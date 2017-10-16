@@ -1,0 +1,15 @@
+{{!Sempre que atualizar o arquivo de layout é necessário reiniciar o processo da API, para registrar o novo layout}}
+
+{{!HEADER}}
+<div id="header">
+    {{> email-html-header }}
+</div>
+{{!BODY}}
+<div id="content">
+    {{#block 'body'}}
+    {{/block}}
+</div>
+{{!FOOTER}}
+<div id="footer">
+    {{> email-html-footer }}
+</div>

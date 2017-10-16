@@ -1,0 +1,19 @@
+{
+    "auth": {
+        "login": {
+            "success": "Successful login {{name}}"
+        }
+    },
+    "validation": {
+        "any": {
+            "required": "validation.any.required"
+        }
+    },
+    "validation-error": "validation-error",
+    "http-500": "http-500",
+    "user-info": "user-info",
+    "user": {
+        "show": "user.show",
+        "login": "user.login"
+    }
+}

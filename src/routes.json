@@ -1,0 +1,7 @@
+{
+    "GET /login": "AuthController.login",
+    "user": {
+        "GET /": "UserController.list",
+        "POST /": "UserController.save"
+    }
+}

@@ -1,0 +1,69 @@
+{
+    "name": "servir.me-api",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "pre-commit": [
+        "lint"
+    ],
+    "scripts": {
+        "start": "nodemon local/server -q",
+        "new-migration": "dynamo-migrator create",
+        "migrate": "DYNAMO_ENDPOINT=http://localhost:4569 dynamo-migrator migrate",
+        "dynamo-gui": "DYNAMO_ENDPOINT=http://localhost:4569 dynamodb-admin",
+        "lint": "eslint src test",
+        "validate-yml": "js-yaml serverless.yml",
+        "ci-test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- test/**/*.test.js",
+        "send-coverage-data": "codecov",
+        "test": "cross-env FORCE_COLOR=true DB_DIALECT=sqlite istanbul cover ./node_modules/mocha/bin/_mocha -- test/**/*.test.js",
+        "deploy-prod": "sls deploy -s prod"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/MatheusVellone/servir.me-api.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/MatheusVellone/servir.me-api/issues"
+    },
+    "homepage": "https://github.com/MatheusVellone/servir.me-api#readme",
+    "dependencies": {
+        "aws-sdk": "^2.117.0",
+        "axios": "^0.16.2",
+        "bluebird": "^3.5.0",
+        "elasticsearch": "^13.3.1",
+        "email-templates": "^2.7.1",
+        "eslint": "^4.7.0",
+        "handlebars": "^4.0.10",
+        "handlebars-layouts": "^3.1.4",
+        "i18n": "^0.8.3",
+        "joi": "^10.6.0",
+        "jsonwebtoken": "^7.4.3",
+        "jwk-to-pem": "^1.2.6",
+        "nodemailer": "^4.1.0",
+        "serverless": "^1.22.0",
+        "uuid": "^3.1.0"
+    },
+    "devDependencies": {
+        "chai": "^4.1.2",
+        "chai-http": "^3.0.0",
+        "codecov": "^2.3.0",
+        "cors": "^2.8.4",
+        "cross-env": "^5.0.5",
+        "dotenv": "^4.0.0",
+        "dynamo-migrator": "^1.1.0",
+        "dynamodb-admin": "^1.14.0",
+        "eslint-config-airbnb-base": "^11.3.2",
+        "eslint-config-matheusvellone-base": "^1.0.4",
+        "eslint-plugin-import": "^2.7.0",
+        "express": "^4.15.4",
+        "istanbul": "^0.4.5",
+        "js-yaml": "^3.10.0",
+        "lambda-tester": "^3.1.0",
+        "mocha": "^3.5.3",
+        "nodemon": "^1.12.1",
+        "pre-commit": "^1.2.2",
+        "yamljs": "^0.3.0"
+    }
+}

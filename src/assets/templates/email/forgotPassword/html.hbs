@@ -1,0 +1,10 @@
+{{#extend 'email-html-layout'}}
+    {{#content 'body'}}
+        <div>
+            {{__ 'body-fp-content'}}
+        </div>
+        <div id="hash">
+            {{recoveryLinkHash}}
+        </div>
+    {{/content}}
+{{/extend}}

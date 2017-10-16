@@ -1,0 +1,19 @@
+{
+    "validation": {
+        "any": {
+            "required": "validation.any.required"
+        }
+    },
+    "validation-error": "validation-error",
+    "auth": {
+        "login": {
+            "success": "auth.login.success"
+        }
+    },
+    "http-500": "http-500",
+    "user-info": "user-info",
+    "user": {
+        "show": "user.show",
+        "login": "user.login"
+    }
+}
