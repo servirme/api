@@ -5,16 +5,6 @@ const BbPromise = require('bluebird');
 const InternalException = require('../Exceptions/InternalException');
 const htmlEntityEncode = require('./utils/string').htmlEntityEncode;
 
-/**
- * O erro após ser normalizado
- * @typedef {{request: {method, headers, data, url}, response: {statusCode: number, statusText: *, headers: *, data: *}}} RequestErrorNormalized
- */
-
-/**
- * Normaliza o erro para um formato mais amigável e universal
- * @param err
- * @return RequestErrorNormalized
- */
 const normalizeError = (err) => {
     return {
         request: {
