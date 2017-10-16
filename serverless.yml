@@ -1,6 +1,14 @@
 service:
     name: servir.me
 
+custom:
+  prune:
+    automatic: true
+    number: 10
+
+plugins:
+  - serverless-prune-plugin
+
 provider:
     name: aws
     runtime: nodejs6.10
