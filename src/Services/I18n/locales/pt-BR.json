@@ -15,5 +15,6 @@
     "user": {
         "show": "user.show",
         "login": "user.login"
-    }
+    },
+    "User-already-exists": "User-already-exists"
 }

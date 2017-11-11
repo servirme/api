@@ -1,17 +1,15 @@
-'use strict';
-
-const Exception = require('./Exception');
-const internalExceptionErrorCode = require('../configs/errorCodes').internalError;
-const log = require('../lib/log');
+const Exception = require('./Exception')
+const { internalError } = require('../../config/errorCodes')
+const log = require('../lib/log')
 
 class InternalException extends Exception {
-    /**
-     * @param {...*} errs
-     */
-    constructor(...errs) {
-        super(500, internalExceptionErrorCode, 'http-500');
-        log('error', ...errs, this.stack);
-    }
+  /**
+   * @param {...*} errs
+   */
+  constructor(...errs) {
+    super(500, internalError, 'http-500')
+    log('error', ...errs, this.stack)
+  }
 }
 
-module.exports = InternalException;
+module.exports = InternalException

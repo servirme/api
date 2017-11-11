@@ -1,11 +1,9 @@
-'use strict';
-
-const InternalException = require('./InternalException');
+const InternalException = require('./InternalException')
 
 class NotImplementedException extends InternalException {
-    constructor(filename, action) {
-        super(`${filename.replace(/(.*)\..*/, '$1')}.${action} isn't implemented`);
-    }
+  constructor(filename, action) {
+    super(`${filename.replace(/(.*)\..*/, '$1')}.${action} isn't implemented`)
+  }
 }
 
-module.exports = NotImplementedException;
+module.exports = NotImplementedException

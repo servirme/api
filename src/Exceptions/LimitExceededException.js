@@ -1,18 +1,16 @@
-'use strict';
+const Exception = require('./Exception')
+const { limitExceeded } = require('../../config/errorCodes')
 
-const Exception = require('./Exception');
-const limitExceededErrorCodes = require('../configs/errorCodes').limitExceeded;
-
-const messageSuffix = 'limit-exceeded';
+const messageSuffix = 'limit-exceeded'
 
 class LimitExceededException extends Exception {
-    /**
-     * @param {string} resourceName
-     */
-    constructor(resourceName = 'generic') {
-        const message = `${resourceName}-${messageSuffix}`;
-        super(429, limitExceededErrorCodes[resourceName], message);
-    }
+  /**
+   * @param {string} resourceName
+   */
+  constructor(resourceName = 'generic') {
+    const message = `${resourceName}-${messageSuffix}`
+    super(429, limitExceeded[resourceName], message)
+  }
 }
 
-module.exports = LimitExceededException;
+module.exports = LimitExceededException

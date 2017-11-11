@@ -1,9 +1,7 @@
-'use strict';
-
-const Transform = require('./Transform');
+const Transform = require('./Transform')
 
 class UserTransform extends Transform {
 
 }
 
-module.exports = UserTransform;
+module.exports = UserTransform

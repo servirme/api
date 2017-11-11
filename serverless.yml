@@ -1,5 +1,5 @@
 service:
-    name: servir.me
+  name: servir.me
 
 custom:
   prune:
@@ -10,17 +10,26 @@ plugins:
   - serverless-prune-plugin
 
 provider:
-    name: aws
-    runtime: nodejs6.10
-    region: us-west-2
-    memorySize: 128
-    timeout: 30
+  name: aws
+  runtime: nodejs6.10
+  region: us-west-2
+  memorySize: 128
+  timeout: 30
+  environment:
+    NODE_ENV: prod
 
 package:
-    exclude:
-        - node_modules/aws-sdk/**
+  exclude:
+    - node_modules/aws-sdk/**
 
 functions:
-    authorizer:
-        handler: src/Lambdas/authorizer.handler
-        description: Authorizer function
+  authorizer:
+    handler: src/Lambdas/authorizer.handler
+    description: Authorizer function
+
+  user:
+    handler: src/Lambdas/Api/test.test
+    events:
+      - http:
+          path: /test
+          method: get

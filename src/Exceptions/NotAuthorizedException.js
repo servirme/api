@@ -1,18 +1,16 @@
-'use strict';
+const Exception = require('./Exception')
+const { unauthorized } = require('../../config/errorCodes')
 
-const Exception = require('./Exception');
-const unauthorizedErrorCodes = require('../configs/errorCodes').unauthorized;
-
-const messageSuffix = 'unauthorized';
+const messageSuffix = 'unauthorized'
 
 class NotAuthorizedException extends Exception {
-    /**
-     * @param {string} resourceName
-     */
-    constructor(resourceName = 'generic') {
-        const message = `${resourceName}-${messageSuffix}`;
-        super(401, unauthorizedErrorCodes[resourceName], message);
-    }
+  /**
+   * @param {string} resourceName
+   */
+  constructor(resourceName = 'generic') {
+    const message = `${resourceName}-${messageSuffix}`
+    super(401, unauthorized[resourceName], message)
+  }
 }
 
-module.exports = NotAuthorizedException;
+module.exports = NotAuthorizedException

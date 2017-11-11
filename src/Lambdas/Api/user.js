@@ -1,9 +1,9 @@
-'use strict';
+const publisher = require('./_publisher')
+const UserController = require('../../Controllers/UserController')
 
-const publisher = require('./publisher');
-const UserController = require('../../Controllers/UserController');
+const exposedActions = [
+  'login',
+  'show',
+]
 
-module.exports = publisher(UserController, [
-    'login',
-    'show',
-]);
+module.exports = publisher(UserController, exposedActions)

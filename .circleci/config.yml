@@ -2,8 +2,8 @@ version: 2
 jobs:
   build:
     environment:
-        NODE_ENV: test
-        APP_ENV: test
+      NODE_ENV: test
+      APP_ENV: test
 
     working_directory: ~/servir.me
     docker:
@@ -19,9 +19,11 @@ jobs:
       - run:
           name: Lint code
           command: npm run lint
+
       - run:
           name: Validate serverless.yml
           command: npm run validate-yml
+
       - run:
           name: Run tests
           command: npm run ci-test
