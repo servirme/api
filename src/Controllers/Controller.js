@@ -1,5 +1,5 @@
 const BbPromise = require('bluebird')
-const { path, assocPath } = require('ramda')
+const { view, lensPath, set } = require('ramda')
 
 const Exception = require('../Exceptions/Exception')
 const InternalException = require('../Exceptions/InternalException')
@@ -18,6 +18,7 @@ class Controller {
 
   lambdaWrapper(actionName) {
     return (event, context, callback) => {
+      console.time('Request')
       context.callbackWaitsForEmptyEventLoop = false
 
       const rawReq = {
@@ -62,28 +63,32 @@ class Controller {
           return this.response(error.getBody(), error.getHttpCode(), {}, error.getTranslateKeys())
         })
         .then((response) => {
+          console.timeEnd('Request')
           callback(null, response)
         })
     }
   }
 
   response(body, statusCode = 200, headers = {}, translate = []) {
+    headers['Content-Type'] = 'application/json'
     translate.push('message')
 
     this._i18n.setLocale(this._selectedLanguage)
 
-    translate.forEach((keyToTranslate) => {
+    const bodyTranslated = translate.reduce((oldBody, keyToTranslate) => {
       const keyTranslatePath = keyToTranslate.split('.')
-      const value = path(keyTranslatePath, body)
+      const path = lensPath(keyTranslatePath)
+
+      const value = view(path, oldBody)
       const translated = this._i18n.translate(value)
 
-      assocPath(keyTranslatePath, translated, body)
-    })
+      return set(path, translated, oldBody)
+    }, body)
 
     return {
       statusCode,
       headers,
-      body: JSON.stringify(body),
+      body: JSON.stringify(bodyTranslated),
     }
   }
 }

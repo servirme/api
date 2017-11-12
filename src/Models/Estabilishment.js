@@ -1,41 +1,27 @@
 const Sequelize = require('sequelize')
 
-module.exports = (db) => {
-  return db.sequelize.define('Estabilishment', {
-    id: Sequelize,
-    name: Sequelize,
-    active: Sequelize,
-    site: Sequelize,
-    slug: Sequelize,
-    email: Sequelize,
-    plan_id: Sequelize,
-    created_at: Sequelize,
-    updated_at: Sequelize,
-    deleted_at: Sequelize,
-  }, {
-    indexes: [{
-      fields: ['company_id'],
-    }, {
-      fields: ['document_type'],
-    }, {
-      fields: ['document_number'],
-    }, {
-      fields: ['email'],
-    }],
-    hooks: db.eshelper.sequelizeHooksBuilder(),
-    instanceMethods: {
-      _esObjectType: 'customer',
-      _esParentResponsesReindexingRules: {
-        transaction: parentReindexingRules,
-        subscription: parentReindexingRules,
-      },
-      esIndex: db.eshelper.sequelizeEsIndexBuilder(responseObjectBuilder),
-    },
-    classMethods: {
-      responseObjectBuilder,
-      buildMappings,
-    },
-  })
+module.exports.fields = {
+  id: {
+    primaryKey: true,
+    type: Sequelize.INTEGER,
+  },
+  name: Sequelize.STRING,
+  active: Sequelize.TINYINT,
+  site: Sequelize.STRING,
+  slug: Sequelize.STRING,
+  email: Sequelize.STRING,
+  plan_id: Sequelize.INTEGER,
+  created_at: Sequelize.DATE,
+  updated_at: Sequelize.DATE,
+  deleted_at: Sequelize.DATE,
+}
+
+module.exports.config = {
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  deletedAt: 'deleted_at',
+  paranoid: true,
 }
 
 module.exports.associate = (model, database) => {

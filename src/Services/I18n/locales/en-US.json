@@ -7,6 +7,9 @@
     "validation": {
         "any": {
             "required": "validation.any.required"
+        },
+        "object": {
+            "allowUnknown": "validation.object.allowUnknown"
         }
     },
     "validation-error": "validation-error",

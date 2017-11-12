@@ -27,9 +27,10 @@ functions:
     handler: src/Lambdas/authorizer.handler
     description: Authorizer function
 
-  user:
-    handler: src/Lambdas/Api/test.test
+  # ESTABILISHMENT
+  estabilishment_create:
+    handler: src/Lambdas/Api/estabilishment.create
     events:
       - http:
-          path: /test
-          method: get
+          path: /estabilishment
+          method: post

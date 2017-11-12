@@ -1,4 +1,5 @@
 /* eslint-disable no-console, global-require */
+console.log('\x1Bc')
 
 require('dotenv').config()
 const { readFileSync } = require('fs')
@@ -6,6 +7,14 @@ const { join } = require('path')
 const cors = require('cors')
 const express = require('express')
 const { safeLoad } = require('js-yaml')
+const chalk = require('chalk')
+
+const log = color => text => console.log(color(text))
+
+const logSuccess = log(chalk.green)
+const logError = log(chalk.red)
+const bold = chalk.bold
+// const logWarning = (chalk.yellow)
 
 const serverlessPath = join(__dirname, '..', 'serverless.yml')
 const serverlessFile = safeLoad(readFileSync(serverlessPath))
@@ -61,6 +70,12 @@ const registerRoutes = () => {
           }
           console.log(method, apiPath, functionData.handler)
 
+          const lambdaHandler = files[file][handler]
+          if (!lambdaHandler) {
+            logError(`Skipping ${bold(apiPath)} on method ${bold(method)} pointing to ${bold(file)}.${bold(handler)} is undefined`)
+            return
+          }
+
           const routesHandler = [lambdaWrapper(files[file][handler])]
 
           app[method](apiPath, ...routesHandler)
@@ -69,10 +84,9 @@ const registerRoutes = () => {
   })
 }
 
-console.log('\x1Bc')
 app.use(cors())
 registerRoutes()
 
 app.listen(PORT, () => {
-  console.log(`API running in localhost:${PORT}`)
+  logSuccess(`API running in localhost:${PORT}`)
 })

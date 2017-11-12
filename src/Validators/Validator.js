@@ -5,20 +5,6 @@ const ValidationException = require('../Exceptions/ValidationException')
 class Validator {
   constructor() {
     this._validators = {}
-    this._predefined = {}
-  }
-
-  addPredefined(alias, rule) {
-    this._predefined[alias] = rule
-  }
-
-  getPredefined(alias, required = false) {
-    const rule = this._predefined[alias]
-    if (!rule) {
-      return Joi.any()
-    }
-
-    return required ? rule.required() : rule
   }
 
   addValidator(alias, validatorRules) {
@@ -31,14 +17,13 @@ class Validator {
       return BbPromise.resolve(targetToValidate)
     }
 
-    const result = Joi.validate(targetToValidate, schema, {
+    const { error, validated } = schema.validate(targetToValidate, {
       abortEarly: false,
-      convert: true,
       stripUnknown: true,
     })
 
-    if (result.error) {
-      const errorsObject = result.error.details
+    if (error) {
+      const errorsObject = error.details
         .reduce((finalObject, err) => {
           finalObject[err.context.key] = {
             rule: err.type,
@@ -50,7 +35,7 @@ class Validator {
       throw new ValidationException(errorsObject)
     }
 
-    return BbPromise.resolve(result.value)
+    return BbPromise.resolve(validated)
   }
 }
 
