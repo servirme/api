@@ -1,5 +1,5 @@
 const BbPromise = require('bluebird')
-const getObjPropWithString = require('../lib/utils/object').getObjPropWithString
+const { path } = require('ramda')
 
 class Transform {
   constructor() {
@@ -16,27 +16,24 @@ class Transform {
     const typeOfTransformation = typeof transformation
 
     if (typeOfTransformation === 'string') {
-      // Se for string, simplesmente traduz o campo. Sem colocar valor padrão, pois para isso, é utilizado o objeto
-      // A string é mais comumente utilizada quando o campo sempre existe na tabela.
-      return getObjPropWithString(record, transformation)
+      return path(transformation, record)
     } else if (Array.isArray(transformation)) {
       return transformation.map((fieldTransform) => {
-        return getObjPropWithString(record, fieldTransform)
+        return path(fieldTransform, record)
       })
     } else if (typeOfTransformation === 'function') {
       return transformation(record)
     }
 
     const fieldValue = !Array.isArray(transformation.field) ?
-      getObjPropWithString(record, transformation.field) :
+      path(transformation.field, record) :
       transformation.field.map((fieldTransform) => {
-        return getObjPropWithString(record, fieldTransform)
+        return path(fieldTransform, record)
       })
 
     const value = transformation.transformFunction ?
       transformation.transformFunction(fieldValue, record) : fieldValue
     if (!options.noDefaultValues) {
-      // Resultado, caso exista, ou o default
       return typeof value !== 'undefined' ? value : transformation.default
     }
     return value

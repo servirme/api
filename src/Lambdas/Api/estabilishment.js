@@ -3,6 +3,7 @@ const EstabilishmentController = require('../../Controllers/EstabilishmentContro
 
 const exposedActions = [
   'create',
+  'update',
 ]
 
 module.exports = publisher(EstabilishmentController, exposedActions)

@@ -11,7 +11,8 @@ const password = process.env.DATABASE_PASSWORD
 const sequelize = new Sequelize(database, username, password, {
   host,
   dialect: offline ? 'sqlite' : 'mysql',
-  logging: process.env.NODE_ENV !== 'prod',
+  logging: process.env.NODE_ENV !== 'prod' && console.log, // eslint-disable-line no-console
+  operatorsAliases: Sequelize.Op,
 })
 
 class SequelizeRepository extends BaseRepository {
@@ -69,13 +70,13 @@ class SequelizeRepository extends BaseRepository {
   //       ]
   //     })
   // }
-
-  remove(condition, options = {}) {
-    options.where = condition
-
-    return this.ready
-      .then(() => this.schema.destroy(options))
-  }
+  //
+  // remove(condition, options = {}) {
+  //   options.where = condition
+  //
+  //   return this.ready
+  //     .then(() => this.schema.destroy(options))
+  // }
 }
 
 module.exports = SequelizeRepository
