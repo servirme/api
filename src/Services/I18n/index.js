@@ -6,7 +6,6 @@ const validLocales = [
   'pt-BR',
 ]
 
-let instance = false
 const i18nConfig = {
   locales: validLocales,
   objectNotation: true,
@@ -24,6 +23,7 @@ const normalizeTranslateInput = (key, data = {}) => {
     data,
   }
 }
+let instance = false
 
 class I18n {
   static getInstance() {
