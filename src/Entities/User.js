@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 
-module.exports.name = 'Estabilishment'
+module.exports.name = 'User'
 
 module.exports.fields = {
   id: {
@@ -9,10 +9,7 @@ module.exports.fields = {
     type: Sequelize.INTEGER,
   },
   name: Sequelize.STRING,
-  site: Sequelize.STRING,
-  slug: Sequelize.STRING,
   email: Sequelize.STRING,
-  plan_id: Sequelize.INTEGER,
   active: Sequelize.TINYINT,
   created_at: Sequelize.DATE,
   updated_at: Sequelize.DATE,
@@ -25,18 +22,4 @@ module.exports.config = {
   updatedAt: 'updated_at',
   deletedAt: 'deleted_at',
   paranoid: true,
-}
-
-module.exports.associate = (model, database) => {
-  const {
-    address,
-    phone,
-    document,
-  } = database
-
-  model.hasMany(address)
-  model.hasMany(phone)
-  model.hasMany(document, {
-    as: 'documents',
-  })
 }

@@ -38,4 +38,8 @@ class Validator {
   }
 }
 
+Validator.getRule = (rule, required) => {
+  return required ? rule.required() : rule
+}
+
 module.exports = Validator

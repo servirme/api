@@ -7,7 +7,6 @@
     "start": "nodemon local/server",
     "lint": "eslint .",
     "validate-yml": "js-yaml serverless.yml",
-    "ci-test": "jest",
     "send-coverage-data": "codecov",
     "test": "jest",
     "deploy-prod": "sls deploy -s prod"

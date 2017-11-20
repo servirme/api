@@ -27,6 +27,19 @@ functions:
     handler: src/Lambdas/authorizer.handler
     description: Authorizer function
 
+  # AUTH
+  auth_signin:
+    handler: src/Lambdas/Api/auth.signIn
+    events:
+      - http:
+          path: /auth/sign-in
+          method: post
+  auth_signup:
+    handler: src/Lambdas/Api/auth.signUp
+    events:
+      - http:
+          path: /auth/sign-up
+          method: post
   # ESTABILISHMENT
   estabilishment_create:
     handler: src/Lambdas/Api/estabilishment.create
