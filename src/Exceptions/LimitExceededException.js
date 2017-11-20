@@ -4,11 +4,8 @@ const { limitExceeded } = require('../../config/errorCodes')
 const messageSuffix = 'limit-exceeded'
 
 class LimitExceededException extends Exception {
-  /**
-   * @param {string} resourceName
-   */
   constructor(resourceName = 'generic') {
-    const message = `${resourceName}-${messageSuffix}`
+    const message = `${messageSuffix}.${resourceName}`
     super(429, limitExceeded[resourceName], message)
   }
 }

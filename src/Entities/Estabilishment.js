@@ -3,6 +3,7 @@ const Sequelize = require('sequelize')
 module.exports.fields = {
   id: {
     primaryKey: true,
+    autoIncrement: true,
     type: Sequelize.INTEGER,
   },
   name: Sequelize.STRING,

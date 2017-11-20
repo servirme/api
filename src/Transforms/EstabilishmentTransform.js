@@ -9,6 +9,7 @@ class EstabilishmentTransform extends Transform {
     })
 
     this.addTransformSet('output', {
+      id: 'id',
       name: 'name',
     })
   }

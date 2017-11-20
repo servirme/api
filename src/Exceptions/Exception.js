@@ -1,11 +1,6 @@
 Error.stackTraceLimit = Infinity
 
 class Exception extends Error {
-  /**
-   * @param {number} httpCode
-   * @param {number} code
-   * @param {string} message
-   */
   constructor(httpCode = 500, code, message) {
     super(message)
     this._translateKeys = []
@@ -21,9 +16,6 @@ class Exception extends Error {
     this._translateKeys.push(key)
   }
 
-  /**
-   * @return {object}
-   */
   getBody() {
     return this._body
   }
@@ -32,18 +24,8 @@ class Exception extends Error {
     return this._translateKeys
   }
 
-  /**
-   * @return {number}
-   */
   getHttpCode() {
     return this._httpCode
-  }
-
-  getCallbackPayload() {
-    return {
-      statusCode: this.getHttpCode(),
-      body: this.getBody(),
-    }
   }
 }
 

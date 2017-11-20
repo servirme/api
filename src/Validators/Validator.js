@@ -1,5 +1,4 @@
 const Joi = require('joi')
-const BbPromise = require('bluebird')
 const ValidationException = require('../Exceptions/ValidationException')
 
 class Validator {
@@ -14,10 +13,10 @@ class Validator {
   validate(alias, targetToValidate) {
     const schema = this._validators[alias]
     if (!schema) {
-      return BbPromise.resolve(targetToValidate)
+      return targetToValidate
     }
 
-    const { error, validated } = schema.validate(targetToValidate, {
+    const { error, value } = schema.validate(targetToValidate, {
       abortEarly: false,
       stripUnknown: true,
     })
@@ -35,7 +34,7 @@ class Validator {
       throw new ValidationException(errorsObject)
     }
 
-    return BbPromise.resolve(validated)
+    return value
   }
 }
 

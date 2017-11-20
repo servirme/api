@@ -11,15 +11,16 @@ class Transform {
   }
 
   _transformField(record, transformSet, field, options) {
-    const transformMap = typeof transformSet === 'string' ? this._transformSets[transformSet] : transformSet
+    const transformMap = typeof transformSet === 'string' ?
+      this._transformSets[transformSet] : transformSet
     const transformation = transformMap[field]
     const typeOfTransformation = typeof transformation
 
     if (typeOfTransformation === 'string') {
-      return path(transformation, record)
+      return path(transformation.split('.'), record)
     } else if (Array.isArray(transformation)) {
       return transformation.map((fieldTransform) => {
-        return path(fieldTransform, record)
+        return path(fieldTransform.split('.'), record)
       })
     } else if (typeOfTransformation === 'function') {
       return transformation(record)
@@ -28,7 +29,7 @@ class Transform {
     const fieldValue = !Array.isArray(transformation.field) ?
       path(transformation.field, record) :
       transformation.field.map((fieldTransform) => {
-        return path(fieldTransform, record)
+        return path(fieldTransform.split('.'), record)
       })
 
     const value = transformation.transformFunction ?
@@ -40,11 +41,17 @@ class Transform {
   }
 
   transform(record, transformSet, options = {}) {
-    const transformMap = typeof transformSet === 'string' ? this._transformSets[transformSet] : transformSet
+    const transformMap = typeof transformSet === 'string' ?
+      this._transformSets[transformSet] : transformSet
 
     const values = Object.keys(transformMap)
       .map((field) => {
-        const valueTransformed = this._transformField(record, transformSet, field, options)
+        const valueTransformed = this._transformField(
+          record,
+          transformSet,
+          field,
+          options
+        )
 
         if (options.promise) {
           return BbPromise.resolve(valueTransformed)

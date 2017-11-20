@@ -1,14 +1,11 @@
 const Exception = require('./Exception')
 const { conflict } = require('../../config/errorCodes')
 
-const suffixMessage = 'already-exists'
+const suffixMessage = 'conflict'
 
 class ConflictException extends Exception {
-  /**
-   * @param {string} resourceName
-   */
   constructor(resourceName = 'generic') {
-    const message = `${resourceName}-${suffixMessage}`
+    const message = `${suffixMessage}.${resourceName}`
     super(409, conflict[resourceName], message)
   }
 }

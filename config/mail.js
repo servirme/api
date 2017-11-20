@@ -6,7 +6,7 @@ module.exports = {
     secure: true,
     auth: {
       user: 'contato@servir.me',
-      pass: 'password',
+      pass: process.env.EMAIL_PASSWORD,
     },
   },
 }

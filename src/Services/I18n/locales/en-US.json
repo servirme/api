@@ -1,23 +1,20 @@
 {
-    "auth": {
-        "login": {
-            "success": "Successful login {{name}}"
-        }
-    },
+    "generic-unauthorized": "generic-unauthorized",
+    "empty-token-unauthorized": "empty-token-unauthorized",
+    "not-authorized-unauthorized": "not-authorized-unauthorized",
+    "invalid-token-unauthorized": "invalid-token-unauthorized",
+    "http-500": "http-500",
     "validation": {
         "any": {
             "required": "validation.any.required"
         },
-        "object": {
-            "allowUnknown": "validation.object.allowUnknown"
+        "string": {
+            "email": "validation.string.email"
         }
     },
     "validation-error": "validation-error",
-    "http-500": "http-500",
-    "user-info": "user-info",
-    "user": {
-        "show": "user.show",
-        "login": "user.login"
-    },
-    "User-already-exists": "User-already-exists"
+    "estabilishment": {
+        "created": "estabilishment.created",
+        "show": "estabilishment.show"
+    }
 }

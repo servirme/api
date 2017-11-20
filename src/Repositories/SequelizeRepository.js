@@ -39,44 +39,44 @@ class SequelizeRepository extends BaseRepository {
       })
   }
 
-  // update(condition, payload, options = {}) {
-  //   options.where = condition
-  //
-  //   return this.schema.update(payload, options)
-  // }
-  //
-  // getOne(condition, options = {}) {
-  //   options.where = condition
-  //
-  //   return this.schema.findOne(options)
-  // }
-  //
-  // getAll(condition, options = {}) {
-  //   options.where = condition
-  //   options.page = options.page || 1
-  //   options.limit = options.limit || this.pageLimit
-  //   options.offset = (options.page - 1) * options.limit
-  //
-  //   return this.schema.findAndCountAll(options)
-  //     .then((result) => {
-  //       const pagination = {
-  //         currentPage: options.page,
-  //         pages: Math.ceil((result.count / options.limit)),
-  //         total: result.count,
-  //       }
-  //       return [
-  //         result.rows,
-  //         pagination,
-  //       ]
-  //     })
-  // }
-  //
-  // remove(condition, options = {}) {
-  //   options.where = condition
-  //
-  //   return this.ready
-  //     .then(() => this.schema.destroy(options))
-  // }
+  update(condition, payload, options = {}) {
+    options.where = condition
+
+    return this.schema.update(payload, options)
+  }
+
+  getOne(condition, options = {}) {
+    options.where = condition
+
+    return this.schema.findOne(options)
+  }
+
+  getAll(condition, options = {}) {
+    options.where = condition
+    options.page = options.page || 1
+    options.limit = options.limit || this.pageLimit
+    options.offset = (options.page - 1) * options.limit
+
+    return this.schema.findAndCountAll(options)
+      .then((result) => {
+        const pagination = {
+          currentPage: options.page,
+          pages: Math.ceil((result.count / options.limit)),
+          total: result.count,
+        }
+        return [
+          result.rows,
+          pagination,
+        ]
+      })
+  }
+
+  remove(condition, options = {}) {
+    options.where = condition
+
+    return this.ready
+      .then(() => this.schema.destroy(options))
+  }
 }
 
 module.exports = SequelizeRepository

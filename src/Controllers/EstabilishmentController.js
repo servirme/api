@@ -1,33 +1,54 @@
-const Controller = require('./Controller')
 const EstabilishmentModel = require('../Models/EstabilishmentModel')
 const EstabilishmentValidator = require('../Validators/EstabilishmentValidator')
 
-class UserController extends Controller {
+class UserController {
   constructor() {
-    super()
-
     this.model = new EstabilishmentModel()
-    this._useValidator(EstabilishmentValidator)
+    this.validator = new EstabilishmentValidator()
   }
 
   create(req) {
-    const { body } = req
+    const validatedReq = this.validator.validate('create', req)
+
+    const { body } = validatedReq
 
     return this.model.createEstabilishment(body)
-      .then(() => ({
+      .then(estabilishment => ({
         statusCode: 201,
-        body: { message: 'estabilishment.created' },
+        body: {
+          message: 'estabilishment.created',
+          result: estabilishment,
+        },
       }))
   }
 
   update(req) {
-    const { body, path } = req
+    const validatedReq = this.validator.validate('update', req)
+
+    const { body, path } = validatedReq
     const { estabilishmentId } = path
 
     return this.model.updateEstabilishment(estabilishmentId, body)
-      .then(() => ({
+      .then(estabilishment => ({
         statusCode: 200,
-        body: { message: 'estabilishment.updated' },
+        body: {
+          message: 'estabilishment.updated',
+          result: estabilishment,
+        },
+      }))
+  }
+
+  show(req) {
+    const { path } = req
+    const { estabilishmentId } = path
+
+    return this.model.showEstabilishment(estabilishmentId)
+      .then(estabilishment => ({
+        statusCode: 200,
+        body: {
+          message: 'estabilishment.show',
+          result: estabilishment,
+        },
       }))
   }
 }

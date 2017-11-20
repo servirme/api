@@ -4,19 +4,16 @@ const { validationError } = require('../../config/errorCodes')
 const validationErrorsField = 'validationErrors'
 
 class ValidationException extends Exception {
-  /**
-   * @param {object} errorsObject Objeto com os erros
-   */
   constructor(errorsObject) {
-    const errorsLength = Object.keys(errorsObject).length
+    const errors = Object.keys(errorsObject)
     super(422, validationError, {
       key: 'validation-error',
       data: {
-        errorsLength,
+        errorsLength: errors.length,
       },
     })
 
-    this._body[validationErrorsField] = Object.keys(errorsObject)
+    this._body[validationErrorsField] = errors
       .reduce((errorObject, field) => {
         this.addTranslateKey(`${validationErrorsField}.${field}`)
         errorObject[field] = {

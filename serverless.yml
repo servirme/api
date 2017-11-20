@@ -34,3 +34,9 @@ functions:
       - http:
           path: /estabilishment
           method: post
+  estabilishment_show:
+    handler: src/Lambdas/Api/estabilishment.show
+    events:
+      - http:
+          path: /estabilishment/{estabilishmentId}
+          method: get

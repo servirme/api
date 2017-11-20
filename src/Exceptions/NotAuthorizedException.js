@@ -4,11 +4,8 @@ const { unauthorized } = require('../../config/errorCodes')
 const messageSuffix = 'unauthorized'
 
 class NotAuthorizedException extends Exception {
-  /**
-   * @param {string} resourceName
-   */
   constructor(resourceName = 'generic') {
-    const message = `${resourceName}-${messageSuffix}`
+    const message = `${messageSuffix}.${resourceName}`
     super(401, unauthorized[resourceName], message)
   }
 }

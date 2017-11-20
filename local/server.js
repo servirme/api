@@ -85,6 +85,7 @@ const registerRoutes = () => {
 }
 
 app.use(cors())
+app.use(express.json())
 registerRoutes()
 
 app.listen(PORT, () => {

@@ -13,6 +13,7 @@ class EstabilishmentModel extends Model {
     const transformed = this.transformInput(estabilishmentData)
 
     return this.repository.create(transformed)
+      .then(this.transformOutput.bind(this))
   }
 
   updateEstabilishment(estabilishmentId, estabilishmentData) {
@@ -21,6 +22,13 @@ class EstabilishmentModel extends Model {
     return this.repository.update({
       id: estabilishmentId,
     }, transformed)
+      .then(this.transformOutput.bind(this))
+  }
+
+  showEstabilishment(id) {
+    const condition = { id }
+    return this.repository.getOne(condition)
+      .then(this.transformOutput.bind(this))
   }
 }
 

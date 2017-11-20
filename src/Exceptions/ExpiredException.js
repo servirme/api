@@ -4,11 +4,8 @@ const { expired } = require('../../config/errorCodes')
 const messageSuffix = 'expired'
 
 class ExpiredException extends Exception {
-  /**
-   * @param {string} resourceName
-   */
   constructor(resourceName = 'generic') {
-    const message = `${resourceName}-${messageSuffix}`
+    const message = `${messageSuffix}.${resourceName}`
     super(410, expired[resourceName], message)
   }
 }
