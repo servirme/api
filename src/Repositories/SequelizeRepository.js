@@ -2,16 +2,23 @@ const Sequelize = require('sequelize')
 const BaseRepository = require('./BaseRepository')
 const ConflictException = require('../Exceptions/ConflictException')
 
-const offline = process.env.OFFLINE === 'true'
-const host = process.env.DATABASE_HOST
-const database = process.env.DATABASE_NAME
-const username = process.env.DATABASE_USERNAME
-const password = process.env.DATABASE_PASSWORD
+const {
+  NODE_ENV,
+  OFFLINE,
+  DATABASE_HOST,
+  DATABASE_NAME,
+  DATABASE_USERNAME,
+  DATABASE_PASSWORD,
+} = process.env
 
-const sequelize = new Sequelize(database, username, password, {
+const offline = OFFLINE === 'true'
+const logging = NODE_ENV !== 'production' && process.env.LOGGING === 'true' && console.log // eslint-disable-line no-console
+const host = offline ? 'local.db' : DATABASE_HOST
+
+const sequelize = new Sequelize(DATABASE_NAME, DATABASE_USERNAME, DATABASE_PASSWORD, {
   host,
   dialect: offline ? 'sqlite' : 'mysql',
-  logging: process.env.NODE_ENV !== 'prod' && console.log, // eslint-disable-line no-console
+  logging,
   operatorsAliases: Sequelize.Op,
 })
 

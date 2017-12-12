@@ -16,5 +16,9 @@
     "estabilishment": {
         "created": "estabilishment.created",
         "show": "estabilishment.show"
-    }
+    },
+    "invalid": {
+        "oi": "invalid.oi"
+    },
+    "url-not-found": "url-not-found"
 }

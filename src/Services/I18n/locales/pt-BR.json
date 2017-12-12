@@ -12,9 +12,13 @@
             "email": "validation.string.email"
         }
     },
-    "validation-error": "validation-error",
+    "validation-error": "Erro de validação",
     "estabilishment": {
         "created": "estabilishment.created",
         "show": "estabilishment.show"
-    }
+    },
+    "invalid": {
+        "oi": "oier"
+    },
+    "url-not-found": "url-not-found"
 }
