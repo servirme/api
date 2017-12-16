@@ -22,7 +22,7 @@ module.exports.extractResponseBody = (chunk, headers) => {
 module.exports.wrapControllerAction = (controller, action) => {
   const actionBinded = action.bind(controller)
 
-  return (req, res) => {
+  return (req, res, next) => {
     BbPromise.resolve(actionBinded(req))
       .then((response = {}) => {
         const {
@@ -33,6 +33,9 @@ module.exports.wrapControllerAction = (controller, action) => {
 
         translate.forEach(res.translate)
         res.status(statusCode).send(body)
+      })
+      .catch((err) => {
+        next(err)
       })
   }
 }

@@ -1,13 +1,13 @@
 const Model = require('./Model')
-const UserRepository = require('../Repositories/UserRepository')
-const UserTransform = require('../Transforms/UserTransform')
+// const UserRepository = require('../Repositories/UserRepository')
+// const UserTransform = require('../Transforms/UserTransform')
 
 class UserModel extends Model {
-  constructor() {
-    super()
-    this.repository = new UserRepository()
-    this.transform = new UserTransform()
-  }
+  // constructor() {
+  //   super()
+  //   this.repository = new UserRepository()
+  //   this.transform = new UserTransform()
+  // }
 
   createUser(user) {
     const transformed = this.transformInput(user)
