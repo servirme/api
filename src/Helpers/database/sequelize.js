@@ -76,4 +76,3 @@ module.exports = (database) => {
 
   return mountedEntities
 }
-
