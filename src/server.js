@@ -38,6 +38,11 @@ app.all('*', (req, res) => {
 
 app.use(errorHandler)
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   logger.info(`Server is running in port ${PORT}`)
 })
+
+module.exports = {
+  server,
+  app,
+}
