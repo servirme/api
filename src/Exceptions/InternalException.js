@@ -1,11 +1,14 @@
+const log4js = require('log4js')
+
 const Exception = require('./Exception')
 const { internalError } = require('../../config/errorCodes')
-const log = require('../lib/log')
+
+const logger = log4js.getLogger('api')
 
 class InternalException extends Exception {
-  constructor(...errs) {
+  constructor(err) {
     super(500, internalError, 'http-500')
-    log('error', ...errs, this.stack)
+    logger.error('Internal Error', err)
   }
 }
 

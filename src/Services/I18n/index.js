@@ -2,8 +2,8 @@ const { join } = require('path')
 const i18n = require('i18n')
 
 const validLocales = [
-  'en-US',
   'pt-BR',
+  'en-US',
 ]
 
 const i18nConfig = {
@@ -29,15 +29,23 @@ class I18n {
   static getInstance() {
     if (!instance) {
       instance = new I18n()
-      i18nConfig.register = instance
+      i18nConfig.register = instance.i18nInstance
       i18n.configure(i18nConfig)
     }
     return instance
   }
 
+  constructor() {
+    this.i18nInstance = {}
+  }
+
   translate(...params) {
     const { key, data } = normalizeTranslateInput(...params)
-    return this.__(key, data)
+    return this.i18nInstance.__(key, data)
+  }
+
+  setLocale(language) {
+    return this.i18nInstance.setLocale(language)
   }
 }
 

@@ -1,7 +1,6 @@
 {
   "verbose": false,
   "watch": [
-    "./"
-  ],
-  "ext": "js json yml"
+    "*.*"
+  ]
 }
