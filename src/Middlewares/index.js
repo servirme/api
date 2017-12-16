@@ -1,21 +1,15 @@
-const lambda = require('./lambda')
-const i18n = require('./i18n')
-const publicAuth = require('./auth/public')
-const adminAuth = require('./auth/private')
-
-const basic = [
-  lambda,
-  i18n,
-]
+const i18nMiddleware = require('./i18n')
+const errorHandler = require('./errorHandler')
+const apiLogger = require('./apiLogger')
+const requestMetadata = require('./requestMetadata')
+const auth = require('./auth')
 
 module.exports = {
-  noAuth: basic,
-  publicAuth: [
-    ...basic,
-    publicAuth,
-  ],
-  adminAuth: [
-    ...basic,
-    adminAuth,
-  ],
+  i18nMiddleware,
+  errorHandler,
+  apiLogger,
+  requestMetadata,
+  clientAuth: auth.client,
+  adminAuth: auth.admin,
+  masterAuth: auth.master,
 }

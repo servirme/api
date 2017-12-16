@@ -2,22 +2,16 @@ const { lensPath, view, set } = require('ramda')
 const I18n = require('../Services/I18n')
 
 const i18n = I18n.getInstance()
-let language = I18n.validLocales[0]
+const defaultLanguage = I18n.validLocales[0]
 
-module.exports.pre = (req) => {
-  const headerLanguage = req.headers['Accept-Language']
-  if (I18n.validLocales.includes(headerLanguage)) {
-    language = headerLanguage
-  }
-  return req
-}
-
-module.exports.post = ({ body = {}, translate = [], ...response }) => {
-  translate.push('message')
-
+const translateBody = (translate, body, language) => {
   i18n.setLocale(language)
 
-  response.body = translate.reduce((oldBody, keyToTranslate) => {
+  if (typeof body === 'string') {
+    return i18n.translate(body)
+  }
+
+  return translate.reduce((oldBody, keyToTranslate) => {
     const keyTranslatePath = keyToTranslate.split('.')
     const path = lensPath(keyTranslatePath)
 
@@ -26,6 +20,30 @@ module.exports.post = ({ body = {}, translate = [], ...response }) => {
 
     return set(path, translated, oldBody)
   }, body)
+}
 
-  return response
+module.exports = (req, res, next) => {
+  const language = req.headers['Accept-Language'] || defaultLanguage
+
+  if (I18n.validLocales.includes(language)) {
+    req.language = language
+  } else {
+    req.language = defaultLanguage
+  }
+
+  const toTranslate = ['message']
+  res.translate = (key) => {
+    toTranslate.push(key)
+    return res
+  }
+
+  const send = res.send
+  res.send = (responseBody) => {
+    const translatedBody = translateBody(toTranslate, responseBody, language)
+
+    res.send = send
+    return res.send(translatedBody)
+  }
+
+  next()
 }
