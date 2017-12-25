@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize')
 
-module.exports.name = 'Estabilishment'
+module.exports.name = 'estabilishment'
+module.exports.type = 'admin'
 
 module.exports.fields = {
   id: {
@@ -27,16 +28,8 @@ module.exports.config = {
   paranoid: true,
 }
 
-module.exports.associate = (model, database) => {
-  const {
-    address,
-    phone,
-    document,
-  } = database
-
-  model.hasMany(address)
-  model.hasMany(phone)
-  model.hasMany(document, {
-    as: 'documents',
-  })
-}
+// module.exports.associate = (entity, entities) => {
+//   const { user } = entities
+//
+//   entity.belongsTo(user)
+// }

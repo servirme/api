@@ -1,6 +1,8 @@
 language: node_js
 node_js:
   - "6.11.0"
+notifications:
+  slack: servirme:PL18rvrpG8M0tB8dTVhxAODI
 script:
     - npm run lint
     - npm run test
@@ -16,3 +18,4 @@ env:
     - NODE_ENV=test
     - OFFLINE=true
     - LOGGING=false
+    - API_PORT=3000
