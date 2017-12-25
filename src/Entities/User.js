@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 
-module.exports.name = 'User'
+module.exports.name = 'user'
 
 module.exports.fields = {
   id: {

@@ -5,7 +5,7 @@ const EstabilishmentTransform = require('../Transforms/EstabilishmentTransform')
 class EstabilishmentModel extends Model {
   constructor() {
     super()
-    this.repository = new EstabilishmentRepository()
+    this.repository = EstabilishmentRepository
     this.transform = new EstabilishmentTransform()
   }
 
