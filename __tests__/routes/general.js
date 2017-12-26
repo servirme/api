@@ -1,4 +1,4 @@
-const testServer = require('./testServer')
+const testServer = require('../testServer')
 
 describe('General routes', () => {
   test('/status route', () => {

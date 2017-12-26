@@ -1,14 +1,12 @@
-const { getClientConnection } = require('../Helpers/repository')
-
-const getEntity = (estabilishmentId) => {
-  return getClientConnection(estabilishmentId).teste
-}
+const { database, getClientDatabase } = require('../Helpers/database')
 
 module.exports.getOne = (estabilishmentId) => {
-  return getEntity(estabilishmentId)
+  return database.client.entity
     .findAll({
       where: {
         id: 1,
       },
+    }, {
+      searchPath: getClientDatabase(estabilishmentId),
     })
 }

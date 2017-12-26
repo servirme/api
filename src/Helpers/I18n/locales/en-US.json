@@ -18,10 +18,21 @@
         "show": "estabilishment.show"
     },
     "invalid": {
-        "oi": "invalid.oi"
+        "oi": "invalid.oi",
+        "password": "invalid.password"
     },
     "url-not-found": "url-not-found",
     "status": {
         "ok": "status.ok"
+    },
+    "signed": {
+        "in": "signed.in",
+        "up": "signed.up"
+    },
+    "not-found": {
+        "user": "not-found.user"
+    },
+    "conflict": {
+        "user": "conflict.user"
     }
 }

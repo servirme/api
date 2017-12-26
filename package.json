@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon bin/www",
+    "start": "nodemon server.js",
     "lint": "eslint .",
     "send-coverage-data": "codecov",
-    "test": "jest"
+    "test": "jest --forceExit",
+    "migrate": "sequelize db:migrate",
+    "seed": "sequelize db:seed"
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,7 @@
   },
   "homepage": "https://github.com/MatheusVellone/servir.me-api#readme",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "bluebird": "^3.5.0",
     "body-parser": "^1.18.2",
     "compression": "^1.7.1",
@@ -28,22 +31,23 @@
     "express": "^4.15.4",
     "i18n": "^0.8.3",
     "joi": "^10.6.0",
+    "jsonwebtoken": "^8.1.0",
     "log4js": "^2.4.1",
-    "pg": "^7.4.0",
+    "pg": "^6.4.2",
     "ramda": "^0.25.0",
-    "sequelize": "^4.28.6",
+    "sequelize": "^4.29.0",
     "uuid": "^3.1.0"
   },
   "devDependencies": {
     "codecov": "^2.3.0",
-    "cross-env": "^5.1.1",
-    "eslint": "^4.11.0",
+    "cross-env": "^5.1.3",
+    "eslint": "^4.14.0",
     "eslint-config-airbnb-base": "^11.3.2",
     "eslint-config-matheusvellone-base": "^1.0.8",
     "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jest": "^21.3.2",
-    "jest": "^21.2.1",
-    "nodemon": "^1.12.5",
+    "eslint-plugin-jest": "^21.5.0",
+    "jest": "^22.0.4",
+    "nodemon": "^1.14.8",
     "sequelize-cli": "^3.0.0",
     "supertest": "^3.0.0"
   }

@@ -10,12 +10,14 @@ module.exports = {
   invalid: {
     generic: 1300,
     body: 1301,
+    jwt: 1302,
   },
   mismatch: {
     generic: 1400,
   },
   expired: {
     generic: 1500,
+    jwt: 1501,
   },
   unauthorized: {
     generic: 1600,
