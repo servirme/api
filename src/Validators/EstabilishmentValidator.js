@@ -29,6 +29,4 @@ class EstabilishmentValidator extends Validator {
   }
 }
 
-EstabilishmentValidator.Estabilishment = Estabilishment
-
 module.exports = EstabilishmentValidator

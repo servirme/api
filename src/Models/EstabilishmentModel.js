@@ -1,35 +1,25 @@
-const Model = require('./Model')
-const EstabilishmentRepository = require('../Repositories/EstabilishmentRepository')
-const EstabilishmentTransform = require('../Transforms/EstabilishmentTransform')
+const estabilishmentTransform = require('../Transforms/EstabilishmentTransform')
+const estabilishmentRepository = require('../Repositories/EstabilishmentRepository')
 
-class EstabilishmentModel extends Model {
-  constructor() {
-    super()
-    this.repository = EstabilishmentRepository
-    this.transform = new EstabilishmentTransform()
-  }
+module.exports.createEstabilishment = (estabilishmentData) => {
+  const transformed = estabilishmentTransform.input(estabilishmentData)
 
-  createEstabilishment(estabilishmentData) {
-    const transformed = this.transformInput(estabilishmentData)
-
-    return this.repository.create(transformed)
-      .then(this.transformOutput.bind(this))
-  }
-
-  updateEstabilishment(estabilishmentId, estabilishmentData) {
-    const transformed = this.transformOutput(estabilishmentData)
-
-    return this.repository.update({
-      id: estabilishmentId,
-    }, transformed)
-      .then(this.transformOutput.bind(this))
-  }
-
-  showEstabilishment(id) {
-    const condition = { id }
-    return this.repository.getOne(condition)
-      .then(this.transformOutput.bind(this))
-  }
+  return estabilishmentRepository.create(transformed)
+    .then(estabilishmentTransform.output)
 }
 
-module.exports = EstabilishmentModel
+module.exports.updateEstabilishment = (id, estabilishmentData) => {
+  const transformed = estabilishmentTransform.input(estabilishmentData)
+
+  return estabilishmentRepository.update({
+    id,
+  }, transformed)
+    .then(estabilishmentTransform.output)
+}
+
+module.exports.showEstabilishment = (id) => {
+  const condition = { id }
+
+  return estabilishmentRepository.getOne(condition)
+    .then(estabilishmentTransform.output)
+}

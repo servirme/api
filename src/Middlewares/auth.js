@@ -1,14 +1,12 @@
 const { path } = require('ramda')
+const jwt = require('../Helpers/jwt')
 const NotAuthorizedException = require('../Exceptions/NotAuthorizedException')
 
-const getApiToken = path(['headers', 'token'])
+const HEADER_NAME = 'token'
+
+const getApiToken = path(['headers', HEADER_NAME])
 const decode = (token) => {
-  try {
-    // TODO - use JWT
-    return JSON.parse(token)
-  } catch (a) {
-    throw new NotAuthorizedException('invalid-token')
-  }
+  return jwt.verify(token)
 }
 
 const MODES = {
