@@ -1,0 +1,37 @@
+version: "3"
+services:
+  database:
+    image: postgres:10.1
+    restart: always
+    environment:
+      POSTGRES_DB: servirme
+      POSTGRES_USER: database-user
+      POSTGRES_PASSWORD: database-password
+    expose:
+      - 5432
+#    ports:
+#      - "5432:5432"
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /code
+    env_file:
+      - .env
+    volumes:
+      - ./:/code
+      - /code/node_modules
+    expose:
+      - 3000
+#    ports:
+#     - "3000:3000"
+    command: "npm start"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/status"]
+      interval: 10s
+      retries: 5
+    links:
+      - database
+    depends_on:
+      - database

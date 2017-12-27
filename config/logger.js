@@ -2,21 +2,22 @@ const log4js = require('log4js')
 
 const { NODE_ENV } = process.env
 
+const isProduction = NODE_ENV === 'production'
 const logLevels = {
   production: 'ALL',
-  test: 'ERROR',
-  dev: 'ERROR',
+  test: 'WARN',
+  development: 'WARN',
 }
-const logType = NODE_ENV === 'production' ? 'file' : 'stdout'
+const logType = isProduction ? 'file' : 'stdout'
 
 const log4jsConfig = {
-  pm2: NODE_ENV === 'prod',
+  pm2: isProduction,
   appenders: {
-    api: {
+    apiFile: {
       type: logType,
       filename: 'logs/api.log',
     },
-    database: {
+    databaseFile: {
       type: logType,
       filename: 'logs/database.log',
     },
@@ -26,12 +27,12 @@ const log4jsConfig = {
   },
   categories: {
     api: {
-      appenders: ['api'],
-      level: logLevels[NODE_ENV] || 'ALL',
+      appenders: ['apiFile'],
+      level: logLevels[NODE_ENV],
     },
     database: {
-      appenders: ['database'],
-      level: logLevels[NODE_ENV] || 'ALL',
+      appenders: ['databaseFile'],
+      level: logLevels[NODE_ENV],
     },
     default: {
       appenders: ['console'],

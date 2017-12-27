@@ -20,5 +20,8 @@
     "invalid": {
         "oi": "invalid.oi"
     },
-    "url-not-found": "url-not-found"
+    "url-not-found": "url-not-found",
+    "status": {
+        "ok": "status.ok"
+    }
 }
