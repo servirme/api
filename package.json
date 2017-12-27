@@ -25,28 +25,26 @@
     "compression": "^1.7.1",
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
-    "eslint": "^4.11.0",
     "express": "^4.15.4",
     "i18n": "^0.8.3",
     "joi": "^10.6.0",
     "log4js": "^2.4.1",
-    "mysql2": "^1.5.0",
+    "pg": "^7.4.0",
     "ramda": "^0.25.0",
     "sequelize": "^4.22.7",
-    "sequelize-cli": "^3.0.0",
-    "supertest": "^3.0.0",
     "uuid": "^3.1.0"
   },
   "devDependencies": {
     "codecov": "^2.3.0",
     "cross-env": "^5.1.1",
+    "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^11.3.2",
     "eslint-config-matheusvellone-base": "^1.0.8",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jest": "^21.3.2",
     "jest": "^21.2.1",
-    "js-yaml": "^3.10.0",
     "nodemon": "^1.12.5",
-    "sqlite3": "^3.1.8"
+    "sequelize-cli": "^3.0.0",
+    "supertest": "^3.0.0"
   }
 }

@@ -15,16 +15,12 @@ const {
 const registerRoutes = require('./routes/index')
 require('../config/logger')
 
-const { API_PORT } = process.env
-if (!API_PORT) {
-  throw new Error('API_PORT not defined')
-}
-
 const logger = log4js.getLogger('api')
 const app = express()
+const PORT = 3000
 
 app.disable('x-powered-by')
-app.set('port', API_PORT)
+app.set('port', PORT)
 
 app.use(cors())
 app.use(json())
@@ -46,8 +42,8 @@ app.use(errorHandler)
 
 const server = http.createServer(app)
 
-server.listen(API_PORT, () => {
-  logger.info(`Server is running in port ${API_PORT}`)
+server.listen(PORT, () => {
+  logger.info(`Server is running in port ${PORT}`)
 })
 
 module.exports = server

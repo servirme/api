@@ -1,5 +1,6 @@
 const InternalException = require('../../Exceptions/InternalException')
 const initializeSequelize = require('./sequelize')
+const { DATABASE } = require('../../../config/constants')
 
 const connections = {}
 
@@ -10,14 +11,14 @@ const TYPE = {
 
 const getDatabaseName = (type, clientId) => {
   if (type === TYPE.MASTER) {
-    return 'servirme'
+    return DATABASE.MASTER
   }
 
   if (!clientId) {
     throw new InternalException(`Database type '${type}' without ${clientId}`)
   }
 
-  return `estabilishment_${clientId}`
+  return DATABASE.CLIENT_PREFIX + clientId
 }
 
 const getConnection = (type, clientId) => {

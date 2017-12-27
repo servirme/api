@@ -1,20 +1,36 @@
-language: node_js
-node_js:
-  - "6.11.0"
+language: generic
+
+sudo: required
+
+services:
+  - docker
+
 notifications:
   slack: servirme:PL18rvrpG8M0tB8dTVhxAODI
+
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - ./scripts/ci-env-to-docker
+
 script:
-    - npm run lint
-    - npm run test
+  - make lint
+  - make test
+
 after_script:
-    - npm run send-coverage-data
+  - make send-coverage-data
+
 #deploy:
-#    provider: script
-#    script: npm run deploy-prod
-#    on:
-#        branch: master
+#  provider: script
+#  script: npm run deploy-prod
+#  on:
+#    branch: master
+
 env:
   global:
+    - DOCKER_COMPOSE_VERSION=1.17.0
     - NODE_ENV=test
     - OFFLINE=true
     - LOGGING=false
