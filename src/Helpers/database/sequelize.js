@@ -14,16 +14,13 @@ const {
 
 const {
   NODE_ENV,
-  OFFLINE,
   DATABASE_HOST,
   DATABASE_USERNAME,
   DATABASE_PASSWORD,
 } = process.env
 const logger = log4js.getLogger('database')
 
-const offline = OFFLINE === 'true'
 const logging = (NODE_ENV === 'production' || process.env.LOGGING === 'true') && logger.debug.bind(logger)
-const host = offline ? 'local.db' : DATABASE_HOST
 
 const ENTITIES_DIRECTORY = join(__dirname, '..', '..', 'Entities')
 
@@ -45,8 +42,8 @@ const runAssociate = pipe(
 )
 const getSequelizeConfig = database => ({
   database,
-  host,
-  dialect: offline ? 'sqlite' : 'mysql',
+  host: DATABASE_HOST,
+  dialect: 'postgres',
   logging,
   operatorsAliases: Sequelize.Op,
   username: DATABASE_USERNAME,
@@ -60,17 +57,11 @@ const getSequelizeConfig = database => ({
 })
 
 const mountEntity = (sequelizeInstance, { name, fields, config = {} }) => {
-  const schema = sequelizeInstance.define(
+  return sequelizeInstance.define(
     name,
     fields,
     config
   )
-
-  if (offline) {
-    schema.sync()
-  }
-
-  return schema
 }
 
 module.exports = (database) => {
