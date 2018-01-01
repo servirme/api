@@ -1,6 +1,11 @@
 {
-  "verbose": false,
+  "verbose": true,
+  "ignore": [
+    "*.log"
+  ],
   "watch": [
-    "*.*"
-  ]
+    "*",
+    ".env"
+  ],
+  "ext": "js json"
 }

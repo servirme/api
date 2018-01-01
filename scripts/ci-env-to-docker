@@ -1,0 +1,14 @@
+#!/bin/bash
+
+dotEnvContent=
+variables=(
+  "CODECOV_TOKEN"
+)
+
+> .env
+
+for variable in "${variables[@]}"
+do
+  varContent=$(printenv $variable)
+  echo $dotEnvContent$variable=$varContent >> .env
+done

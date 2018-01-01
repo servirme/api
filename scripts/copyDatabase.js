@@ -1,3 +1,5 @@
+// TODO - agora o banco está em postgres, tem q ver se ainda funciona
+// https://stackoverflow.com/questions/18216462/how-to-duplicate-schemas-in-postgresql
 // TODO - tem que testar isso certinho e ver se várias execuções em paralelo não caga
 
 require('dotenv').config()
