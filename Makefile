@@ -1,6 +1,6 @@
 default: setupdb api
 
-api: database
+api: setupdb
 	@docker-compose up -d api
 	@sleep 3
 
@@ -10,7 +10,7 @@ database:
 	@docker-compose up -d database
 	@sleep 3
 
-migrate: api database
+migrate: database
 	@docker-compose run api scripts/database/migrate
 
 seed: migrate
