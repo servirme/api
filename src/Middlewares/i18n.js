@@ -1,8 +1,7 @@
 const { lensPath, view, set } = require('ramda')
-const I18n = require('../Services/I18n')
+const I18n = require('../Helpers/I18n')
 
 const i18n = I18n.getInstance()
-const defaultLanguage = I18n.validLocales[0]
 
 const translateBody = (translate, body, language) => {
   i18n.setLocale(language)
@@ -22,15 +21,16 @@ const translateBody = (translate, body, language) => {
   }, body)
 }
 
-module.exports = (req, res, next) => {
-  const language = req.headers['Accept-Language'] || defaultLanguage
+const getRequestLanguage = (req) => {
+  const language = req.headers['Accept-Language']
 
-  if (I18n.validLocales.includes(language)) {
-    req.language = language
-  } else {
-    req.language = defaultLanguage
+  if (language && I18n.validLocales.includes(language)) {
+    return language
   }
+  return I18n.validLocales[0]
+}
 
+module.exports = (req, res, next) => {
   const toTranslate = ['message']
   res.translate = (key) => {
     toTranslate.push(key)
@@ -39,8 +39,11 @@ module.exports = (req, res, next) => {
 
   const send = res.send
   res.send = (responseBody) => {
+    const language = getRequestLanguage(req)
+
     const translatedBody = translateBody(toTranslate, responseBody, language)
 
+    res.set('Content-Language', language)
     res.send = send
     return res.send(translatedBody)
   }

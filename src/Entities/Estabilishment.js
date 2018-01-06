@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 
 module.exports.name = 'estabilishment'
-module.exports.type = 'admin'
+module.exports.type = 'master'
 
 module.exports.fields = {
   id: {
@@ -27,9 +27,3 @@ module.exports.config = {
   deletedAt: 'deleted_at',
   paranoid: true,
 }
-
-// module.exports.associate = (entity, entities) => {
-//   const { user } = entities
-//
-//   entity.belongsTo(user)
-// }

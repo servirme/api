@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const InternalException = require('../Exceptions/InternalException')
 const ValidationException = require('../Exceptions/ValidationException')
 
 class Validator {
@@ -13,7 +14,7 @@ class Validator {
   validate(alias, targetToValidate) {
     const schema = this._validators[alias]
     if (!schema) {
-      return targetToValidate
+      throw new InternalException(`No validate alias defined for '${alias}'`)
     }
 
     const { error, value } = schema.validate(targetToValidate, {

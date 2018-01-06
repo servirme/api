@@ -1,16 +1,21 @@
 const Joi = require('joi')
 const Validator = require('./Validator')
-const { Estabilishment } = require('./EstabilishmentValidator')
-// const { User } = require('./UserValidator')
 
 class AuthValidator extends Validator {
   constructor() {
     super()
 
-    this.addValidator('create', {
+    this.addValidator('signIn', {
       body: Joi.object({
-        estabilishment: Estabilishment(true).required(),
-        // user: User(true).required(),
+        email: Joi.string().email().required(),
+        password: Joi.string().required(),
+      }),
+    })
+
+    this.addValidator('signUp', {
+      body: Joi.object({
+        email: Joi.string().email().required(),
+        password: Joi.string().required(),
       }),
     })
   }

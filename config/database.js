@@ -1,3 +1,4 @@
+require('dotenv').config()
 const { DATABASE } = require('./constants')
 
 const {
@@ -8,17 +9,17 @@ const {
 
 module.exports = {
   development: {
-    username: 'database-user',
-    password: 'database-password',
+    username: DATABASE_USERNAME,
+    password: DATABASE_PASSWORD,
     database: DATABASE.MASTER,
-    host: 'database',
+    host: DATABASE_HOST,
     dialect: 'postgres',
   },
   test: {
-    username: 'database-user',
-    password: 'database-password',
+    username: DATABASE_USERNAME,
+    password: DATABASE_PASSWORD,
     database: DATABASE.MASTER,
-    host: 'database',
+    host: DATABASE_HOST,
     dialect: 'postgres',
   },
   production: {

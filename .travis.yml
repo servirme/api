@@ -1,26 +1,38 @@
-language: generic
+language: node_js
+node_js:
+  - 8
+cache:
+  - node_modules
 
 sudo: required
 
 services:
-  - docker
+  - postgresql
+addons:
+  postgresql: "9.6"
 
 notifications:
   slack: servirme:PL18rvrpG8M0tB8dTVhxAODI
 
 before_install:
-  - sudo rm /usr/local/bin/docker-compose
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
-  - ./scripts/ci-env-to-docker
+  - cp .env.test .env
+#  - sudo rm /usr/local/bin/docker-compose
+#  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+#  - chmod +x docker-compose
+#  - sudo mv docker-compose /usr/local/bin
+#  - ./scripts/ci-env-to-docker
+
+before_script:
+  - psql -c 'create database servirme;' -U postgres
+  - npm run migrate
+  - npm run seed
 
 script:
-  - make lint
-  - make test
+  - npm run lint
+  - npm run test
 
 after_script:
-  - make send-coverage-data
+  - npm run send-coverage-data
 
 #deploy:
 #  provider: script
@@ -29,9 +41,8 @@ after_script:
 #    branch: master
 
 env:
-  global:
-    - DOCKER_COMPOSE_VERSION=1.17.0
-    - NODE_ENV=test
-    - OFFLINE=true
-    - LOGGING=false
-    - API_PORT=3000
+  # All variables added here that needs to be available in the application
+  # level need to be whitelisted in 'scripts/ci-env-to-docker' so we can
+  # insert them into docker
+#  global:
+#    - DOCKER_COMPOSE_VERSION=1.17.0

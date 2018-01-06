@@ -1,8 +1,4 @@
 const request = require('supertest')
-const server = require('../src/server')
+const app = require('../src/app')
 
-afterAll(() => {
-  server.close()
-})
-
-module.exports = request(server)
+module.exports = request(app)
