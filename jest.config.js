@@ -1,5 +1,7 @@
 module.exports = {
   verbose: true,
+  globalSetup: './__tests__/setup.js',
+  globalTeardown: './__tests__/teardown.js',
   collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.js',
@@ -8,6 +10,8 @@ module.exports = {
   testPathIgnorePatterns: [
     '/node_modules/',
     'testServer.js',
+    'setup.js',
+    'teardown.js',
   ],
   coverageDirectory: 'coverage',
 }

@@ -2,7 +2,6 @@ npm-debug.log
 coverage
 node_modules/
 .env
-.serverless
 .vscode
 .idea
 local.db

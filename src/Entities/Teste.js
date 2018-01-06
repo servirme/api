@@ -16,9 +16,3 @@ module.exports.config = {
   timestamps: false,
   tableName: 'teste',
 }
-
-// module.exports.associate = (entity, entities) => {
-//   const { user } = entities
-//
-//   entity.belongsTo(user)
-// }

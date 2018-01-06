@@ -19,11 +19,9 @@ module.exports.extractResponseBody = (chunk, headers) => {
   return chunk
 }
 
-module.exports.wrapControllerAction = (controller, action) => {
-  const actionBinded = action.bind(controller)
-
+module.exports.wrapAction = (action) => {
   return (req, res, next) => {
-    BbPromise.resolve(actionBinded(req))
+    BbPromise.resolve(action(req))
       .then((response = {}) => {
         const {
           statusCode = 200,
