@@ -5,7 +5,7 @@ describe('Auth routes', () => {
 
   test('Should successfully sign up', () => {
     return testServer
-      .post('/auth/sign-up')
+      .post('/auth/register')
       .send({
         email,
         password: '123456',
@@ -15,7 +15,7 @@ describe('Auth routes', () => {
 
   test('Should successfully sign in', () => {
     return testServer
-      .post('/auth/sign-in')
+      .post('/auth/login')
       .send({
         email,
         password: '123456',
@@ -26,7 +26,7 @@ describe('Auth routes', () => {
   describe('Trying to register an existing email', () => {
     test('Should successfully sign up', () => {
       return testServer
-        .post('/auth/sign-up')
+        .post('/auth/register')
         .send({
           email,
           password: '123456',
@@ -37,7 +37,7 @@ describe('Auth routes', () => {
 
   test('Should not successfully sign up', () => {
     return testServer
-      .post('/auth/sign-up')
+      .post('/auth/register')
       .send({
         email: 'not_email',
         password: '123456',
@@ -48,7 +48,7 @@ describe('Auth routes', () => {
   describe('Should not successfully sign in', () => {
     test('Due to not found email', () => {
       return testServer
-        .post('/auth/sign-in')
+        .post('/auth/login')
         .send({
           email: 'another.email@example.com',
           password: '123456',
@@ -58,7 +58,7 @@ describe('Auth routes', () => {
 
     test('Due to wrong password', () => {
       return testServer
-        .post('/auth/sign-in')
+        .post('/auth/login')
         .send({
           email,
           password: '1234567',
