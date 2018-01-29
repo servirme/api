@@ -6,7 +6,8 @@
     "http-500": "http-500",
     "validation": {
         "any": {
-            "required": "validation.any.required"
+            "required": "validation.any.required",
+            "empty": "validation.any.empty"
         },
         "string": {
             "email": "validation.string.email"
@@ -18,8 +19,8 @@
         "show": "estabilishment.show"
     },
     "invalid": {
-        "oi": "invalid.oi",
-        "password": "invalid.password"
+        "password": "invalid.password",
+        "body": "invalid.body"
     },
     "url-not-found": "url-not-found",
     "status": {

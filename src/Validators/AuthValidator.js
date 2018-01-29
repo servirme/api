@@ -5,14 +5,14 @@ class AuthValidator extends Validator {
   constructor() {
     super()
 
-    this.addValidator('signIn', {
+    this.addValidator('login', {
       body: Joi.object({
         email: Joi.string().email().required(),
         password: Joi.string().required(),
       }),
     })
 
-    this.addValidator('signUp', {
+    this.addValidator('register', {
       body: Joi.object({
         email: Joi.string().email().required(),
         password: Joi.string().required(),
