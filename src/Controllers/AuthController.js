@@ -3,8 +3,8 @@ const AuthValidator = require('../Validators/AuthValidator')
 
 const validator = new AuthValidator()
 
-module.exports.signIn = (req) => {
-  const validatedReq = validator.validate('signIn', req)
+module.exports.login = (req) => {
+  const validatedReq = validator.validate('login', req)
 
   const { body } = validatedReq
 
@@ -18,8 +18,8 @@ module.exports.signIn = (req) => {
     }))
 }
 
-module.exports.signUp = (req) => {
-  const validatedReq = validator.validate('signUp', req)
+module.exports.register = (req) => {
+  const validatedReq = validator.validate('register', req)
 
   const { body } = validatedReq
 

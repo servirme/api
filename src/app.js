@@ -17,13 +17,13 @@ const app = express()
 
 app.disable('x-powered-by')
 
+app.use(i18nMiddleware)
 app.use(cors())
 app.use(json())
 app.use(compression())
 
 app.use(requestMetadata)
 app.use(apiLogger)
-app.use(i18nMiddleware)
 
 registerRoutes(app)
 

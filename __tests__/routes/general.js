@@ -12,4 +12,15 @@ describe('General routes', () => {
       .get('/random/123')
       .expect(404)
   })
+
+  test('Should receive error 400 with invalid body error', () => {
+    return testServer
+      .post('/auth/register')
+      .type('json')
+      .send('{ "email": "matheusvellone@hotmail.com" ')
+      .expect(400, {
+        code: 1301,
+        message: 'invalid.body',
+      })
+  })
 })
