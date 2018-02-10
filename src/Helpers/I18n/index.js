@@ -6,7 +6,7 @@ const validLocales = [
   'en-US',
 ]
 
-const i18nConfig = {
+const i18nBaseConfig = {
   locales: validLocales,
   objectNotation: true,
   syncFiles: true,
@@ -23,29 +23,31 @@ const normalizeTranslateInput = (key, data = {}) => {
     data,
   }
 }
-let instance = false
+const instances = {}
 
 class I18n {
-  static getInstance() {
-    if (!instance) {
-      instance = new I18n()
-      i18nConfig.register = instance.i18nInstance
+  static getInstance(language) {
+    if (!instances[language]) {
+      const instance = new I18n()
+
+      const i18nConfig = Object.assign(i18nBaseConfig, {
+        register: instance._i18n,
+      })
       i18n.configure(i18nConfig)
+      instance._i18n.setLocale(language)
+
+      instances[language] = instance
     }
-    return instance
+    return instances[language]
   }
 
   constructor() {
-    this.i18nInstance = {}
+    this._i18n = {}
   }
 
   translate(...params) {
     const { key, data } = normalizeTranslateInput(...params)
-    return this.i18nInstance.__(key, data)
-  }
-
-  setLocale(language) {
-    return this.i18nInstance.setLocale(language)
+    return this._i18n.__(key, data)
   }
 }
 

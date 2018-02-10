@@ -1,9 +1,14 @@
 const Exception = require('../Exceptions/Exception')
 const InternalException = require('../Exceptions/InternalException')
+const InvalidException = require('../Exceptions/InvalidException')
 
 const normalizeError = (err) => {
   if (err instanceof Exception) {
     return err
+  }
+
+  if (err.type === 'entity.parse.failed') {
+    return new InvalidException('body')
   }
 
   return new InternalException(err)
