@@ -2,6 +2,7 @@ language: node_js
 node_js:
   - 8
 cache:
+  directories:
   - node_modules
 
 sudo: required
@@ -14,13 +15,14 @@ addons:
 notifications:
   slack: servirme:PL18rvrpG8M0tB8dTVhxAODI
 
-before_install:
-  - cp .env.test .env
+#before_install:
 #  - sudo rm /usr/local/bin/docker-compose
 #  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
 #  - chmod +x docker-compose
 #  - sudo mv docker-compose /usr/local/bin
 #  - ./scripts/ci-env-to-docker
+before_install:
+  - npm set progress=false
 
 before_script:
   - psql -c 'create database servirme;' -U postgres
@@ -29,7 +31,7 @@ before_script:
 
 script:
   - npm run lint
-  - npm run test
+  - npm run test-ci
 
 after_script:
   - npm run send-coverage-data
@@ -44,5 +46,6 @@ env:
   # All variables added here that needs to be available in the application
   # level need to be whitelisted in 'scripts/ci-env-to-docker' so we can
   # insert them into docker
-#  global:
+  global:
+    - NODE_ENV=test
 #    - DOCKER_COMPOSE_VERSION=1.17.0

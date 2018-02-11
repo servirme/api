@@ -2,7 +2,7 @@
 // https://stackoverflow.com/questions/18216462/how-to-duplicate-schemas-in-postgresql
 // TODO - tem que testar isso certinho e ver se várias execuções em paralelo não caga
 
-require('dotenv').config()
+require('../dotenv').config()
 const util = require('util')
 const { exec } = require('child_process')
 const log4js = require('log4js')
