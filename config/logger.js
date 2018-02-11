@@ -6,7 +6,7 @@ const isProduction = NODE_ENV === 'production'
 const logLevels = {
   production: 'ALL',
   test: 'WARN',
-  development: 'ALL',
+  development: 'WARN',
 }
 const logType = isProduction ? 'file' : 'stdout'
 
