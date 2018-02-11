@@ -17,8 +17,6 @@ services:
       context: .
       dockerfile: Dockerfile
     working_dir: /code
-    env_file:
-      - .env
     volumes:
       - ./:/code
       - /code/node_modules

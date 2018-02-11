@@ -1,6 +1,7 @@
 NODE_ENV=development
 
-DATABASE_HOST=database
+DATABASE_HOST=localhost
+DATABASE_DATABASE=servirme
 DATABASE_USERNAME=database-user
 DATABASE_PASSWORD=database-password
 
