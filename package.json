@@ -7,7 +7,8 @@
     "start": "nodemon server.js",
     "lint": "eslint .",
     "send-coverage-data": "codecov",
-    "test": "jest --forceExit",
+    "test": "NODE_ENV=development jest --forceExit",
+    "test-ci": "jest --forceExit",
     "migrate": "sequelize db:migrate",
     "seed": "sequelize db:seed"
   },

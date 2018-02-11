@@ -1,4 +1,5 @@
 NODE_ENV=test
+
 LOGGING=true
 
 DATABASE_HOST=localhost
