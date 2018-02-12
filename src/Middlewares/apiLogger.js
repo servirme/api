@@ -1,31 +1,7 @@
 const log4js = require('log4js')
-const { assocPath, isNil, path } = require('ramda')
 const { extractResponseBody } = require('../Helpers/express')
 
 const logger = log4js.getLogger('api')
-
-const requestSensitiveFields = [
-  'password',
-]
-
-const responseSensitiveFields = []
-
-const replaceSensitiveFields = (sensitiveFields, data) => {
-  if (typeof data === 'string') {
-    return data
-  }
-
-  return sensitiveFields.reduce((body, sensitiveField) => {
-    const fieldPath = sensitiveField.split('.')
-    const needToReplace = !isNil(path(fieldPath, body))
-
-    if (needToReplace) {
-      return assocPath(fieldPath, '*', body)
-    }
-
-    return body
-  }, data)
-}
 
 module.exports = (req, res, next) => {
   // Request
@@ -38,7 +14,7 @@ module.exports = (req, res, next) => {
     method: req.method,
     headers: req.headers,
     startTime: req.startTime.toISOString(),
-    body: replaceSensitiveFields(requestSensitiveFields, req.body),
+    body: req.body,
   })
 
   const end = res.end
@@ -55,7 +31,7 @@ module.exports = (req, res, next) => {
     logger.debug({
       requestId: req.requestId,
       type: 'reponse',
-      body: replaceSensitiveFields(responseSensitiveFields, responseBody),
+      body: responseBody,
       header: res._headers,
       statusCode: res.statusCode,
       latency: difference,
