@@ -23,6 +23,10 @@
         "body": "invalid.body"
     },
     "url-not-found": "url-not-found",
+    "plans": {
+      "list": "Listing all plans successfully",
+      "show": "Listing plan details successfully"
+    },
     "status": {
         "ok": "status.ok"
     },
@@ -35,6 +39,9 @@
     },
     "conflict": {
         "user": "conflict.user"
+    },
+    "unauthorized": {
+        "empty-token": "unauthorized.empty-token"
     },
     "expired": {
         "jwt": "expired.jwt"

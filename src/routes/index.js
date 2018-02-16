@@ -3,6 +3,7 @@ const { wrapAction } = require('../Helpers/express')
 
 const estabilishmentRouter = require('./estabilishment')
 const authRouter = require('./auth')
+const planRouter = require('./plan')
 const testeRouter = require('./teste')
 
 // https://stackoverflow.com/questions/44327291/express-js-wrap-every-middleware-route-in-decorator
@@ -21,4 +22,5 @@ module.exports = (app) => {
   app.use('/estabilishment', estabilishmentRouter)
   app.use('/auth', authRouter)
   app.use('/teste', testeRouter)
+  app.use('/plans', planRouter)
 }
