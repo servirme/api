@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 
-module.exports.name = 'plan'
+module.exports.name = 'cookeries'
 module.exports.type = 'master'
 
 module.exports.fields = {
@@ -9,9 +9,10 @@ module.exports.fields = {
     autoIncrement: true,
     type: Sequelize.INTEGER,
   },
-  name: Sequelize.STRING,
-  description: Sequelize.TEXT,
-  price: Sequelize.DECIMAL(10, 2),
+  name: {
+    type: Sequelize.STRING,
+    unique: true,
+  },
   active: {
     defaultValue: true,
     type: Sequelize.TINYINT,

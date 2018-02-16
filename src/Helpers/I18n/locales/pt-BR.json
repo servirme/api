@@ -40,6 +40,14 @@
     "list": "Listando todos os planos com sucesso",
     "show": "Listando detalhes do plano com sucesso"
   },
+  "categories": {
+    "list": "Listando todos as categorias com sucesso",
+    "show": "Listando detalhes da categoria com sucesso"
+  },
+  "cookeries": {
+    "list": "Listando todos as culinárias com sucesso",
+    "show": "Listando detalhes da culinária com sucesso"
+  },
   "expired": {
     "jwt": "expired.jwt"
   }
