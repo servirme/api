@@ -1,6 +1,6 @@
 const { applySpec, prop } = require('ramda')
 
-module.exports.input = applySpec({
+module.exports.jwt = applySpec({
   email: prop('email'),
-  password: prop('password'),
+  active: prop('active'),
 })

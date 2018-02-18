@@ -1,8 +1,9 @@
+const BbPromise = require('bluebird')
+
 const NotFoundException = require('../Exceptions/NotFoundException')
-const ConflictException = require('../Exceptions/ConflictException')
-const InvalidException = require('../Exceptions/InvalidException')
 const userRepository = require('../Repositories/UserRepository')
-const { checkHashPassword, hashPassword } = require('../Helpers/security')
+const { hashPassword } = require('../Helpers/security')
+const { checkConflict } = require('../Helpers/model')
 
 const checkUserExists = (user) => {
   if (!user) {
@@ -10,35 +11,18 @@ const checkUserExists = (user) => {
   }
 }
 
-const checkPassword = (plainTextPassword) => {
-  return (user) => {
-    return checkHashPassword(plainTextPassword, user.password)
-      .then((valid) => {
-        if (!valid) {
-          throw new InvalidException('password')
-        }
-      })
-  }
-}
-
 module.exports.createUser = ({ email, password }) => {
-  return hashPassword(password)
+  return BbPromise.resolve(password)
+    .then(hashPassword)
     .then((hashedPassword) => {
       return userRepository.createUser({
         email,
         password: hashedPassword,
       })
     })
-    .catch((err) => {
-      if (err.name === 'SequelizeUniqueConstraintError') {
-        throw new ConflictException('user')
-      }
-      throw err
-    })
+    .catch(checkConflict('user'))
 }
 
-module.exports.authenticateUser = ({ email, password }) => {
-  return userRepository.getOne(email)
+module.exports.getByEmail = email =>
+  userRepository.getByEmail(email)
     .tap(checkUserExists)
-    .tap(checkPassword(password))
-}

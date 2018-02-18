@@ -1,13 +1,13 @@
 const { DATABASE } = require('../config/constants')
 
-const tableName = 'users'
+const table = {
+  schema: DATABASE.MASTER,
+  tableName: 'users',
+}
 
 module.exports = {
   up(queryInterface, Sequelize) {
-    return queryInterface.createTable({
-      schema: DATABASE.MASTER,
-      tableName,
-    }, {
+    return queryInterface.createTable(table, {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -32,11 +32,12 @@ module.exports = {
       updated_at: Sequelize.DATE,
       deleted_at: Sequelize.DATE,
     })
+      .then(() =>
+        queryInterface.addIndex(table, {
+          fields: ['email'],
+        }))
   },
   down(queryInterface) {
-    return queryInterface.dropTable({
-      schema: DATABASE.MASTER,
-      tableName,
-    })
+    return queryInterface.dropTable(table)
   },
 }
