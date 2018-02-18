@@ -8,7 +8,7 @@ module.exports.createUser = ({ email, password }) => {
     })
 }
 
-module.exports.getOne = (email) => {
+module.exports.getByEmail = (email) => {
   return database.master.user
     .findOne({
       where: {

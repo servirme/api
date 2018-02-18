@@ -21,11 +21,4 @@ module.exports = (app) => {
   app.use('/estabilishment', estabilishmentRouter)
   app.use('/auth', authRouter)
   app.use('/teste', testeRouter)
-
-  app.get('/status', () => {
-    return {
-      statusCode: 200,
-      body: { message: 'status.ok' },
-    }
-  })
 }

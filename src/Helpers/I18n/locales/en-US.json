@@ -35,5 +35,8 @@
     },
     "conflict": {
         "user": "conflict.user"
+    },
+    "expired": {
+        "jwt": "expired.jwt"
     }
 }

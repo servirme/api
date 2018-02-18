@@ -9,11 +9,11 @@ module.exports.login = (req) => {
   const { body } = validatedReq
 
   return authModel.signIn(body)
-    .then(user => ({
+    .then(token => ({
       statusCode: 200,
       body: {
         message: 'signed.in',
-        result: user,
+        token,
       },
     }))
 }
@@ -24,11 +24,11 @@ module.exports.register = (req) => {
   const { body } = validatedReq
 
   return authModel.signUp(body)
-    .then(user => ({
+    .then(token => ({
       statusCode: 201,
       body: {
         message: 'signed.up',
-        result: user,
+        token,
       },
     }))
 }
