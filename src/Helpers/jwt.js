@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+
 const ExpiredException = require('../Exceptions/ExpiredException')
 const InvalidException = require('../Exceptions/InvalidException')
 

@@ -15,6 +15,7 @@ const {
   DATABASE_USERNAME,
   DATABASE_PASSWORD,
   DATABASE_DATABASE,
+  DATABASE_DIALECT,
   LOGGING,
 } = process.env
 const logger = log4js.getLogger('database')
@@ -40,7 +41,7 @@ const entitiesIndexed = entitiesFiles.reduce((entities, entity) => {
 const sequelizeConfig = {
   database: DATABASE_DATABASE,
   host: DATABASE_HOST,
-  dialect: 'postgres',
+  dialect: DATABASE_DIALECT,
   logging,
   operatorsAliases: Sequelize.Op,
   username: DATABASE_USERNAME,
@@ -83,6 +84,10 @@ const runAssociate = () => {
 }
 
 runAssociate(entitiesFiles)
+
+if (DATABASE_DIALECT === 'sqlite') {
+  sequelize.sync()
+}
 
 module.exports.database = database
 module.exports.getClientDatabase = estabilishmentId =>

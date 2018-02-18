@@ -1,13 +1,13 @@
 const { DATABASE } = require('../config/constants')
 
-const tableName = 'categories'
+const table = {
+  schema: DATABASE.MASTER,
+  tableName: 'categories',
+}
 
 module.exports = {
   up(queryInterface, Sequelize) {
-    return queryInterface.createTable({
-      tableName,
-      schema: DATABASE.MASTER,
-    }, {
+    return queryInterface.createTable(table, {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -24,6 +24,6 @@ module.exports = {
     })
   },
   down(queryInterface) {
-    return queryInterface.dropTable(tableName)
+    return queryInterface.dropTable(table)
   },
 }
