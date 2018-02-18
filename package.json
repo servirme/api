@@ -37,6 +37,7 @@
     "pg": "^7.4.1",
     "ramda": "^0.25.0",
     "sequelize": "^4.32.6",
+    "sqlite3": "^3.1.13",
     "uuid": "^3.2.1"
   },
   "devDependencies": {
