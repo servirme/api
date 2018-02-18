@@ -22,6 +22,15 @@ app.use(json())
 app.use(compression())
 
 app.use(requestMetadata)
+
+app.get('/status', () => ({
+  statusCode: 200,
+  body: {
+    timestamp: new Date().toISOString(),
+    message: 'status.ok',
+  },
+}))
+
 app.use(apiLogger)
 
 registerRoutes(app)
