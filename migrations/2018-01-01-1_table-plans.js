@@ -17,14 +17,20 @@ module.exports = {
         type: Sequelize.STRING(30),
         allowNull: false,
       },
+      description: {
+        type: Sequelize.TEXT,
+      },
       price: {
-        type: Sequelize.FLOAT,
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
       active: {
         type: Sequelize.BOOLEAN,
         defaultValue: true,
       },
+      created_at: Sequelize.DATE,
+      updated_at: Sequelize.DATE,
+      deleted_at: Sequelize.DATE,
     })
   },
   down(queryInterface) {
