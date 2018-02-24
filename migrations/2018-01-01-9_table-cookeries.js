@@ -2,7 +2,7 @@ const { DATABASE } = require('../config/constants')
 
 const table = {
   schema: DATABASE.MASTER,
-  tableName: 'categories',
+  tableName: 'cookeries',
 }
 
 module.exports = {
