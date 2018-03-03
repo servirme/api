@@ -9,6 +9,7 @@ module.exports = {
   errorHandler,
   apiLogger,
   requestMetadata,
+  anyAuth: auth.any,
   clientAuth: auth.client,
   adminAuth: auth.admin,
   masterAuth: auth.master,

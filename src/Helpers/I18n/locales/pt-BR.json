@@ -20,7 +20,8 @@
   },
   "invalid": {
     "password": "invalid.password",
-    "body": "invalid.body"
+    "body": "invalid.body",
+    "jwt": "invalid.jwt"
   },
   "url-not-found": "url-not-found",
   "status": {
@@ -50,5 +51,12 @@
   },
   "expired": {
     "jwt": "expired.jwt"
+  },
+  "unauthorized": {
+    "not-authorized": "unauthorized.not-authorized",
+    "empty-token": "unauthorized.empty-token"
+  },
+  "token": {
+    "refresh": "token.refresh"
   }
 }
