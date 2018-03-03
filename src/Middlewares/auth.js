@@ -26,7 +26,7 @@ const getMiddleware = (mode) => {
     const decoded = decode(token)
     const { type } = decoded
 
-    if (type !== mode) {
+    if (mode && type !== mode) {
       throw new NotAuthorizedException('not-authorized')
     }
 
@@ -39,3 +39,4 @@ const getMiddleware = (mode) => {
 module.exports.client = getMiddleware(MODES.CLIENT)
 module.exports.admin = getMiddleware(MODES.ADMIN)
 module.exports.master = getMiddleware(MODES.MASTER)
+module.exports.any = getMiddleware()

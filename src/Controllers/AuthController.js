@@ -1,3 +1,6 @@
+const { dissoc, pipe } = require('ramda')
+const BbPromise = require('bluebird')
+
 const authModel = require('../Models/AuthModel')
 const AuthValidator = require('../Validators/AuthValidator')
 
@@ -28,6 +31,26 @@ module.exports.register = (req) => {
       statusCode: 201,
       body: {
         message: 'signed.up',
+        token,
+      },
+    }))
+}
+
+const removeJwtFields = pipe(
+  dissoc('exp'),
+  dissoc('iat'),
+  dissoc('iss')
+)
+
+module.exports.refreshToken = (req) => {
+  const decoded = removeJwtFields(req.auth)
+
+  return BbPromise.resolve(decoded)
+    .then(authModel.sign)
+    .then(token => ({
+      statusCode: 200,
+      body: {
+        message: 'token.refresh',
         token,
       },
     }))
