@@ -2,6 +2,7 @@ const testServer = require('../testServer')
 
 describe('Auth routes', () => {
   const email = `email${Math.random()}@servir.me`
+  let token
 
   test('Should successfully sign up', () => {
     return testServer
@@ -21,18 +22,29 @@ describe('Auth routes', () => {
         password: '123456',
       })
       .expect(200)
+      .then(({ body }) => {
+        token = body.token
+      })
   })
 
-  describe('Trying to register an existing email', () => {
-    test('Should successfully sign up', () => {
-      return testServer
-        .post('/auth/register')
-        .send({
-          email,
-          password: '123456',
-        })
-        .expect(409)
-    })
+  test('Should successfully refresh token', () => {
+    return testServer
+      .get('/auth/refresh')
+      .set('token', token)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.token).toEqual(token)
+      })
+  })
+
+  test('Should when trying to register an existing email', () => {
+    return testServer
+      .post('/auth/register')
+      .send({
+        email,
+        password: '123456',
+      })
+      .expect(409)
   })
 
   test('Should not successfully sign up', () => {

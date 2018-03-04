@@ -4,13 +4,14 @@ const ExpiredException = require('../Exceptions/ExpiredException')
 const InvalidException = require('../Exceptions/InvalidException')
 
 const { JWT_SECRET } = process.env
+const issuer = 'servir.me'
 const jwtSignOptions = {
   expiresIn: '1d',
-  issuer: 'servir.me',
+  issuer,
 }
 
 const jwtVerifyOptions = {
-  issuer: 'servir.me',
+  issuer,
 }
 
 module.exports.sign = (payload) => {

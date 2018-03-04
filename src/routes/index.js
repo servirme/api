@@ -11,7 +11,7 @@ const cookeryRouter = require('./cookery')
 // https://stackoverflow.com/questions/44327291/express-js-wrap-every-middleware-route-in-decorator
 const handleRequest = Layer.prototype.handle_request
 Layer.prototype.handle_request = function routesWrapper(...args) {
-  if (this.method && !this.isWrapped) {
+  if (this.method && !this.isWrapped && this.handle.length <= 1) {
     const action = this.handle
     this.handle = wrapAction(action)
 
