@@ -2,8 +2,8 @@ NODE_ENV=development
 
 DATABASE_HOST=localhost
 DATABASE_DATABASE=servirme
-DATABASE_USERNAME=database-user
-DATABASE_PASSWORD=database-password
+DATABASE_USERNAME=postgres
+DATABASE_PASSWORD=
 DATABASE_DIALECT=postgres
 
 JWT_SECRET=i_would_never_think_about_this_secret
