@@ -10,7 +10,7 @@ const i18nBaseConfig = {
   locales: validLocales,
   objectNotation: true,
   syncFiles: true,
-  indent: '    ',
+  indent: '  ',
   directory: join(__dirname, 'locales'),
 }
 

@@ -31,7 +31,7 @@ before_script:
 
 script:
   - npm run lint
-  - npm run test-ci
+  - npm test
 
 after_script:
   - npm run send-coverage-data
