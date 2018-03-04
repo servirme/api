@@ -27,3 +27,5 @@ module.exports.signIn = ({ email, password }) => {
     .then(userTransform.jwt)
     .then(sign)
 }
+
+module.exports.sign = sign

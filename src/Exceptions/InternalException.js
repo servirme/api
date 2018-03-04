@@ -7,13 +7,21 @@ const logger = log4js.getLogger('api')
 const { NODE_ENV } = process.env
 
 class InternalException extends Exception {
-  constructor(err) {
+  constructor(err, requestId) {
     super(500, internalError, 'http-500')
 
     if (NODE_ENV === 'development') {
       this._body.error = err
+
+      logger.error(err)
+      return
     }
-    logger.error('Internal Error', err)
+
+    logger.error({
+      requestId,
+      message: err.message,
+      stackTrace: err.stack,
+    })
   }
 }
 

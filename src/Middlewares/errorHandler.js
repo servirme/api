@@ -2,7 +2,7 @@ const Exception = require('../Exceptions/Exception')
 const InternalException = require('../Exceptions/InternalException')
 const InvalidException = require('../Exceptions/InvalidException')
 
-const normalizeError = (err) => {
+const normalizeError = (err, requestId) => {
   if (err instanceof Exception) {
     return err
   }
@@ -11,11 +11,11 @@ const normalizeError = (err) => {
     return new InvalidException('body')
   }
 
-  return new InternalException(err)
+  return new InternalException(err, requestId)
 }
 
 module.exports = (err, req, res, next) => {
-  const error = normalizeError(err)
+  const error = normalizeError(err, req.requestId)
 
   error.getTranslateKeys().forEach(res.translate)
 

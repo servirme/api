@@ -5,8 +5,8 @@ services:
     restart: always
     environment:
       POSTGRES_DB: servirme
-      POSTGRES_USER: database-user
-      POSTGRES_PASSWORD: database-password
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD:
     expose:
       - 5432
     ports:
