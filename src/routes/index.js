@@ -1,5 +1,5 @@
 const Layer = require('express/lib/router/layer')
-const { wrapAction } = require('../Helpers/express')
+const { wrapAction } = require('../helpers/express')
 
 const establishmentRouter = require('./establishment')
 const authRouter = require('./auth')
