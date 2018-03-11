@@ -1,0 +1,80 @@
+{
+  "generic-unauthorized": "generic-unauthorized",
+  "empty-token-unauthorized": "empty-token-unauthorized",
+  "not-authorized-unauthorized": "not-authorized-unauthorized",
+  "invalid-token-unauthorized": "invalid-token-unauthorized",
+  "http-500": "http-500",
+  "validation": {
+    "any": {
+      "required": "validation.any.required",
+      "empty": "validation.any.empty"
+    },
+    "string": {
+      "email": "validation.string.email"
+    },
+    "boolean": {
+      "base": "validation.boolean.base"
+    },
+    "object": {
+      "base": "validation.object.base"
+    },
+    "number": {
+      "base": "validation.number.base"
+    }
+  },
+  "validation-error": "Erro de validação",
+  "establishment": {
+    "created": "establishment.created",
+    "show": "establishment.show",
+    "updated": "establishment.updated"
+  },
+  "invalid": {
+    "password": "invalid.password",
+    "body": "invalid.body",
+    "jwt": "invalid.jwt"
+  },
+  "url-not-found": "url-not-found",
+  "status": {
+    "ok": "status.ok"
+  },
+  "signed": {
+    "in": "signed.in",
+    "up": "signed.up"
+  },
+  "not-found": {
+    "user": "not-found.user",
+    "establishment": "not-found.establishment"
+  },
+  "conflict": {
+    "user": "conflict.user"
+  },
+  "plans": {
+    "list": "Listando todos os planos com sucesso",
+    "show": "Listando detalhes do plano com sucesso"
+  },
+  "expired": {
+    "jwt": "expired.jwt"
+  },
+  "unauthorized": {
+    "empty-token": "unauthorized.empty-token",
+    "not-authorized": "unauthorized.not-authorized"
+  },
+  "establishmen": {
+    "created": "establishmen.created",
+    "show": "establishment.show"
+  },
+  "categories": {
+    "list": "Listando todos as categorias com sucesso",
+    "show": "Listando detalhes da categoria com sucesso"
+  },
+  "cookeries": {
+    "list": "Listando todos as culinárias com sucesso",
+    "show": "Listando detalhes da culinária com sucesso"
+  },
+  "token": {
+    "refresh": "token.refresh"
+  },
+  "forbidden": {
+    "jwt": "forbidden.jwt"
+  }
+}
