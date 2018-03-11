@@ -2,7 +2,7 @@ const { DATABASE } = require('../config/constants')
 
 const table = {
   schema: DATABASE.MASTER,
-  tableName: 'estabilishments_categories',
+  tableName: 'establishments_cookeries',
 }
 
 module.exports = {
@@ -13,11 +13,11 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true,
       },
-      category_id: {
+      cookery_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      estabilishment_id: {
+      establishment_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },

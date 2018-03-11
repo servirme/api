@@ -7,9 +7,7 @@ const AuthValidator = require('../Validators/AuthValidator')
 const validator = new AuthValidator()
 
 module.exports.login = (req) => {
-  const validatedReq = validator.validate('login', req)
-
-  const { body } = validatedReq
+  const { body } = validator.validate('login', req)
 
   return authModel.signIn(body)
     .then(token => ({
@@ -22,9 +20,7 @@ module.exports.login = (req) => {
 }
 
 module.exports.register = (req) => {
-  const validatedReq = validator.validate('register', req)
-
-  const { body } = validatedReq
+  const { body } = validator.validate('register', req)
 
   return authModel.signUp(body)
     .then(token => ({
