@@ -1,6 +1,7 @@
 const { path } = require('ramda')
 const jwt = require('../Helpers/jwt')
 const NotAuthorizedException = require('../Exceptions/NotAuthorizedException')
+const ForbiddenException = require('../Exceptions/ForbiddenException')
 
 const HEADER_NAME = 'token'
 
@@ -27,7 +28,7 @@ const getMiddleware = (mode) => {
     const { type } = decoded
 
     if (mode && type !== mode) {
-      throw new NotAuthorizedException('not-authorized')
+      throw new ForbiddenException('jwt')
     }
 
     req.auth = decoded

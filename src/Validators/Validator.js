@@ -1,4 +1,3 @@
-const Joi = require('joi')
 const InternalException = require('../Exceptions/InternalException')
 const ValidationException = require('../Exceptions/ValidationException')
 
@@ -8,7 +7,7 @@ class Validator {
   }
 
   addValidator(alias, validatorRules) {
-    this._validators[alias] = Joi.object(validatorRules)
+    this._validators[alias] = validatorRules
   }
 
   validate(alias, targetToValidate) {
@@ -19,7 +18,7 @@ class Validator {
 
     const { error, value } = schema.validate(targetToValidate, {
       abortEarly: false,
-      stripUnknown: true,
+      stripUnknown: { objects: true },
     })
 
     if (error) {
@@ -39,8 +38,8 @@ class Validator {
   }
 }
 
-Validator.getRule = (rule, required) => {
-  return required ? rule.required() : rule
+Validator.getRule = (rule, isRequired = false) => {
+  return isRequired ? rule.required() : rule
 }
 
 module.exports = Validator

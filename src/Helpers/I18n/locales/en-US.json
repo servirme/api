@@ -14,9 +14,10 @@
     }
   },
   "validation-error": "validation-error",
-  "estabilishment": {
-    "created": "estabilishment.created",
-    "show": "estabilishment.show"
+  "establishment": {
+    "created": "establishment.created",
+    "show": "establishment.show",
+    "updated": "establishment.updated"
   },
   "invalid": {
     "password": "invalid.password",

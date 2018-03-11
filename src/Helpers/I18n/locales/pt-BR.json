@@ -11,12 +11,16 @@
     },
     "string": {
       "email": "validation.string.email"
+    },
+    "boolean": {
+      "base": "validation.boolean.base"
     }
   },
   "validation-error": "Erro de validação",
-  "estabilishment": {
-    "created": "estabilishment.created",
-    "show": "estabilishment.show"
+  "establishment": {
+    "created": "establishment.created",
+    "show": "establishment.show",
+    "updated": "establishment.updated"
   },
   "invalid": {
     "password": "invalid.password",
@@ -32,7 +36,8 @@
     "up": "signed.up"
   },
   "not-found": {
-    "user": "not-found.user"
+    "user": "not-found.user",
+    "establishment": "not-found.establishment"
   },
   "conflict": {
     "user": "conflict.user"
@@ -41,6 +46,17 @@
     "list": "Listando todos os planos com sucesso",
     "show": "Listando detalhes do plano com sucesso"
   },
+  "expired": {
+    "jwt": "expired.jwt"
+  },
+  "unauthorized": {
+    "empty-token": "unauthorized.empty-token",
+    "not-authorized": "unauthorized.not-authorized"
+  },
+  "estabilishment": {
+    "created": "estabilishment.created",
+    "show": "estabilishment.show"
+  },
   "categories": {
     "list": "Listando todos as categorias com sucesso",
     "show": "Listando detalhes da categoria com sucesso"
@@ -48,13 +64,6 @@
   "cookeries": {
     "list": "Listando todos as culinárias com sucesso",
     "show": "Listando detalhes da culinária com sucesso"
-  },
-  "expired": {
-    "jwt": "expired.jwt"
-  },
-  "unauthorized": {
-    "not-authorized": "unauthorized.not-authorized",
-    "empty-token": "unauthorized.empty-token"
   },
   "token": {
     "refresh": "token.refresh"
