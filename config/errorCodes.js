@@ -4,6 +4,7 @@ module.exports = {
   notFound: {
     generic: 1100,
     user: 1101,
+    establishment: 1102,
   },
   conflict: {
     generic: 1200,

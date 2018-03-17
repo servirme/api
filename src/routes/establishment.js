@@ -1,24 +1,14 @@
 const express = require('express')
-const { show, create, update } = require('../Controllers/EstablishmentController')
+const { show, create, update } = require('../controllers/establishment')
 const {
   adminAuth,
-} = require('../Middlewares')
+  masterAuth,
+} = require('../middlewares')
 
 const router = express.Router()
 
-router.get('/:id',
-  adminAuth,
-  show
-)
-
-router.post('/',
-  adminAuth,
-  create
-)
-
-router.put('/:id',
-  adminAuth,
-  update
-)
+router.post('/', masterAuth, create)
+router.put('/:id', adminAuth, update)
+router.get('/:id', adminAuth, show)
 
 module.exports = router

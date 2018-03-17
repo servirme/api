@@ -8,7 +8,7 @@ const {
   errorHandler,
   apiLogger,
   requestMetadata,
-} = require('./Middlewares/index')
+} = require('./middlewares/index')
 const registerRoutes = require('./routes/index')
 require('../config/logger')
 

@@ -5,4 +5,12 @@ module.exports = {
     BASE_CLIENT: 'base_client',
     CLIENT_PREFIX: 'servirme_',
   },
+  AUTH: {
+    HEADER: 'token',
+    LEVELS: {
+      CLIENT: 'client',
+      ADMIN: 'admin',
+      MASTER: 'master',
+    },
+  },
 }
