@@ -58,6 +58,9 @@ module.exports = {
       category_id: {
         type: Sequelize.INTEGER,
       },
+      plan_id: {
+        type: Sequelize.INTEGER,
+      },
       created_at: Sequelize.DATE,
       updated_at: Sequelize.DATE,
       deleted_at: Sequelize.DATE,
