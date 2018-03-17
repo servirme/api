@@ -90,5 +90,5 @@ if (DATABASE_DIALECT === 'sqlite') {
 }
 
 module.exports.database = database
-module.exports.getClientDatabase = estabilishmentId =>
-  DATABASE.CLIENT_PREFIX + estabilishmentId
+module.exports.getClientDatabase = establishmentId =>
+  DATABASE.CLIENT_PREFIX + establishmentId

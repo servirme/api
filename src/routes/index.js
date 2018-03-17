@@ -1,10 +1,9 @@
 const Layer = require('express/lib/router/layer')
 const { wrapAction } = require('../Helpers/express')
 
-const estabilishmentRouter = require('./estabilishment')
+const establishmentRouter = require('./establishment')
 const authRouter = require('./auth')
 const planRouter = require('./plan')
-const testeRouter = require('./teste')
 const categoryRouter = require('./category')
 const cookeryRouter = require('./cookery')
 
@@ -21,9 +20,8 @@ Layer.prototype.handle_request = function routesWrapper(...args) {
 }
 
 module.exports = (app) => {
-  app.use('/estabilishment', estabilishmentRouter)
+  app.use('/establishments', establishmentRouter)
   app.use('/auth', authRouter)
-  app.use('/teste', testeRouter)
   app.use('/plans', planRouter)
   app.use('/categories', categoryRouter)
   app.use('/cookeries', cookeryRouter)

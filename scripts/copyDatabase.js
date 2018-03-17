@@ -25,15 +25,15 @@ process.env.PGPASSWORD = DATABASE_PASSWORD
 
 const pgdumpCommand = `pg_dump --schema='${DATABASE.BASE_CLIENT}' servirme`
 const psqlCommand = 'psql -d servirme'
-const clone = (estabilishmentId) => {
-  const newDatabaseName = `servirme_${estabilishmentId}`
+const clone = (establishmentId) => {
+  const newDatabaseName = `servirme_${establishmentId}`
   const replaceDatabaseName = `sed 's/${DATABASE.BASE_CLIENT}/${newDatabaseName}/g'`
 
   const command = `${pgdumpCommand} | ${replaceDatabaseName} | ${psqlCommand}`
   return execPromise(command)
     .then(({ stderr }) => {
       if (stderr) {
-        logger.error(`Failed to create database for #${estabilishmentId}`, {
+        logger.error(`Failed to create database for #${establishmentId}`, {
           err: stderr,
         })
         throw new Error('Failed to create database')

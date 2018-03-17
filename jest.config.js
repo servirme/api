@@ -12,6 +12,7 @@ module.exports = {
     'testServer.js',
     'setup.js',
     'teardown.js',
+    'helpers.js',
   ],
   coverageDirectory: 'coverage',
 }
