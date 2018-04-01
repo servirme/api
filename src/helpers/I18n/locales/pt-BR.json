@@ -71,6 +71,13 @@
     "list": "Listando todos as culinárias com sucesso",
     "show": "Listando detalhes da culinária com sucesso"
   },
+  "menus": {
+    "list": "Listando todos os menus com sucesso",
+    "show": "Listando detalhes do menu com sucesso",
+    "created": "Menu criado com sucesso",
+    "updated": "Menu atualizado com sucesso",
+    "deleted": "Menu deletado com sucesso"
+  },
   "token": {
     "refresh": "token.refresh"
   },

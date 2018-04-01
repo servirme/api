@@ -43,6 +43,13 @@
     "list": "Listing all cookeries successfully",
     "show": "Listing cookery details successfully"
   },
+  "menus": {
+    "list": "Listing all menus successfully",
+    "created": "Menu created successfully",
+    "updated": "Menu updated successfully",
+    "show": "Listing menu details successfully",
+    "deleted": "Menu deleted successfully"
+  },
   "status": {
     "ok": "status.ok"
   },
