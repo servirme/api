@@ -73,6 +73,13 @@
     "list": "Listando todos as culinárias com sucesso",
     "show": "Listando detalhes da culinária com sucesso"
   },
+  "items": {
+    "list": "Listando todos os itens com sucesso",
+    "show": "Listando detalhes do item com sucesso",
+    "created": "Item criado com sucesso",
+    "updated": "Item atualizado com sucesso",
+    "deleted": "Item deletado com sucesso"
+  },
   "token": {
     "refresh": "token.refresh",
     "ok": "token.ok"

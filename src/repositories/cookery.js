@@ -3,7 +3,7 @@ const { DATABASE } = require('../../config/constants')
 
 module.exports.paginate = () => {
   return database.master.cookeries
-    .findAll({}, {
+    .findAll({
       searchPath: DATABASE.MASTER,
     })
 }

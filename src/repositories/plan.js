@@ -3,7 +3,7 @@ const { DATABASE } = require('../../config/constants')
 
 module.exports.paginate = () => {
   return database.master.plan
-    .findAll({}, { searchPath: DATABASE.MASTER })
+    .findAll({ searchPath: DATABASE.MASTER })
 }
 
 module.exports.getOneById = (id) => {

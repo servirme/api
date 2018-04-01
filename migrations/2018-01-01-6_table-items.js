@@ -27,11 +27,17 @@ module.exports = {
       long_description: {
         type: Sequelize.TEXT,
       },
+      image_url: {
+        type: Sequelize.STRING(255),
+      },
       ingredients: {
         type: Sequelize.TEXT,
       },
       price: {
-        type: Sequelize.FLOAT,
+        type: Sequelize.DECIMAL(10, 2),
+      },
+      promotion_price: {
+        type: Sequelize.DECIMAL(10, 2),
       },
       active: {
         type: Sequelize.BOOLEAN,
