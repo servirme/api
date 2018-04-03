@@ -6,6 +6,7 @@ const authRouter = require('./auth')
 const planRouter = require('./plan')
 const categoryRouter = require('./category')
 const cookeryRouter = require('./cookery')
+const sectionRouter = require('./section')
 
 // https://stackoverflow.com/questions/44327291/express-js-wrap-every-middleware-route-in-decorator
 const handleRequest = Layer.prototype.handle_request
@@ -25,4 +26,5 @@ module.exports = (app) => {
   app.use('/plans', planRouter)
   app.use('/categories', categoryRouter)
   app.use('/cookeries', cookeryRouter)
+  app.use('/sections', sectionRouter)
 }

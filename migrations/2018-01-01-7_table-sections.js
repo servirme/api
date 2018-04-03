@@ -18,11 +18,15 @@ module.exports = {
         allowNull: false,
       },
       name: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING(100),
         allowNull: false,
       },
       icon: {
         type: Sequelize.STRING(50),
+      },
+      active: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true,
       },
       created_at: Sequelize.DATE,
       updated_at: Sequelize.DATE,
