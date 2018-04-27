@@ -1,3 +1,4 @@
+const { AUTH } = require('../../config/constants')
 const testServer = require('../testServer')
 
 describe('Auth routes', () => {
@@ -30,11 +31,19 @@ describe('Auth routes', () => {
   test('Should successfully refresh token', () => {
     return testServer
       .get('/auth/refresh')
-      .set('token', token)
+      .set(AUTH.HEADER, token)
       .expect(200)
       .then(({ body }) => {
         expect(body.token).toEqual(token)
+        token = body.token
       })
+  })
+
+  test('Should successfully check token', () => {
+    return testServer
+      .get('/auth/check')
+      .set(AUTH.HEADER, token)
+      .expect(200)
   })
 
   test('Should when trying to register an existing email', () => {

@@ -1,5 +1,3 @@
-const BbPromise = require('bluebird')
-
 module.exports.extractResponseBody = (chunk, headers) => {
   if (chunk) {
     const isJson = headers && headers['content-type'] && headers['content-type'].indexOf('json') >= 0
@@ -21,7 +19,7 @@ module.exports.extractResponseBody = (chunk, headers) => {
 
 module.exports.wrapAction = (action) => {
   return (req, res, next) => {
-    BbPromise.resolve(action(req))
+    Promise.resolve(action(req))
       .then((response = {}) => {
         const {
           statusCode = 200,

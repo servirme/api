@@ -9,7 +9,7 @@ describe('Plans routes', () => {
 
   test('It should get plan details', () => {
     return testServer
-      .get('/plans/1')
+      .get('/plan/1')
       .expect(200)
   })
 })

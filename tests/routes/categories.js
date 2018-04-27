@@ -9,7 +9,7 @@ describe('Categories routes', () => {
 
   test('It should get category details', () => {
     return testServer
-      .get('/categories/1')
+      .get('/category/1')
       .expect(200)
   })
 })

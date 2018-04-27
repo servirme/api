@@ -1,5 +1,3 @@
-const BbPromise = require('bluebird')
-
 const NotFoundError = require('../Errors/NotFound')
 const userRepository = require('../repositories/user')
 const { hashPassword } = require('../helpers/security')
@@ -12,7 +10,7 @@ const checkUserExists = (user) => {
 }
 
 module.exports.createUser = ({ email, password }) => {
-  return BbPromise.resolve(password)
+  return Promise.resolve(password)
     .then(hashPassword)
     .then((hashedPassword) => {
       return userRepository.createUser({
