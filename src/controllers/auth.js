@@ -1,8 +1,6 @@
-const { dissoc, pipe } = require('ramda')
-const BbPromise = require('bluebird')
-
 const authModel = require('../models/auth')
 const authValidator = require('../validators/auth')
+const { removeJwtFields } = require('../helpers/jwt')
 
 module.exports.login = (req) => {
   const { body } = authValidator.login(req)
@@ -30,16 +28,10 @@ module.exports.register = (req) => {
     }))
 }
 
-const removeJwtFields = pipe(
-  dissoc('exp'),
-  dissoc('iat'),
-  dissoc('iss')
-)
-
 module.exports.refreshToken = (req) => {
   const decoded = removeJwtFields(req.auth)
 
-  return BbPromise.resolve(decoded)
+  return Promise.resolve(decoded)
     .then(authModel.sign)
     .then(token => ({
       statusCode: 200,
@@ -49,3 +41,10 @@ module.exports.refreshToken = (req) => {
       },
     }))
 }
+
+module.exports.check = () => ({
+  statusCode: 200,
+  body: {
+    message: 'token.ok',
+  },
+})

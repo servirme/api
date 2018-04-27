@@ -3,7 +3,7 @@ const { index, show } = require('../controllers/cookery')
 
 const router = express.Router()
 
-router.get('/', index)
-router.get('/:id', show)
+router.get('/cookeries', index)
+router.get('/cookery/:id', show)
 
 module.exports = router

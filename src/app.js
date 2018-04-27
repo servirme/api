@@ -1,3 +1,4 @@
+require('./global-setup')
 const express = require('express')
 const cors = require('cors')
 const { json } = require('body-parser')

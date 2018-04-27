@@ -1,11 +1,12 @@
 const log4js = require('log4js')
 const { extractResponseBody } = require('../helpers/express')
+const { getData } = require('../helpers/jwt')
 
 const logger = log4js.getLogger('api')
 
 module.exports = (req, res, next) => {
   // Request
-  logger.debug({
+  const requestLog = {
     requestId: req.requestId,
     type: 'request',
     ip: req.connection.remoteAddress,
@@ -15,7 +16,13 @@ module.exports = (req, res, next) => {
     headers: req.headers,
     startTime: req.startTime.toISOString(),
     body: req.body,
-  })
+  }
+
+  if (req.headers.token) {
+    requestLog.auth = getData(req.headers.token)
+  }
+
+  logger.debug(requestLog)
 
   const end = res.end
   res.end = (chunk, encoding) => {
@@ -32,7 +39,7 @@ module.exports = (req, res, next) => {
       requestId: req.requestId,
       type: 'reponse',
       body: responseBody,
-      header: res._headers,
+      headers: res._headers,
       statusCode: res.statusCode,
       latency: difference,
     })
