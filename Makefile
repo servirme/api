@@ -1,8 +1,10 @@
+prod:
+	@docker-compose up -d api-prod
+
 default: setupdb api
 
 api: setupdb
 	@docker-compose up -d api
-	@sleep 3
 
 api-logs:
 	@docker-compose logs --tail=0 -f api
@@ -10,23 +12,23 @@ api-logs:
 setupdb: database migrate seed
 
 database:
-	@docker-compose up -d database
+	@docker-compose up -d postgres
 	@sleep 3
 
 migrate:
-	@docker-compose run api scripts/database/migrate
+	@docker-compose run --rm api npm run migrate
 
 seed:
-	@docker-compose run api scripts/database/seed
+	@docker-compose run --rm api npm run seed
 
-test: setupdb
-	@docker-compose run api scripts/code/test
+test:
+	@docker-compose exec api env NODE_ENV=test npm test
 
 lint:
-	@docker-compose run api scripts/code/lint
+	@docker-compose exec api npm run lint
 
 send-coverage-data:
-	@docker-compose run api scripts/code/send-coverage-data
+	@docker-compose exec api npm run send-coverage-data
 
 down:
 	@docker-compose stop
@@ -34,3 +36,5 @@ down:
 
 clean:
 	@docker-compose down -v --rmi local --remove-orphans
+
+.PHONY: api api setupdb database migrate seed test lint send down clean

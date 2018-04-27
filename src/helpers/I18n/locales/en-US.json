@@ -55,17 +55,20 @@
     "establishment": "not-found.establishment"
   },
   "conflict": {
-    "user": "conflict.user"
+    "user": "conflict.user",
+    "establishment": "conflict.establishment"
   },
   "unauthorized": {
     "empty-token": "unauthorized.empty-token",
-    "not-authorized": "unauthorized.not-authorized"
+    "not-authorized": "unauthorized.not-authorized",
+    "jwt-incomplete": "unauthorized.jwt-incomplete"
   },
   "expired": {
     "jwt": "expired.jwt"
   },
   "token": {
-    "refresh": "token.refresh"
+    "refresh": "token.refresh",
+    "ok": "token.ok"
   },
   "forbidden": {
     "jwt": "forbidden.jwt"

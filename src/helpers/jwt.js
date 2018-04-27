@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const { dissoc, pipe } = require('ramda')
 
 const ExpiredError = require('../Errors/Expired')
 const InvalidError = require('../Errors/Invalid')
@@ -14,6 +15,12 @@ const jwtVerifyOptions = {
   issuer,
 }
 
+const removeJwtFields = pipe(
+  dissoc('exp'),
+  dissoc('iat'),
+  dissoc('iss')
+)
+
 module.exports.sign = (payload) => {
   return jwt.sign(payload, JWT_SECRET, jwtSignOptions)
 }
@@ -28,3 +35,7 @@ module.exports.verify = (jwtToken) => {
     throw new InvalidError('jwt')
   }
 }
+
+module.exports.getData = pipe(jwt.decode, removeJwtFields)
+
+module.exports.removeJwtFields = removeJwtFields

@@ -1,16 +1,28 @@
-FROM node:8
+FROM keymetrics/pm2:8-alpine
 
-# Create app directory
 WORKDIR /code
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
 COPY package*.json /code/
+
+RUN apk --update --no-cache add \
+  # postgresql-client \
+  git \
+  g++ \
+  gcc \
+  libgcc \
+  libstdc++ \
+  linux-headers \
+  make \
+  python && \
+  npm install node-gyp -g && \
+  npm update -g npm
+
+RUN npm ci && \
+  npm rebuild bcrypt --build-from-source && \
+  npm cache clean --force && \
+  pm2 install pm2-intercom
 
 # If you are building your code for production
 # RUN npm install --only=production
-RUN npm install
 
-# Bundle app source
 COPY . /code/

@@ -72,6 +72,8 @@ const database = map(
   map(entity => mountEntity(sequelize, entity)),
   entitiesIndexed
 )
+database.sequelize = sequelize
+
 const runSingleAssociate = (entity) => {
   const mountedEntity = database[entity.type][entity.name]
 

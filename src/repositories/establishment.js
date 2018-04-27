@@ -25,3 +25,6 @@ module.exports.update = (id, data) => {
       return resource.updateAttributes(data)
     })
 }
+
+module.exports.activate = establishment =>
+  establishment.updateAttributes({ active: true })

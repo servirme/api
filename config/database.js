@@ -1,4 +1,4 @@
-require('../dotenv').config()
+require('../dotenv')
 const { DATABASE } = require('./constants')
 
 const {
@@ -8,26 +8,17 @@ const {
   DATABASE_DIALECT,
 } = process.env
 
+const config = {
+  seederStorage: 'sequelize',
+  username: DATABASE_USERNAME,
+  password: DATABASE_PASSWORD,
+  database: DATABASE.MASTER,
+  host: DATABASE_HOST,
+  dialect: DATABASE_DIALECT,
+}
+
 module.exports = {
-  development: {
-    username: DATABASE_USERNAME,
-    password: DATABASE_PASSWORD,
-    database: DATABASE.MASTER,
-    host: DATABASE_HOST,
-    dialect: DATABASE_DIALECT,
-  },
-  test: {
-    username: DATABASE_USERNAME,
-    password: DATABASE_PASSWORD,
-    database: DATABASE.MASTER,
-    host: DATABASE_HOST,
-    dialect: DATABASE_DIALECT,
-  },
-  production: {
-    username: DATABASE_USERNAME,
-    password: DATABASE_PASSWORD,
-    database: DATABASE.MASTER,
-    host: DATABASE_HOST,
-    dialect: DATABASE_DIALECT,
-  },
+  development: config,
+  test: config,
+  production: config,
 }

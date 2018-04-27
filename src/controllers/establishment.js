@@ -3,8 +3,9 @@ const establishmentValidator = require('../validators/establishment')
 
 module.exports.create = (req) => {
   const { body } = establishmentValidator.create(req)
+  const { id: userId } = req.auth.user
 
-  return establishmentModel.createEstablishment(body)
+  return establishmentModel.createEstablishment(body, userId)
     .then(establishment => ({
       statusCode: 201,
       body: {
@@ -39,3 +40,16 @@ module.exports.show = (req) => {
       },
     }))
 }
+
+// module.exports.userEstabilishments = (req) => {
+//   const { auth } = req
+
+//   return establishmentModel.getUserEstablishment(auth.user.id)
+//     .then(establishments => ({
+//       statusCode: 200,
+//       body: {
+//         message: 'establishment.user-list',
+//         result: establishments,
+//       },
+//     }))
+// }

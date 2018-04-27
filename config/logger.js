@@ -10,7 +10,7 @@ const logLevels = {
   development: 'ALL',
 }
 const logType = isProduction ? 'dateFile' : 'stdout'
-const layoutType = isProduction ? 'json' : 'basic'
+const layoutType = isProduction ? 'json' : 'colored'
 
 const log4jsConfig = {
   pm2: isProduction,
@@ -50,7 +50,9 @@ const log4jsConfig = {
 }
 
 const sensitiveFields = [
-  'password',
+  'body.password',
+  'body.token',
+  'headers.token',
 ]
 
 const replaceSensitiveFields = (data) => {
@@ -63,7 +65,7 @@ const replaceSensitiveFields = (data) => {
     const needToReplace = !isNil(path(fieldPath, body))
 
     if (needToReplace) {
-      return assocPath(fieldPath, '*', body)
+      return assocPath(fieldPath, '******', body)
     }
 
     return body
