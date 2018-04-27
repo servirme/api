@@ -1,4 +1,4 @@
-require('../dotenv').config()
+require('../dotenv')
 const util = require('util')
 const { exec } = require('child_process')
 const log4js = require('log4js')
@@ -15,18 +15,21 @@ const {
   DATABASE_PASSWORD,
 } = process.env
 
-if (!DATABASE_HOST || !DATABASE_USERNAME || !DATABASE_PASSWORD) {
-  throw new Error('Missing some config data')
+const addEnvironment = (name, value) => {
+  return `${name}=${value}`
 }
 
-process.env.PGHOST = DATABASE_HOST
-process.env.PGUSER = DATABASE_USERNAME
-process.env.PGPASSWORD = DATABASE_PASSWORD
+const environments = [
+  addEnvironment('PGHOST', DATABASE_HOST),
+  addEnvironment('PGUSER', DATABASE_USERNAME),
+  addEnvironment('PGPASSWORD', DATABASE_PASSWORD),
+].join(' ')
 
-const pgdumpCommand = `pg_dump --schema='${DATABASE.BASE_CLIENT}' servirme`
-const psqlCommand = 'psql -d servirme'
-const clone = (establishmentId) => {
-  const newDatabaseName = `servirme_${establishmentId}`
+const pgdumpCommand = `${environments} pg_dump --schema='${DATABASE.BASE_CLIENT}' servirme`
+const psqlCommand = `${environments} psql -d servirme`
+
+module.exports = (establishmentId) => {
+  const newDatabaseName = DATABASE.CLIENT_PREFIX + establishmentId
   const replaceDatabaseName = `sed 's/${DATABASE.BASE_CLIENT}/${newDatabaseName}/g'`
 
   const command = `${pgdumpCommand} | ${replaceDatabaseName} | ${psqlCommand}`
@@ -36,9 +39,7 @@ const clone = (establishmentId) => {
         logger.error(`Failed to create database for #${establishmentId}`, {
           err: stderr,
         })
-        throw new Error('Failed to create database')
+        throw new Error(`Failed to create database for #${establishmentId}`)
       }
     })
 }
-
-module.exports = clone

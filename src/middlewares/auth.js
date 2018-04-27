@@ -3,12 +3,25 @@ const jwt = require('../helpers/jwt')
 const NotAuthorizedError = require('../Errors/NotAuthorized')
 const ForbiddenError = require('../Errors/Forbidden')
 const { AUTH } = require('../../config/constants')
+const { jwt: jwtValidator } = require('../validators/auth')
 
 const { HEADER, LEVELS } = AUTH
 
 const getApiToken = path(['headers', HEADER])
-const decode = (token) => {
-  return jwt.verify(token)
+
+const decodeAndValidate = (token) => {
+  const decoded = jwt.removeJwtFields(jwt.verify(token))
+
+  const { value, error } = jwtValidator.validate(decoded, {
+    abortEarly: true,
+    allowUnknown: false,
+  })
+
+  if (error) {
+    throw new NotAuthorizedError('jwt-invalid')
+  }
+
+  return value
 }
 
 const getMiddleware = (mode) => {
@@ -19,7 +32,8 @@ const getMiddleware = (mode) => {
       throw new NotAuthorizedError('empty-token')
     }
 
-    const decoded = decode(token)
+    const decoded = decodeAndValidate(token)
+
     const { type } = decoded
 
     if (mode && type !== mode) {

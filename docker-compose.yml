@@ -1,18 +1,22 @@
 version: "3"
 services:
-  database:
-    image: postgres:10.1
+  postgres:
+    container_name: 'servirme_dev_db'
+    image: postgres:9
     restart: always
     environment:
       POSTGRES_DB: servirme
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD:
+    networks:
+      - application
     expose:
       - 5432
-    ports:
-      - "5432:5432"
+    # ports:
+    #   - 5432:5432
 
   api:
+    container_name: 'servirme_dev_api'
     build:
       context: .
       dockerfile: Dockerfile
@@ -20,16 +24,58 @@ services:
     volumes:
       - ./:/code
       - /code/node_modules
+    networks:
+      - application
+    environment:
+      - CODECOV_TOKEN
+      - CI
+      - NODE_ENV=development
     expose:
       - 3000
-#    ports:
-#     - "3000:3000"
-    command: "npm start"
+    # ports:
+      # - 3000:3000
+    command: "npm run start-dev"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/status"]
       interval: 10s
       retries: 5
-    links:
-      - database
     depends_on:
-      - database
+      - postgres
+
+  nginx:
+    container_name: 'servirme_nginx'
+    image: jwilder/nginx-proxy
+    restart: always
+    volumes:
+      - ./certs/privkey.pem:/etc/nginx/certs/api.servir.me.key
+      - ./certs/cert.pem:/etc/nginx/certs/api.servir.me.crt
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - application
+    ports:
+      - 80:80
+      - 443:443
+
+  api-prod:
+    container_name: 'servirme_prod_api'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /code
+    volumes:
+      - ./:/code
+      - /code/node_modules
+    networks:
+      - application
+    environment:
+      - VIRTUAL_HOST=api.servir.me
+      - NODE_ENV=production
+      - PORT=80
+    expose:
+      - 80
+    command: "npm run start-prod"
+    depends_on:
+      - nginx
+
+networks:
+  application:

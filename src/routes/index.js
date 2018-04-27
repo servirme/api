@@ -20,9 +20,9 @@ Layer.prototype.handle_request = function routesWrapper(...args) {
 }
 
 module.exports = (app) => {
-  app.use('/establishments', establishmentRouter)
-  app.use('/auth', authRouter)
-  app.use('/plans', planRouter)
-  app.use('/categories', categoryRouter)
-  app.use('/cookeries', cookeryRouter)
+  app.use(establishmentRouter)
+  app.use(authRouter)
+  app.use(planRouter)
+  app.use(categoryRouter)
+  app.use(cookeryRouter)
 }

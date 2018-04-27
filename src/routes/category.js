@@ -3,7 +3,7 @@ const { index, show } = require('../controllers/category')
 
 const router = express.Router()
 
-router.get('/', index)
-router.get('/:id', show)
+router.get('/categories', index)
+router.get('/category/:id', show)
 
 module.exports = router

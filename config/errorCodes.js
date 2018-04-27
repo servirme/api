@@ -9,6 +9,7 @@ module.exports = {
   conflict: {
     generic: 1200,
     user: 1201,
+    establishment: 1202,
   },
   invalid: {
     generic: 1300,

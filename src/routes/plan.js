@@ -3,7 +3,7 @@ const { index, show } = require('../controllers/plans')
 
 const router = express.Router()
 
-router.get('/', index)
-router.get('/:id', show)
+router.get('/plans/', index)
+router.get('/plan/:id', show)
 
 module.exports = router

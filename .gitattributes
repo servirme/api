@@ -1,1 +1,2 @@
 config/environment/production filter=git-crypt diff=git-crypt
+certs/* filter=git-crypt diff=git-crypt
