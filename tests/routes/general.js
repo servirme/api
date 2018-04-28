@@ -7,6 +7,13 @@ describe('General routes', () => {
       .expect(200)
   })
 
+  test('/robots.txt route', () => {
+    return testServer
+      .get('/robots.txt')
+      .expect('content-type', 'text/plain; charset=utf-8')
+      .expect(200)
+  })
+
   test('Should hit 404 route', () => {
     return testServer
       .get('/random/123')
