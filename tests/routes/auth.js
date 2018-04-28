@@ -28,15 +28,20 @@ describe('Auth routes', () => {
       })
   })
 
-  test('Should successfully refresh token', () => {
-    return testServer
-      .get('/auth/refresh')
-      .set(AUTH.HEADER, token)
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.token).toEqual(token)
-        token = body.token
-      })
+  describe('when waiting 1s', () => {
+    beforeEach(() => {
+      return Promise.delay(1000)
+    })
+
+    test('and refreshing token', () => {
+      return testServer
+        .get('/auth/refresh')
+        .set(AUTH.HEADER, token)
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.token).not.toEqual(token)
+        })
+    })
   })
 
   test('Should successfully check token', () => {
