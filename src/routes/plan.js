@@ -1,7 +1,7 @@
-const express = require('express')
+const { Router } = require('express')
 const { index, show } = require('../controllers/plans')
 
-const router = express.Router()
+const router = Router()
 
 router.get('/plans/', index)
 router.get('/plan/:id', show)

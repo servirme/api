@@ -72,5 +72,8 @@
   },
   "forbidden": {
     "jwt": "forbidden.jwt"
+  },
+  "robots": {
+    "txt": "User-agent: *\nDisallow: /"
   }
 }
