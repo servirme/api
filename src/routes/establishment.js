@@ -1,4 +1,4 @@
-const express = require('express')
+const { Router } = require('express')
 const {
   show,
   create,
@@ -9,7 +9,7 @@ const {
   adminAuth,
 } = require('../middlewares')
 
-const router = express.Router()
+const router = Router()
 
 router.post('/establishments', adminAuth, create)
 // router.get('/establishments/my', adminAuth, userEstabilishments)
