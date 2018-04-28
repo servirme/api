@@ -7,10 +7,10 @@ const compression = require('compression')
 const {
   i18nMiddleware,
   errorHandler,
-  apiLogger,
   requestMetadata,
 } = require('./middlewares/index')
-const registerRoutes = require('./routes/index')
+const appGenericRoutes = require('./routes/otherRoutes')
+const appRoutes = require('./routes/appRoutes')
 require('../config/logger')
 
 const app = express()
@@ -24,26 +24,15 @@ app.use(compression())
 
 app.use(requestMetadata)
 
-app.get('/status', () => ({
-  statusCode: 200,
+app.use(appGenericRoutes)
+app.use(appRoutes)
+
+app.all('*', () => ({
+  statusCode: 404,
   body: {
-    timestamp: new Date().toISOString(),
-    message: 'status.ok',
+    message: 'url-not-found',
   },
 }))
-
-app.use(apiLogger)
-
-registerRoutes(app)
-
-app.all('*', () => {
-  return {
-    statusCode: 404,
-    body: {
-      message: 'url-not-found',
-    },
-  }
-})
 
 app.use(errorHandler)
 
