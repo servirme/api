@@ -1,26 +1,42 @@
-prod:
+.PHONY: dev prod test lint down clean
+
+# PROD
+prod: setupdb-prod api-prod
+
+api-prod:
 	@docker-compose up -d api-prod
 
-default: setupdb api
+setupdb-prod: database-prod migrate-prod seed-prod
 
-api: setupdb
+database-prod:
+	@docker-compose up -d postgres-prod
+	@sleep 3
+
+migrate-prod:
+	@docker-compose run --rm api-prod npm run migrate
+
+seed-prod:
+	@docker-compose run --rm api-prod npm run seed
+
+# Development
+dev: setupdb-dev api-dev
+
+api-dev:
 	@docker-compose up -d api
 
-api-logs:
-	@docker-compose logs --tail=0 -f api
+setupdb-dev: database-dev migrate-dev seed-dev
 
-setupdb: database migrate seed
-
-database:
+database-dev:
 	@docker-compose up -d postgres
 	@sleep 3
 
-migrate:
+migrate-dev:
 	@docker-compose run --rm api npm run migrate
 
-seed:
+seed-dev:
 	@docker-compose run --rm api npm run seed
 
+# Test
 test:
 	@docker-compose exec api env NODE_ENV=test npm test
 
@@ -30,11 +46,10 @@ lint:
 send-coverage-data:
 	@docker-compose exec api npm run send-coverage-data
 
+# Docker related commands
 down:
 	@docker-compose stop
 	@docker-compose rm -v -f
 
 clean:
 	@docker-compose down -v --rmi local --remove-orphans
-
-.PHONY: api api setupdb database migrate seed test lint send down clean

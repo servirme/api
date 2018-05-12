@@ -77,5 +77,18 @@ services:
     depends_on:
       - nginx
 
+  postgres-prod:
+    container_name: 'servirme_prod_db'
+    image: postgres:9
+    restart: always
+    environment:
+      POSTGRES_DB: servirme
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD:
+    networks:
+      - application
+    expose:
+      - 5432
+
 networks:
   application:
