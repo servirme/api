@@ -10,7 +10,10 @@ describe('Security', () => {
   })
 
   test('checkPassword', () => {
-    const checkPasswordPromise = security.checkHashPassword(password, passwordHash)
+    const checkPasswordPromise = security.checkHashPassword(
+      password,
+      passwordHash
+    )
 
     return expect(checkPasswordPromise).resolves.toEqual(true)
   })
