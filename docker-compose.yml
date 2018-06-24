@@ -42,13 +42,13 @@ services:
     depends_on:
       - postgres
 
-  nginx:
-    container_name: 'servirme_nginx'
+  nginx-proxy:
+    container_name: 'nginx-proxy'
     image: jwilder/nginx-proxy
     restart: always
     volumes:
-      - ./certs/privkey.pem:/etc/nginx/certs/api.servir.me.key
-      - ./certs/cert.pem:/etc/nginx/certs/api.servir.me.crt
+      - ./letsencrypt/live/api.servir.me/privkey.pem:/etc/nginx/certs/api.servir.me.key:ro
+      - ./letsencrypt/live/api.servir.me/cert.pem:/etc/nginx/certs/api.servir.me.crt:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
     networks:
       - application
@@ -75,7 +75,7 @@ services:
       - 80
     command: "npm run start-prod"
     depends_on:
-      - nginx
+      - nginx-proxy
 
   postgres-prod:
     container_name: 'servirme_prod_db'
