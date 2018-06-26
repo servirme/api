@@ -32,10 +32,9 @@ module.exports = {
       updated_at: Sequelize.DATE,
       deleted_at: Sequelize.DATE,
     })
-      .then(() =>
-        queryInterface.addIndex(table, {
-          fields: ['email'],
-        }))
+      .then(() => queryInterface.addIndex(table, {
+        fields: ['email'],
+      }))
   },
   down(queryInterface) {
     return queryInterface.dropTable(table)

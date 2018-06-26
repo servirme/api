@@ -81,8 +81,16 @@ seed-dev:
 	@docker-compose run --rm api npm run seed
 
 # Test
-test:
-	@docker-compose exec api env NODE_ENV=test npm test
+test: test-unit test-e2e
+
+test-e2e:
+	@docker-compose exec api env NODE_ENV=test npm run test-e2e
+
+test-unit: api-dev
+	@docker-compose exec api env NODE_ENV=test npm run test-unit
+
+test-unit-watch: api-dev
+	@docker-compose exec api env NODE_ENV=test npm run test-unit-watch
 
 lint:
 	@docker-compose exec api npm run lint

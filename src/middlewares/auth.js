@@ -24,26 +24,24 @@ const decodeAndValidate = (token) => {
   return value
 }
 
-const getMiddleware = (mode) => {
-  return (req, res, next) => {
-    const token = getApiToken(req)
+const getMiddleware = mode => (req, res, next) => {
+  const token = getApiToken(req)
 
-    if (!token) {
-      throw new NotAuthorizedError('empty-token')
-    }
-
-    const decoded = decodeAndValidate(token)
-
-    const { type } = decoded
-
-    if (mode && type !== mode) {
-      throw new ForbiddenError('jwt')
-    }
-
-    req.auth = decoded
-
-    next()
+  if (!token) {
+    throw new NotAuthorizedError('empty-token')
   }
+
+  const decoded = decodeAndValidate(token)
+
+  const { type } = decoded
+
+  if (mode && type !== mode) {
+    throw new ForbiddenError('jwt')
+  }
+
+  req.auth = decoded
+
+  next()
 }
 
 module.exports.client = getMiddleware(LEVELS.CLIENT)

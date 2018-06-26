@@ -9,9 +9,9 @@ const {
   errorHandler,
   requestMetadata,
 } = require('./middlewares/index')
+const { wrapAction } = require('./helpers/express')
 const appGenericRoutes = require('./routes/otherRoutes')
 const appRoutes = require('./routes/appRoutes')
-require('../config/logger')
 
 const app = express()
 
@@ -27,12 +27,14 @@ app.use(requestMetadata)
 app.use(appGenericRoutes)
 app.use(appRoutes)
 
-app.all('*', () => ({
+const notFoundResponse = () => ({
   statusCode: 404,
   body: {
     message: 'url-not-found',
   },
-}))
+})
+
+app.all('*', wrapAction(notFoundResponse))
 
 app.use(errorHandler)
 

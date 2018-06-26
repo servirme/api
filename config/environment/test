@@ -9,4 +9,5 @@ DATABASE_DATABASE=servirme
 DATABASE_DIALECT=postgres
 
 JWT_SECRET=i_would_never_think_about_this_secret
+
 SALT=$2a$10$7LvUnAKx7AobYS7dYN4ceu

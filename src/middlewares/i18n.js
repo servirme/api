@@ -35,7 +35,7 @@ module.exports = (req, res, next) => {
     return res
   }
 
-  const send = res.send
+  const { send } = res
   res.send = (responseBody) => {
     const language = getRequestLanguage(req)
     const translatedBody = translateBody(toTranslate, responseBody, language)

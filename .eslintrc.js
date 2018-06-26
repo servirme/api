@@ -8,8 +8,11 @@ module.exports = {
     'jest',
   ],
   parserOptions: {
-    ecmaVersion: 6,
+    ecmaVersion: 2017,
     sourceType: 'script',
   },
   extends: 'matheusvellone-base/backend',
+  rules: {
+    strict: ['error', 'never'],
+  },
 }

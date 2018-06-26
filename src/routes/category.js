@@ -1,9 +1,13 @@
 const { Router } = require('express')
-const { index, show } = require('../controllers/category')
+const CategoryController = require('../Controllers/Category')
+const { wrapAction } = require('../helpers/express')
 
 const router = Router()
+const controller = new CategoryController()
 
-router.get('/categories', index)
-router.get('/category/:id', show)
+const { index, show } = controller
+
+router.get('/categories', wrapAction(index))
+router.get('/category/:id', wrapAction(show))
 
 module.exports = router

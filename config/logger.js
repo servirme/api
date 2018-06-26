@@ -14,6 +14,16 @@ const layoutType = isProduction ? 'json' : 'colored'
 
 const log4jsConfig = {
   pm2: isProduction,
+  levels: {
+    RESPONSE_ERROR_4XX: {
+      value: log4js.levels.WARN.level,
+      colour: 'red',
+    },
+    RESPONSE_ERROR_5XX: {
+      value: log4js.levels.FATAL.level,
+      colour: 'red',
+    },
+  },
   appenders: {
     apiFile: {
       type: logType,
@@ -72,16 +82,13 @@ const replaceSensitiveFields = (data) => {
   }, data)
 }
 
-log4js.addLayout('json', () => logEvent =>
-  logEvent.data
-    .map((data) => {
-      return JSON.stringify({
-        timestamp: logEvent.startTime,
-        level: logEvent.level.levelStr,
-        category: logEvent.categoryName,
-        data: replaceSensitiveFields(data),
-      })
-    })
-    .join('\n'))
+const jsonLayout = () => logEvent => logEvent.data.map(data => JSON.stringify({
+  timestamp: logEvent.startTime,
+  level: logEvent.level.levelStr,
+  category: logEvent.categoryName,
+  data: replaceSensitiveFields(data),
+}))
+  .join('\n')
 
+log4js.addLayout('json', jsonLayout)
 log4js.configure(log4jsConfig)

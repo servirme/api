@@ -1,6 +1,6 @@
 const Joi = require('joi')
 
-const { createValidator, getRuleRequired } = require('../helpers/validator')
+const { getRuleRequired } = require('../helpers/validator')
 
 const active = Joi.boolean()
 const name = Joi.string().max(100)
@@ -35,15 +35,15 @@ const establishmentSchema = (options = {}) => ({
   planId: getRuleRequired(planId, options.create),
 })
 
-module.exports.create = createValidator(Joi.object({
+module.exports.create = Joi.object({
   body: establishmentSchema({ create: true }),
-}))
+})
 
-module.exports.update = createValidator(Joi.object({
+module.exports.update = Joi.object({
   body: establishmentSchema({ create: false }),
   params: { id: Joi.number().integer() },
-}))
+})
 
-module.exports.show = createValidator(Joi.object({
+module.exports.show = Joi.object({
   params: { id: Joi.number().integer() },
-}))
+})

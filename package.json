@@ -9,7 +9,9 @@
     "pm2-restart": "pm2 reload pm2.config.js",
     "lint": "eslint .",
     "send-coverage-data": "codecov",
-    "test": "jest --forceExit",
+    "test-e2e": "jest --forceExit --config tests/e2e/jest.config.js",
+    "test-unit": "jest --config tests/unit/jest.config.js",
+    "test-unit-watch": "jest --config tests/unit/jest.config.js --watch",
     "migrate": "sequelize db:migrate",
     "seed": "sequelize db:seed:all"
   },
@@ -46,13 +48,13 @@
     "codecov": "3.0.2",
     "cross-env": "5.1.5",
     "eslint": "4.19.1",
-    "eslint-config-airbnb-base": "12.1.0",
-    "eslint-config-matheusvellone-base": "1.0.11",
+    "eslint-config-matheusvellone-base": "1.0.12",
     "eslint-plugin-import": "2.11.0",
     "eslint-plugin-jest": "21.15.1",
     "jest": "22.4.3",
     "nodemon": "1.17.4",
     "sequelize-cli": "4.0.0",
+    "sinon": "5.0.7",
     "supertest": "3.1.0"
   }
 }

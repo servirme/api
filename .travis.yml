@@ -19,7 +19,8 @@ before_script:
 
 script:
   - make lint
-  - make test
+  - make test-unit
+  - make test-e2e
 
 after_script:
   - make send-coverage-data

@@ -14,8 +14,7 @@ const isClientSchema = or(
   match(clientSchemaRegex)
 )
 
-module.exports = (queryInterface, migrationFunction) => {
-  return queryInterface.showAllSchemas()
-    .then(filter(isClientSchema))
-    .map(migrationFunction)
-}
+module.exports = (queryInterface, migrationFunction) => queryInterface
+  .showAllSchemas()
+  .then(filter(isClientSchema))
+  .map(migrationFunction)

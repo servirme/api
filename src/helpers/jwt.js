@@ -1,19 +1,9 @@
-const jwt = require('jsonwebtoken')
+const Jwt = require('jsonwebtoken')
 const { dissoc, pipe } = require('ramda')
 
+const { jwt } = require('../../config/auth')
 const ExpiredError = require('../Errors/Expired')
 const InvalidError = require('../Errors/Invalid')
-
-const { JWT_SECRET } = process.env
-const issuer = 'servir.me'
-const jwtSignOptions = {
-  expiresIn: '1d',
-  issuer,
-}
-
-const jwtVerifyOptions = {
-  issuer,
-}
 
 const removeJwtFields = pipe(
   dissoc('exp'),
@@ -21,13 +11,26 @@ const removeJwtFields = pipe(
   dissoc('iss')
 )
 
-module.exports.sign = (payload) => {
-  return jwt.sign(payload, JWT_SECRET, jwtSignOptions)
+module.exports.sign = (payload, {
+  expiresIn = jwt.expiresIn,
+  issuer = jwt.issuer,
+  secret = jwt.secret,
+} = {}) => {
+  const jwtSignOptions = {
+    issuer,
+    expiresIn,
+  }
+
+  return Jwt.sign(payload, secret, jwtSignOptions)
 }
 
-module.exports.verify = (jwtToken) => {
+module.exports.verify = (jwtToken, {
+  issuer = jwt.issuer,
+  secret = jwt.secret,
+} = {}) => {
   try {
-    return jwt.verify(jwtToken, JWT_SECRET, jwtVerifyOptions)
+    const verifyOptions = { issuer }
+    return Jwt.verify(jwtToken, secret, verifyOptions)
   } catch (jwtError) {
     if (jwtError.name === 'TokenExpiredError') {
       throw new ExpiredError('jwt')
@@ -36,6 +39,6 @@ module.exports.verify = (jwtToken) => {
   }
 }
 
-module.exports.getData = pipe(jwt.decode, removeJwtFields)
+module.exports.getData = pipe(Jwt.decode, removeJwtFields)
 
 module.exports.removeJwtFields = removeJwtFields
