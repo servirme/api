@@ -19,14 +19,14 @@ describe('BaseError', () => {
       message: errorMessage,
     }
 
-    expect(error._httpCode).toBe(httpCode)
-    expect(error.getHttpCode()).toBe(error._httpCode)
+    expect(error.httpCode).toBe(httpCode)
+    expect(error.getHttpCode()).toBe(error.httpCode)
 
-    expect(error._translateKeys).toEqual([])
-    expect(error.getTranslateKeys()).toBe(error._translateKeys)
+    expect(error.translateKeys).toEqual([])
+    expect(error.getTranslateKeys()).toBe(error.translateKeys)
 
-    expect(error._body).toEqual(expectedBody)
-    expect(error.getBody()).toBe(error._body)
+    expect(error.body).toEqual(expectedBody)
+    expect(error.getBody()).toBe(error.body)
   })
 
   test('default code should be 500', () => {

@@ -31,10 +31,10 @@ class I18n {
       const instance = new I18n()
 
       const i18nConfig = Object.assign(i18nBaseConfig, {
-        register: instance._i18n,
+        register: instance.i18n,
       })
       i18n.configure(i18nConfig)
-      instance._i18n.setLocale(language)
+      instance.i18n.setLocale(language)
 
       instances[language] = instance
     }
@@ -42,12 +42,13 @@ class I18n {
   }
 
   constructor() {
-    this._i18n = {}
+    this.i18n = {}
   }
 
   translate(...params) {
     const { key, data } = normalizeTranslateInput(...params)
-    return this._i18n.__(key, data)
+    // eslint-disable-next-line no-underscore-dangle
+    return this.i18n.__(key, data)
   }
 }
 

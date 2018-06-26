@@ -44,36 +44,30 @@ describe('Establishment routes', () => {
       })
   })
 
-  test('Should get the created establishment', () => {
-    return testServer
-      .get(`/establishment/${establishment.id}`)
-      .set(AUTH.HEADER, adminToken)
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.result).toEqual(establishment)
-      })
-  })
+  test('Should get the created establishment', () => testServer
+    .get(`/establishment/${establishment.id}`)
+    .set(AUTH.HEADER, adminToken)
+    .expect(200)
+    .then(({ body }) => {
+      expect(body.result).toEqual(establishment)
+    }))
 
-  test('Should update a establishment', () => {
-    return testServer
-      .put(`/establishment/${establishment.id}`)
-      .send({
-        name: 'new name',
-      })
-      .set(AUTH.HEADER, adminToken)
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.result.name).toEqual('new name')
-      })
-  })
+  test('Should update a establishment', () => testServer
+    .put(`/establishment/${establishment.id}`)
+    .send({
+      name: 'new name',
+    })
+    .set(AUTH.HEADER, adminToken)
+    .expect(200)
+    .then(({ body }) => {
+      expect(body.result.name).toEqual('new name')
+    }))
 
-  test.skip('Trying to get user establishments', () => {
-    return testServer
-      .get('/establishments/my')
-      .set(AUTH.HEADER, adminToken)
-      .expect(200)
-      .then(({ body }) => {
-        expect(typeof body.result).toBe('array')
-      })
-  })
+  test.skip('Trying to get user establishments', () => testServer
+    .get('/establishments/my')
+    .set(AUTH.HEADER, adminToken)
+    .expect(200)
+    .then(({ body }) => {
+      expect(typeof body.result).toBe('array')
+    }))
 })

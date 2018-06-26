@@ -12,4 +12,7 @@ module.exports = {
     sourceType: 'script',
   },
   extends: 'matheusvellone-base/backend',
+  rules: {
+    strict: ['error', 'never'],
+  },
 }

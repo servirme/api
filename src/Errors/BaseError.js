@@ -12,29 +12,29 @@ class BaseError extends Error {
       logger.error(`Error message '${message}' does not have a code: ${code}`)
     }
 
-    this._translateKeys = []
+    this.translateKeys = []
 
-    this._httpCode = httpCode
-    this._body = {
+    this.httpCode = httpCode
+    this.body = {
       code,
       message,
     }
   }
 
   addTranslateKey(key) {
-    this._translateKeys.push(key)
+    this.translateKeys.push(key)
   }
 
   getBody() {
-    return this._body
+    return this.body
   }
 
   getTranslateKeys() {
-    return this._translateKeys
+    return this.translateKeys
   }
 
   getHttpCode() {
-    return this._httpCode
+    return this.httpCode
   }
 }
 

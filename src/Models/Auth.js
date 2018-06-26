@@ -17,7 +17,7 @@ class AuthModel {
     this.userModel = new UserModelDep()
     this.userTransform = userTransformDep
 
-    this._checkHashPassword = checkHashPasswordDep
+    this.checkHashPassword = checkHashPasswordDep
     this.sign = signDep
   }
 
@@ -26,7 +26,7 @@ class AuthModel {
   }
 
   async checkPassword(plainTextPassword, user) {
-    const valid = await this._checkHashPassword(
+    const valid = await this.checkHashPassword(
       plainTextPassword,
       user.password
     )

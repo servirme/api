@@ -15,9 +15,7 @@ const {
   DATABASE_PASSWORD,
 } = process.env
 
-const addEnvironment = (name, value) => {
-  return `${name}=${value}`
-}
+const addEnvironment = (name, value) => `${name}=${value}`
 
 const environments = [
   addEnvironment('PGHOST', DATABASE_HOST),

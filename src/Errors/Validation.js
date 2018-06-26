@@ -1,22 +1,21 @@
-const BaseError = require('./BaseError')
-const { validationError } = require('../../config/errorCodes')
 const {
+  assoc,
   pipe,
   prop,
   reduce,
 } = require('ramda')
+const BaseError = require('./BaseError')
+const { validationError } = require('../../config/errorCodes')
 
 const validationErrorsField = 'validationErrors'
 
 const transformJoiError = pipe(
   prop('details'),
-  reduce((finalObject, err) => {
-    finalObject[err.context.key] = {
-      rule: err.type,
-      context: err.context,
-    }
-    return finalObject
-  }, {})
+  reduce((finalObject, err) => assoc(
+    err.context.key,
+    { rule: err.type, context: err.context },
+    finalObject
+  ), {})
 )
 
 class ValidationError extends BaseError {
@@ -31,15 +30,17 @@ class ValidationError extends BaseError {
       },
     })
 
-    this._body[validationErrorsField] = fields
+    this.body[validationErrorsField] = fields
       .reduce((errorObject, field) => {
         this.addTranslateKey(`${validationErrorsField}.${field}`)
-        errorObject[field] = {
-          key: `validation.${errorsObject[field].rule}`,
-          data: errorsObject[field].context,
-        }
-
-        return errorObject
+        return assoc(
+          field,
+          {
+            key: `validation.${errorsObject[field].rule}`,
+            data: errorsObject[field].context,
+          },
+          errorObject
+        )
       }, {})
   }
 }

@@ -36,11 +36,12 @@ module.exports = (req, res, next) => {
 
   logger.debug(requestLog)
 
-  const end = res.end
+  const { end } = res
   res.end = (chunk, encoding) => {
     res.end = end
     res.end(chunk, encoding)
 
+    // eslint-disable-next-line no-underscore-dangle
     const responseBody = extractResponseBody(chunk, res._headers)
 
     const endTime = Date.now()
@@ -53,6 +54,7 @@ module.exports = (req, res, next) => {
       requestId: req.requestId,
       type: 'reponse',
       body: responseBody,
+      // eslint-disable-next-line no-underscore-dangle
       headers: res._headers,
       statusCode: res.statusCode,
       latency: difference,

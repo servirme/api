@@ -3,20 +3,22 @@ const { join } = require('path')
 const Sequelize = require('sequelize')
 const log4js = require('log4js')
 const {
-  map,
-  has,
+  assocPath,
+  concat,
   filter,
+  has,
+  map,
 } = require('ramda')
 const { DATABASE } = require('../../config/constants')
 
 const {
-  NODE_ENV,
-  DATABASE_HOST,
-  DATABASE_USERNAME,
-  DATABASE_PASSWORD,
   DATABASE_DATABASE,
   DATABASE_DIALECT,
+  DATABASE_HOST,
+  DATABASE_PASSWORD,
+  DATABASE_USERNAME,
   LOGGING,
+  NODE_ENV,
 } = process.env
 const logger = log4js.getLogger('database')
 
@@ -28,15 +30,12 @@ const entitiesFiles = readdirSync(ENTITIES_DIRECTORY)
   .map(file => join(ENTITIES_DIRECTORY, file))
   .map(require)
 
-const entitiesIndexed = entitiesFiles.reduce((entities, entity) => {
-  if (!entities[entity.type]) {
-    entities[entity.type] = {}
-  }
-
-  entities[entity.type][entity.name] = entity
-
-  return entities
-}, {})
+const assocEntities = (entities, entity) => assocPath(
+  [entity.type, entity.name],
+  entity,
+  entities
+)
+const entitiesIndexed = entitiesFiles.reduce(assocEntities, {})
 
 const sequelizeConfig = {
   database: DATABASE_DATABASE,
@@ -58,13 +57,14 @@ const sequelizeConfig = {
   },
 }
 
-const mountEntity = (sequelizeInstance, { name, fields, config = {} }) => {
-  return sequelizeInstance.define(
-    name,
-    fields,
-    config
-  )
-}
+const mountEntity = (
+  sequelizeInstance,
+  { name, fields, config = {} }
+) => sequelizeInstance.define(
+  name,
+  fields,
+  config
+)
 
 const sequelize = new Sequelize(sequelizeConfig)
 
@@ -92,5 +92,4 @@ if (DATABASE_DIALECT === 'sqlite') {
 }
 
 module.exports.database = database
-module.exports.getClientDatabase = establishmentId =>
-  DATABASE.CLIENT_PREFIX + establishmentId
+module.exports.getClientDatabase = concat(DATABASE.CLIENT_PREFIX)

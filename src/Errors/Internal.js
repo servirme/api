@@ -14,7 +14,7 @@ class InternalError extends BaseError {
     super(500, internalError, 'http-500')
 
     if (environment === 'development') {
-      this._body.error = err
+      this.body.error = err
 
       logger.error(err)
       return

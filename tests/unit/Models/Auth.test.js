@@ -16,9 +16,7 @@ const userTransformFake = {
   jwt: stub().returns('jwt transform'),
 }
 
-const checkHashPasswordFake = stub().callsFake((payload) => {
-  return payload === 'valid'
-})
+const checkHashPasswordFake = stub().callsFake(payload => payload === 'valid')
 const signFake = stub().returns('sign return')
 
 describe('AuthModel', () => {
@@ -39,7 +37,7 @@ describe('AuthModel', () => {
     expect(model.InvalidError).toEqual(InvalidErrorFake)
     expect(model.userTransform).toEqual(userTransformFake)
     expect(model.sign).toEqual(signFake)
-    expect(model._checkHashPassword).toEqual(checkHashPasswordFake)
+    expect(model.checkHashPassword).toEqual(checkHashPasswordFake)
   })
 
   describe('signUp', () => {
@@ -79,7 +77,7 @@ describe('AuthModel', () => {
   describe('signIn', () => {
     afterEach(() => {
       model.userModel.getByEmail.resetHistory()
-      model._checkHashPassword.resetHistory()
+      model.checkHashPassword.resetHistory()
     })
 
     describe('with valid password', () => {
@@ -97,8 +95,8 @@ describe('AuthModel', () => {
         assert.calledOnce(model.userModel.getByEmail)
         assert.calledWithExactly(model.userModel.getByEmail, 'fake email')
 
-        assert.calledOnce(model._checkHashPassword)
-        assert.calledWithExactly(model._checkHashPassword, 'valid', 'fake password')
+        assert.calledOnce(model.checkHashPassword)
+        assert.calledWithExactly(model.checkHashPassword, 'valid', 'fake password')
 
         assert.calledOnce(model.userTransform.jwt)
         assert.calledWithExactly(model.userTransform.jwt, { password: 'fake password' })
@@ -134,8 +132,8 @@ describe('AuthModel', () => {
         assert.calledOnce(model.userModel.getByEmail)
         assert.calledWithExactly(model.userModel.getByEmail, 'fake email')
 
-        assert.calledOnce(model._checkHashPassword)
-        assert.calledWithExactly(model._checkHashPassword, 'invalid', 'fake password')
+        assert.calledOnce(model.checkHashPassword)
+        assert.calledWithExactly(model.checkHashPassword, 'invalid', 'fake password')
       })
 
       test('should throw correct error', () => {

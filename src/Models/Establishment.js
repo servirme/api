@@ -22,8 +22,8 @@ class EstablishmentModel {
   }
 
   async validateOneEstablishmentPerUser(userId) {
-    const establishments =
-      await this.establishmentUserRepository.getEstablishmentsFromUser(userId)
+    const establishments = await this.establishmentUserRepository
+      .getEstablishmentsFromUser(userId)
 
     if (establishments && establishments.length) {
       throw new InvalidError('user-establishment')

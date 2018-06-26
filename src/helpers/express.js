@@ -22,26 +22,24 @@ module.exports.extractResponseBody = (chunk, headers) => {
   return chunk
 }
 
-module.exports.wrapAction = (action) => {
-  return async (req, res, next) => {
-    try {
-      const response = await action(req)
-      const {
-        statusCode = 200,
-        body = {},
-        headers = {},
-        translate = [],
-      } = response
+module.exports.wrapAction = action => async (req, res, next) => {
+  try {
+    const response = await action(req)
+    const {
+      statusCode = 200,
+      body = {},
+      headers = {},
+      translate = [],
+    } = response
 
-      translate.forEach(res.translate)
+    translate.forEach(res.translate)
 
-      forEach(([key, value]) => {
-        res.set(key, value)
-      }, toPairs(headers))
+    forEach(([key, value]) => {
+      res.set(key, value)
+    }, toPairs(headers))
 
-      res.status(statusCode).send(body)
-    } catch (error) {
-      next(error)
-    }
+    res.status(statusCode).send(body)
+  } catch (error) {
+    next(error)
   }
 }
