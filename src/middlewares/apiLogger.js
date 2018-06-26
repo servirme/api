@@ -4,6 +4,18 @@ const { getData } = require('../helpers/jwt')
 
 const logger = log4js.getLogger('api')
 
+const getResponseLogLevel = (statusCode) => {
+  if (statusCode >= 500) {
+    return 'RESPONSE_ERROR_5XX'
+  }
+
+  if (statusCode >= 400) {
+    return 'RESPONSE_ERROR_4XX'
+  }
+
+  return 'DEBUG'
+}
+
 module.exports = (req, res, next) => {
   // Request
   const requestLog = {
@@ -34,8 +46,10 @@ module.exports = (req, res, next) => {
     const endTime = Date.now()
     const difference = endTime - req.startTime.getTime()
 
+    const logLevel = getResponseLogLevel(res.statusCode)
+
     // Response
-    logger.debug({
+    logger.log(logLevel, {
       requestId: req.requestId,
       type: 'reponse',
       body: responseBody,

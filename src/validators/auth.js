@@ -1,20 +1,19 @@
 const Joi = require('joi')
 
 const { AUTH } = require('../../config/constants')
-const { createValidator } = require('../helpers/validator')
 
 const authSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().required(),
 })
 
-module.exports.register = createValidator(Joi.object({
+module.exports.register = Joi.object({
   body: authSchema.required(),
-}))
+})
 
-module.exports.login = createValidator(Joi.object({
+module.exports.login = Joi.object({
   body: authSchema.required(),
-}))
+})
 
 module.exports.jwt = Joi.object({
   type: Joi.valid(Object.values(AUTH.LEVELS)).required(),
