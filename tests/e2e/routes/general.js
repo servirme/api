@@ -24,7 +24,7 @@ describe('General routes', () => {
     return testServer
       .post('/auth/register')
       .type('json')
-      .send('{ "email": "matheusvellone@hotmail.com" ')
+      .send('{ "email": "matheus@servir.me" ')
       .expect(400, {
         code: 1301,
         message: 'invalid.body',

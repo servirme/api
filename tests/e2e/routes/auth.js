@@ -1,4 +1,4 @@
-const { AUTH } = require('../../config/constants')
+const { AUTH } = require('../../../config/constants')
 const testServer = require('../testServer')
 
 describe('Auth routes', () => {
@@ -29,7 +29,7 @@ describe('Auth routes', () => {
   })
 
   describe('when waiting 1s', () => {
-    beforeEach(() => {
+    beforeAll(() => {
       return Promise.delay(1000)
     })
 
@@ -49,47 +49,5 @@ describe('Auth routes', () => {
       .get('/auth/check')
       .set(AUTH.HEADER, token)
       .expect(200)
-  })
-
-  test('Should when trying to register an existing email', () => {
-    return testServer
-      .post('/auth/register')
-      .send({
-        email,
-        password: '123456',
-      })
-      .expect(409)
-  })
-
-  test('Should not successfully sign up', () => {
-    return testServer
-      .post('/auth/register')
-      .send({
-        email: 'not_email',
-        password: '123456',
-      })
-      .expect(422)
-  })
-
-  describe('Should not successfully sign in', () => {
-    test('Due to not found email', () => {
-      return testServer
-        .post('/auth/login')
-        .send({
-          email: 'another.email@example.com',
-          password: '123456',
-        })
-        .expect(404)
-    })
-
-    test('Due to wrong password', () => {
-      return testServer
-        .post('/auth/login')
-        .send({
-          email,
-          password: '1234567',
-        })
-        .expect(400)
-    })
   })
 })

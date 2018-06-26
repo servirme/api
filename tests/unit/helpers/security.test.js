@@ -1,4 +1,4 @@
-const security = require('../../src/helpers/security')
+const security = require('../../../src/helpers/security')
 
 describe('Security', () => {
   const password = '123456'

@@ -1,6 +1,6 @@
-const jwt = require('../../src/helpers/jwt')
-const ExpiredError = require('../../src/Errors/Expired')
-const InvalidError = require('../../src/Errors/Invalid')
+const jwt = require('../../../src/helpers/jwt')
+const ExpiredError = require('../../../src/Errors/Expired')
+const InvalidError = require('../../../src/Errors/Invalid')
 
 const payload = {
   name: 'matheus',
@@ -21,12 +21,26 @@ const payload = {
 }
 
 describe('JWT', () => {
-  test('sign and verify', () => {
-    const jwtToken = jwt.sign(payload)
-    expect(typeof jwtToken).toBe('string')
+  describe('with payload signed', () => {
+    let jwtToken
 
-    const payloadInsideToken = jwt.verify(jwtToken)
-    expect(payloadInsideToken).toMatchObject(payload)
+    beforeAll(() => {
+      jwtToken = jwt.sign(payload)
+    })
+
+    test('token should be a string', () => {
+      expect(typeof jwtToken).toBe('string')
+    })
+
+    test('verify should return same payload', () => {
+      const payloadInsideToken = jwt.verify(jwtToken)
+      expect(payloadInsideToken).toMatchObject(payload)
+    })
+
+    test('decode should return the same payload', () => {
+      const payloadInsideToken = jwt.getData(jwtToken)
+      expect(payloadInsideToken).toMatchObject(payload)
+    })
   })
 
   test('invalid issuer', () => {
