@@ -1,7 +1,9 @@
+const { JWT_SECRET } = process.env
+
 module.exports = {
   jwt: {
-    secret: '',
-    issuer: 'https://api.servir.me',
-    expiresIn: 60 * 60 * 24, // 1 day
+    issuer: 'api.servir.me',
+    expiresIn: '1d',
+    secret: JWT_SECRET,
   },
 }

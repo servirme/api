@@ -39,8 +39,6 @@ services:
       test: ["CMD", "curl", "-f", "http://localhost:3000/status"]
       interval: 10s
       retries: 5
-    depends_on:
-      - postgres
 
   nginx-proxy:
     container_name: 'nginx-proxy'
