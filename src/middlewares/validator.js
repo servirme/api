@@ -13,11 +13,3 @@ module.exports = schema => (req, res, next) => {
     next()
   }
 }
-
-module.exports.getRuleRequired = (rule, required) => {
-  if (required) {
-    return rule.required()
-  }
-
-  return rule
-}
