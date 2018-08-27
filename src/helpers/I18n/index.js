@@ -1,13 +1,12 @@
 const { join } = require('path')
 const i18n = require('i18n')
+const log4js = require('log4js')
+const { i18n: i18nConfig } = require('../../../config/app')
 
-const validLocales = [
-  'pt-BR',
-  'en-US',
-]
+const logger = log4js.getLogger('api')
 
 const i18nBaseConfig = {
-  locales: validLocales,
+  locales: i18nConfig.validLocales,
   objectNotation: true,
   syncFiles: true,
   indent: '  ',
@@ -25,33 +24,37 @@ const normalizeTranslateInput = (key, data = {}) => {
 }
 const instances = {}
 
-class I18n {
-  static getInstance(language) {
-    if (!instances[language]) {
-      const instance = new I18n()
+module.exports.getInstance = (language) => {
+  if (!instances[language]) {
+    const instance = {
+      translate(...params) {
+        const { key, data } = normalizeTranslateInput(...params)
+        // eslint-disable-next-line no-underscore-dangle
+        const translated = this.__(key, data)
 
-      const i18nConfig = Object.assign(i18nBaseConfig, {
-        register: instance.i18n,
-      })
-      i18n.configure(i18nConfig)
-      instance.i18n.setLocale(language)
+        if (translated === key) {
+          logger.warn(`Response not translated: '${key}'`)
+        }
 
-      instances[language] = instance
+        return translated
+      },
     }
-    return instances[language]
-  }
 
-  constructor() {
-    this.i18n = {}
-  }
+    const i18nInstanceConfig = Object.assign(i18nBaseConfig, {
+      register: instance,
+    })
+    i18n.configure(i18nInstanceConfig)
+    instance.setLocale(language)
 
-  translate(...params) {
-    const { key, data } = normalizeTranslateInput(...params)
-    // eslint-disable-next-line no-underscore-dangle
-    return this.i18n.__(key, data)
+    instances[language] = instance
   }
+  return instances[language]
 }
 
-I18n.validLocales = validLocales
+module.exports.getLanguageOrDefault = (language) => {
+  if (language && i18nConfig.locales.includes(language)) {
+    return language
+  }
 
-module.exports = I18n
+  return i18nConfig.default
+}

@@ -1,11 +1,8 @@
 const { Router } = require('express')
-const PlanController = require('../Controllers/Plan')
+const { index, show } = require('../controllers/plan')
 const { wrapAction } = require('../helpers/express')
 
 const router = Router()
-const controller = new PlanController()
-
-const { index, show } = controller
 
 router.get(
   '/plans/',

@@ -1,6 +1,6 @@
 const { AUTH } = require('../../../config/constants')
 const testServer = require('../testServer')
-const { database } = require('../../../src/helpers/database')
+const { models } = require('../../../src/helpers/database')
 const { auth } = require('../helpers')
 
 const { admin: getAdminToken } = auth
@@ -12,8 +12,8 @@ describe('Establishment routes', () => {
   beforeAll(() => {
     adminToken = getAdminToken()
 
-    return database.master.establishment.truncate({ force: true })
-      .then(() => database.master.establishmentUser.truncate({ force: true }))
+    return models.master.establishment.truncate({ force: true })
+      .then(() => models.master.establishmentUser.truncate({ force: true }))
   })
 
   test('Should create a establishment', () => {

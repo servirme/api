@@ -1,6 +1,11 @@
 const { Router } = require('express')
 
-const AuthController = require('../Controllers/Auth')
+const {
+  check,
+  login,
+  register,
+  refreshToken,
+} = require('../controllers/auth')
 const { wrapAction } = require('../helpers/express')
 const { anyAuth, validate } = require('../middlewares')
 const {
@@ -9,14 +14,6 @@ const {
 } = require('../validators/auth')
 
 const router = Router()
-const controller = new AuthController()
-
-const { check } = AuthController
-const {
-  login,
-  register,
-  refreshToken,
-} = controller
 
 router.post(
   '/auth/login',

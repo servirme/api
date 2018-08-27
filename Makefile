@@ -100,8 +100,7 @@ send-coverage-data:
 
 # Docker related commands
 down:
-	@docker-compose stop
-	@docker-compose rm -v -f
+	@docker-compose down
 
 clean:
 	@docker-compose down -v --rmi local --remove-orphans
