@@ -1,6 +1,11 @@
 const { Router } = require('express')
 
-const EstablishmentController = require('../Controllers/Establishment')
+const {
+  show,
+  create,
+  update,
+  // userEstabilishments,
+} = require('../controllers/establishment')
 const {
   adminAuth,
   validate,
@@ -13,14 +18,6 @@ const {
 const { wrapAction } = require('../helpers/express')
 
 const router = Router()
-const controller = new EstablishmentController()
-
-const {
-  show,
-  create,
-  update,
-  // userEstabilishments,
-} = controller
 
 router.post(
   '/establishments',

@@ -1,11 +1,11 @@
 const { lensPath, view, set } = require('ramda')
-const I18n = require('../helpers/I18n')
+const i18n = require('../helpers/I18n')
 
 const translateBody = (translate, body, language) => {
-  const i18n = I18n.getInstance(language)
+  const i18nInstance = i18n.getInstance(language)
 
   if (typeof body === 'string') {
-    return i18n.translate(body)
+    return i18nInstance.translate(body)
   }
 
   return translate.reduce((oldBody, keyToTranslate) => {
@@ -13,7 +13,7 @@ const translateBody = (translate, body, language) => {
     const path = lensPath(keyTranslatePath)
 
     const value = view(path, oldBody)
-    const translated = i18n.translate(value)
+    const translated = i18nInstance.translate(value)
 
     return set(path, translated, oldBody)
   }, body)
@@ -22,10 +22,7 @@ const translateBody = (translate, body, language) => {
 const getRequestLanguage = (req) => {
   const language = req.headers['accept-language']
 
-  if (language && I18n.validLocales.includes(language)) {
-    return language
-  }
-  return I18n.validLocales[0]
+  return i18n.getLanguageOrDefault(language)
 }
 
 module.exports = (req, res, next) => {

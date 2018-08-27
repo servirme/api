@@ -68,16 +68,15 @@ const mountEntity = (
 
 const sequelize = new Sequelize(sequelizeConfig)
 
-const database = map(
+const models = map(
   map(entity => mountEntity(sequelize, entity)),
   entitiesIndexed
 )
-database.sequelize = sequelize
 
 const runSingleAssociate = (entity) => {
-  const mountedEntity = database[entity.type][entity.name]
+  const mountedEntity = models[entity.type][entity.name]
 
-  entity.associate(mountedEntity, database)
+  entity.associate(mountedEntity, models)
 }
 
 const runAssociate = () => {
@@ -91,5 +90,6 @@ if (DATABASE_DIALECT === 'sqlite') {
   sequelize.sync()
 }
 
-module.exports.database = database
+module.exports.models = models
+module.exports.sequelize = sequelize
 module.exports.getClientDatabase = concat(DATABASE.CLIENT_PREFIX)
