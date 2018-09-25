@@ -1,12 +1,5 @@
 const { models } = require('./base')
 
-module.exports.createUser = ({ email, password }) => models.master.user
-  .create({
-    email,
-    password,
-  })
+module.exports.createUser = userPayload => models.User.create(userPayload)
 
-module.exports.getByEmail = email => models.master.user
-  .findOne({
-    where: { email },
-  })
+module.exports.getByEmail = email => models.User.findOne({ where: { email } })

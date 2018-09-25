@@ -1,13 +1,10 @@
-const runClients = require('./helpers/client')
-
-const tableName = 'items'
+const table = {
+  tableName: 'items',
+}
 
 module.exports = {
   up(queryInterface, Sequelize) {
-    const migrationUp = schema => queryInterface.createTable({
-      schema,
-      tableName,
-    }, {
+    return queryInterface.createTable(table, {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -41,15 +38,8 @@ module.exports = {
       updated_at: Sequelize.DATE,
       deleted_at: Sequelize.DATE,
     })
-
-    return runClients(queryInterface, migrationUp)
   },
   down(queryInterface) {
-    const migrationDown = schema => queryInterface.dropTable({
-      schema,
-      tableName,
-    })
-
-    return runClients(queryInterface, migrationDown)
+    return queryInterface.dropTable(table)
   },
 }

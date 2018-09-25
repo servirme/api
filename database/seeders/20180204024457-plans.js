@@ -1,6 +1,4 @@
-const { DATABASE } = require('../config/constants')
-
-const tableName = { tableName: 'plans', schema: DATABASE.MASTER }
+const tableName = { tableName: 'plans' }
 
 module.exports = {
   up: queryInterface => queryInterface.bulkInsert(tableName, [

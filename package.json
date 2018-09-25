@@ -17,14 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MatheusVellone/servir.me-api.git"
+    "url": "git+https://github.com/servirme/api.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MatheusVellone/servir.me-api/issues"
+    "url": "https://github.com/servirme/api/issues"
   },
-  "homepage": "https://github.com/MatheusVellone/servir.me-api#readme",
+  "homepage": "https://github.com/servirme/api#readme",
   "dependencies": {
     "bcrypt": "3.0.1",
     "bluebird": "3.5.1",

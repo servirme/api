@@ -1,8 +1,5 @@
-const { DATABASE } = require('../config/constants')
-
 const table = {
-  schema: DATABASE.MASTER,
-  tableName: 'users',
+  tableName: 'menus',
 }
 
 module.exports = {
@@ -13,16 +10,9 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true,
       },
-      email: {
-        type: Sequelize.STRING(60),
+      name: {
+        type: Sequelize.STRING(100),
         allowNull: false,
-        unique: true,
-        validate: {
-          isEmail: true,
-        },
-      },
-      password: {
-        type: Sequelize.STRING(60),
       },
       active: {
         type: Sequelize.BOOLEAN,
@@ -32,9 +22,6 @@ module.exports = {
       updated_at: Sequelize.DATE,
       deleted_at: Sequelize.DATE,
     })
-      .then(() => queryInterface.addIndex(table, {
-        fields: ['email'],
-      }))
   },
   down(queryInterface) {
     return queryInterface.dropTable(table)

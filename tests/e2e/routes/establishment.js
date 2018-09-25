@@ -12,8 +12,8 @@ describe('Establishment routes', () => {
   beforeAll(() => {
     adminToken = getAdminToken()
 
-    return models.master.establishment.truncate({ force: true })
-      .then(() => models.master.establishmentUser.truncate({ force: true }))
+    return models.Establishment.truncate({ force: true })
+      .then(() => models.EstablishmentUser.truncate({ force: true }))
   })
 
   test('Should create a establishment', () => {

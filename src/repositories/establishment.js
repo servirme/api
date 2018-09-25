@@ -1,11 +1,9 @@
 const { models } = require('./base')
-const { DATABASE } = require('../../config/constants')
 
-const getOne = id => models.master.establishment
-  .findById(id, { searchPath: DATABASE.MASTER })
+const getOne = id => models.Establishment.findById(id)
 module.exports.getOne = getOne
 
-module.exports.create = data => models.master.establishment.create(data)
+module.exports.create = data => models.Establishment.create(data)
 
 module.exports.update = async (id, data) => {
   const resource = await getOne(id)
