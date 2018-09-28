@@ -8,7 +8,7 @@
     "start-prod": "pm2-docker start pm2.config.js",
     "pm2-restart": "pm2 reload pm2.config.js",
     "lint": "eslint .",
-    "send-coverage-data": "codecov",
+    "send-coverage-data": "cat ./coverage/lcov.info | coveralls",
     "test-e2e": "jest --forceExit --config tests/e2e/jest.config.js",
     "test-unit": "jest --config tests/unit/jest.config.js",
     "test-unit-watch": "jest --config tests/unit/jest.config.js --watch",
@@ -45,7 +45,7 @@
     "uuid": "3.2.1"
   },
   "devDependencies": {
-    "codecov": "3.0.2",
+    "coveralls": "3.0.2",
     "cross-env": "5.1.5",
     "eslint": "4.19.1",
     "eslint-config-matheusvellone-base": "1.0.12",

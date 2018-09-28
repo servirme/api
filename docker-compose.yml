@@ -2,7 +2,7 @@ version: "3"
 services:
   postgres:
     container_name: 'servirme_dev_db'
-    image: postgres:9
+    image: postgres:10
     restart: always
     environment:
       POSTGRES_DB: servirme
@@ -27,8 +27,6 @@ services:
     networks:
       - application
     environment:
-      - CODECOV_TOKEN
-      - CI
       - NODE_ENV=development
     expose:
       - 3000

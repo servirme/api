@@ -1,0 +1,61 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/node:10.3
+        environment:
+          NODE_ENV: test
+      - image: circleci/postgres:10
+        name: test-postgres
+        environment:
+          POSTGRES_DB: servirme
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 123$$
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+      - run:
+          name: Install Dependencies
+          command: npm ci
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run:
+          name: Run migrations
+          command: npm run migrate
+      - run:
+          name: Run seeders
+          command: npm run seed
+      - run:
+          name: Run linter
+          command: npm run lint
+      - run:
+          name: Run e2e tests
+          command: npm run test-e2e
+      - run:
+          name: Run unit tests
+          command: npm run test-unit
+      - run:
+          name: Send Coverage data
+          command: npm run send-coverage-data
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+    - test:
+        filters:
+          tags:
+            only: /^v.*/
