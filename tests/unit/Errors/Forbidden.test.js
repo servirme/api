@@ -2,8 +2,8 @@ const BaseError = require('../../../src/Errors/BaseError')
 const ForbiddenError = require('../../../src/Errors/Forbidden')
 const { forbidden } = require('../../../config/errorCodes')
 
-const startCode = 1800
-const endCode = 1899
+const startCode = 1700
+const endCode = 1799
 
 describe('ForbiddenError', () => {
   test('should be a instance of BaseError', () => {

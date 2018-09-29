@@ -1,19 +1,18 @@
 const log4js = require('log4js')
 const { assocPath, isNil, path } = require('ramda')
 
-const { NODE_ENV } = process.env
+const { isProd, env } = require('./env')
 
-const isProduction = NODE_ENV === 'production'
 const logLevels = {
   production: 'ALL',
   test: 'ERROR',
   development: 'ALL',
 }
-const logType = isProduction ? 'dateFile' : 'stdout'
-const layoutType = isProduction ? 'json' : 'colored'
+const logType = isProd ? 'dateFile' : 'stdout'
+const layoutType = isProd ? 'json' : 'colored'
 
 const log4jsConfig = {
-  pm2: isProduction,
+  pm2: isProd,
   levels: {
     RESPONSE_ERROR_4XX: {
       value: log4js.levels.WARN.level,
@@ -46,11 +45,11 @@ const log4jsConfig = {
   categories: {
     api: {
       appenders: ['apiFile'],
-      level: logLevels[NODE_ENV],
+      level: logLevels[env],
     },
     database: {
       appenders: ['databaseFile'],
-      level: logLevels[NODE_ENV],
+      level: logLevels[env],
     },
     default: {
       appenders: ['console'],

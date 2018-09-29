@@ -3,7 +3,6 @@
   "empty-token-unauthorized": "empty-token-unauthorized",
   "not-authorized-unauthorized": "not-authorized-unauthorized",
   "invalid-token-unauthorized": "invalid-token-unauthorized",
-  "http-500": "http-500",
   "validation": {
     "any": {
       "required": "validation.any.required",
@@ -23,7 +22,8 @@
   "establishment": {
     "created": "establishment.created",
     "show": "establishment.show",
-    "updated": "establishment.updated"
+    "updated": "establishment.updated",
+    "user-list": "establishment.user-list"
   },
   "invalid": {
     "password": "invalid.password",
@@ -76,5 +76,8 @@
   },
   "robots": {
     "txt": "User-agent: *\nDisallow: /"
+  },
+  "http": {
+    "500": "http.500"
   }
 }

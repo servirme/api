@@ -20,19 +20,15 @@ module.exports = {
   mismatch: {
     generic: 1400,
   },
-  expired: {
-    generic: 1500,
-    jwt: 1501,
-  },
   unauthorized: {
-    generic: 1600,
-    'empty-token': 1601,
+    generic: 1500,
+    'empty-token': 1501,
   },
   limitExceeded: {
-    generic: 1700,
+    generic: 1600,
   },
   forbidden: {
-    generic: 1800,
-    jwt: 1801,
+    generic: 1700,
+    jwt: 1701,
   },
 }

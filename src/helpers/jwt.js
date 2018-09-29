@@ -2,7 +2,7 @@ const Jwt = require('jsonwebtoken')
 const { dissoc, pipe } = require('ramda')
 
 const { jwt } = require('../../config/auth')
-const ExpiredError = require('../Errors/Expired')
+const NotAuthorizedError = require('../Errors/NotAuthorized')
 const InvalidError = require('../Errors/Invalid')
 
 const removeJwtFields = pipe(
@@ -33,7 +33,7 @@ module.exports.verify = (jwtToken, {
     return Jwt.verify(jwtToken, secret, verifyOptions)
   } catch (jwtError) {
     if (jwtError.name === 'TokenExpiredError') {
-      throw new ExpiredError('jwt')
+      throw new NotAuthorizedError('jwt')
     }
     throw new InvalidError('jwt')
   }

@@ -8,6 +8,8 @@ const {
   has,
 } = require('ramda')
 
+const { isProd } = require('../../config/env')
+
 const {
   DATABASE_DATABASE,
   DATABASE_DIALECT,
@@ -15,11 +17,10 @@ const {
   DATABASE_PASSWORD,
   DATABASE_USERNAME,
   LOGGING,
-  NODE_ENV,
 } = process.env
 const logger = log4js.getLogger('database')
 
-const logging = (NODE_ENV === 'production' || LOGGING === 'true') && logger.debug.bind(logger)
+const logging = (isProd || LOGGING === 'true') && logger.debug.bind(logger)
 
 const sequelizeConfig = {
   database: DATABASE_DATABASE,
@@ -70,3 +71,4 @@ if (DATABASE_DIALECT === 'sqlite') {
 
 module.exports.models = models
 module.exports.sequelize = sequelize
+module.exports.Op = Sequelize.Op

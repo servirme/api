@@ -1,9 +1,9 @@
 const { resolve } = require('path')
 const dotenv = require('dotenv')
 
-const { NODE_ENV = 'development' } = process.env
+const { env } = require('./config/env')
 
-const envFile = resolve(__dirname, 'config', 'environment', NODE_ENV)
+const envFile = resolve(__dirname, 'config', 'environment', env)
 
 dotenv.config({
   path: envFile,
