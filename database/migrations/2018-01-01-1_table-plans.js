@@ -1,20 +1,24 @@
-const runClients = require('./helpers/client')
-
-const tableName = 'menus'
+const table = {
+  tableName: 'plans',
+}
 
 module.exports = {
   up(queryInterface, Sequelize) {
-    const migrationUp = schema => queryInterface.createTable({
-      schema,
-      tableName,
-    }, {
+    return queryInterface.createTable(table, {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
       name: {
-        type: Sequelize.STRING(100),
+        type: Sequelize.STRING(30),
+        allowNull: false,
+      },
+      description: {
+        type: Sequelize.TEXT,
+      },
+      price: {
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
       active: {
@@ -25,15 +29,8 @@ module.exports = {
       updated_at: Sequelize.DATE,
       deleted_at: Sequelize.DATE,
     })
-
-    return runClients(queryInterface, migrationUp)
   },
   down(queryInterface) {
-    const migrationDown = schema => queryInterface.dropTable({
-      schema,
-      tableName,
-    })
-
-    return runClients(queryInterface, migrationDown)
+    return queryInterface.dropTable(table)
   },
 }

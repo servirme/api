@@ -2,11 +2,7 @@ const InvalidError = require('../Errors/Invalid')
 const establishmentTransform = require('../transforms/establishment')
 const establishmentRepository = require('../repositories/establishment')
 const establishmentUserRepository = require('../repositories/establishmentUser')
-// const copyDatabase = require('../../scripts/copyDatabase')
 const { checkConflict, checkExists } = require('../helpers/model')
-
-// const createEstablishmentDatabaseSchema = establishment =>
-//   copyDatabase(establishment.id)
 
 const validateOneEstablishmentPerUser = async (userId) => {
   const establishments = await establishmentUserRepository
@@ -33,8 +29,6 @@ module.exports.createEstablishment = async (establishmentData, userId) => {
       userId,
       establishmentCreated.id
     )
-
-    // await createEstablishmentDatabaseSchema(establishmentCreated)
 
     await establishmentRepository.activate(establishmentCreated)
 

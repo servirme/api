@@ -1,7 +1,4 @@
-const { DATABASE } = require('../config/constants')
-
 const table = {
-  schema: DATABASE.MASTER,
   tableName: 'establishments_users',
 }
 

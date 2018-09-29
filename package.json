@@ -17,16 +17,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MatheusVellone/servir.me-api.git"
+    "url": "git+https://github.com/servirme/api.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MatheusVellone/servir.me-api/issues"
+    "url": "https://github.com/servirme/api/issues"
   },
-  "homepage": "https://github.com/MatheusVellone/servir.me-api#readme",
+  "homepage": "https://github.com/servirme/api#readme",
   "dependencies": {
-    "bcrypt": "2.0.1",
+    "bcrypt": "3.0.1",
     "bluebird": "3.5.1",
     "body-parser": "1.18.3",
     "compression": "1.7.2",
@@ -36,12 +36,12 @@
     "i18n": "0.8.3",
     "joi": "13.3.0",
     "jsonwebtoken": "8.2.1",
-    "log4js": "2.9.0",
+    "log4js": "3.0.5",
     "pg": "7.4.3",
     "pm2": "2.10.4",
     "ramda": "0.25.0",
     "sequelize": "4.37.7",
-    "sqlite3": "4.0.0",
+    "sqlite3": "4.0.2",
     "uuid": "3.2.1"
   },
   "devDependencies": {

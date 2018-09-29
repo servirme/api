@@ -3,13 +3,10 @@ const { join } = require('path')
 const Sequelize = require('sequelize')
 const log4js = require('log4js')
 const {
-  assocPath,
-  concat,
+  assoc,
   filter,
   has,
-  map,
 } = require('ramda')
-const { DATABASE } = require('../../config/constants')
 
 const {
   DATABASE_DATABASE,
@@ -23,19 +20,6 @@ const {
 const logger = log4js.getLogger('database')
 
 const logging = (NODE_ENV === 'production' || LOGGING === 'true') && logger.debug.bind(logger)
-
-const ENTITIES_DIRECTORY = join(__dirname, '..', 'entities')
-
-const entitiesFiles = readdirSync(ENTITIES_DIRECTORY)
-  .map(file => join(ENTITIES_DIRECTORY, file))
-  .map(require)
-
-const assocEntities = (entities, entity) => assocPath(
-  [entity.type, entity.name],
-  entity,
-  entities
-)
-const entitiesIndexed = entitiesFiles.reduce(assocEntities, {})
 
 const sequelizeConfig = {
   database: DATABASE_DATABASE,
@@ -51,33 +35,27 @@ const sequelizeConfig = {
     idle: 60000,
     acquire: 20000,
   },
-  searchPath: 'servirme',
   dialectOptions: {
     prependSearchPath: true,
   },
 }
 
-const mountEntity = (
-  sequelizeInstance,
-  { name, fields, config = {} }
-) => sequelizeInstance.define(
-  name,
-  fields,
-  config
-)
-
 const sequelize = new Sequelize(sequelizeConfig)
 
-const models = map(
-  map(entity => mountEntity(sequelize, entity)),
-  entitiesIndexed
+const ENTITIES_DIRECTORY = join(__dirname, '..', 'entities')
+
+const entitiesFiles = readdirSync(ENTITIES_DIRECTORY)
+  .map(file => join(ENTITIES_DIRECTORY, file))
+  .map(entityName => sequelize.import(entityName))
+
+const assocEntities = (entities, entity) => assoc(
+  entity.name,
+  entity,
+  entities
 )
+const models = entitiesFiles.reduce(assocEntities, {})
 
-const runSingleAssociate = (entity) => {
-  const mountedEntity = models[entity.type][entity.name]
-
-  entity.associate(mountedEntity, models)
-}
+const runSingleAssociate = entity => entity.associate(models)
 
 const runAssociate = () => {
   const haveAssociations = filter(has('associate'), entitiesFiles)
@@ -92,4 +70,3 @@ if (DATABASE_DIALECT === 'sqlite') {
 
 module.exports.models = models
 module.exports.sequelize = sequelize
-module.exports.getClientDatabase = concat(DATABASE.CLIENT_PREFIX)

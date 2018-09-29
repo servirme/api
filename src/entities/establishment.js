@@ -1,50 +1,54 @@
-const Sequelize = require('sequelize')
-
-module.exports.name = 'establishment'
-module.exports.type = 'master'
-
-module.exports.fields = {
-  id: {
-    primaryKey: true,
-    autoIncrement: true,
-    type: Sequelize.INTEGER,
-  },
-  active: {
-    defaultValue: false,
-    type: Sequelize.BOOLEAN,
-  },
-  name: {
-    type: Sequelize.STRING(100),
-    allowNull: false,
-  },
-  logo: Sequelize.STRING(150),
-  street: Sequelize.STRING(50),
-  number: Sequelize.STRING(10),
-  district: Sequelize.STRING(50),
-  city: Sequelize.STRING(50),
-  state: Sequelize.STRING(50),
-  slug: {
-    type: Sequelize.STRING(20),
-    unique: true,
-  },
-  site: Sequelize.STRING(50),
-  landline_phone: Sequelize.STRING(30),
-  email: {
-    type: Sequelize.STRING(60),
-    validate: {
-      isEmail: true,
-    },
-  },
-  category_id: Sequelize.INTEGER,
-  plan_id: Sequelize.INTEGER,
-  created_at: Sequelize.DATE,
-  updated_at: Sequelize.DATE,
-  deleted_at: Sequelize.DATE,
-}
-
-module.exports.config = {
+const config = {
+  tableName: 'establishments',
   timestamps: true,
   underscored: true,
   deletedAt: 'deleted_at',
   paranoid: true,
+}
+
+module.exports = (sequelize, DataTypes) => {
+  const fields = {
+    id: {
+      primaryKey: true,
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+    },
+    active: {
+      defaultValue: false,
+      type: DataTypes.BOOLEAN,
+    },
+    name: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
+    logo: DataTypes.STRING(150),
+    street: DataTypes.STRING(50),
+    number: DataTypes.STRING(10),
+    district: DataTypes.STRING(50),
+    city: DataTypes.STRING(50),
+    state: DataTypes.STRING(50),
+    slug: {
+      type: DataTypes.STRING(20),
+      unique: true,
+    },
+    site: DataTypes.STRING(50),
+    landline_phone: DataTypes.STRING(30),
+    email: {
+      type: DataTypes.STRING(60),
+      validate: {
+        isEmail: true,
+      },
+    },
+    category_id: DataTypes.INTEGER,
+    plan_id: DataTypes.INTEGER,
+    created_at: DataTypes.DATE,
+    updated_at: DataTypes.DATE,
+    deleted_at: DataTypes.DATE,
+  }
+
+  return sequelize.define(
+    'Establishment',
+    fields,
+    config
+  )
 }

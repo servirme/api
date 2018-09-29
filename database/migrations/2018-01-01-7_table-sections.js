@@ -1,8 +1,5 @@
-const { DATABASE } = require('../config/constants')
-
 const table = {
-  schema: DATABASE.MASTER,
-  tableName: 'establishments_cookeries',
+  tableName: 'sections',
 }
 
 module.exports = {
@@ -13,14 +10,20 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true,
       },
-      cookery_id: {
+      menu_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      establishment_id: {
-        type: Sequelize.INTEGER,
+      name: {
+        type: Sequelize.STRING(50),
         allowNull: false,
       },
+      icon: {
+        type: Sequelize.STRING(50),
+      },
+      created_at: Sequelize.DATE,
+      updated_at: Sequelize.DATE,
+      deleted_at: Sequelize.DATE,
     })
   },
   down(queryInterface) {

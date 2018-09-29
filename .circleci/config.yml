@@ -10,11 +10,11 @@ jobs:
         environment:
           NODE_ENV: test
       - image: circleci/postgres:10
-        name: test-postgres
+        name: postgres
         environment:
           POSTGRES_DB: servirme
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: 123$$
+          POSTGRES_PASSWORD: abc12345678
 
     working_directory: ~/repo
 
