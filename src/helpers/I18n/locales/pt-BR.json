@@ -35,7 +35,7 @@
   },
   "url-not-found": "url-not-found",
   "status": {
-    "ok": "status.ok",
+    "ok": "OK",
     "okaaaa": "status.okaaaa"
   },
   "signed": {

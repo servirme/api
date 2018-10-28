@@ -44,7 +44,7 @@
     "show": "Listing cookery details successfully"
   },
   "status": {
-    "ok": "status.ok",
+    "ok": "OK",
     "okaaaa": "status.okaaaa"
   },
   "signed": {
