@@ -13,16 +13,6 @@ const layoutType = isProd ? 'json' : 'colored'
 
 const log4jsConfig = {
   pm2: isProd,
-  levels: {
-    RESPONSE_ERROR_4XX: {
-      value: log4js.levels.WARN.level,
-      colour: 'red',
-    },
-    RESPONSE_ERROR_5XX: {
-      value: log4js.levels.FATAL.level,
-      colour: 'red',
-    },
-  },
   appenders: {
     apiFile: {
       type: logType,

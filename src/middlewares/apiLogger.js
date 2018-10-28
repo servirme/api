@@ -6,11 +6,11 @@ const logger = log4js.getLogger('api')
 
 const getResponseLogLevel = (statusCode) => {
   if (statusCode >= 500) {
-    return 'RESPONSE_ERROR_5XX'
+    return 'FATAL'
   }
 
   if (statusCode >= 400) {
-    return 'RESPONSE_ERROR_4XX'
+    return 'WARN'
   }
 
   return 'DEBUG'
