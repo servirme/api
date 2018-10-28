@@ -3,25 +3,6 @@ const {
   toPairs,
 } = require('ramda')
 
-module.exports.extractResponseBody = (chunk, headers) => {
-  if (chunk) {
-    const isJson = headers && headers['content-type'] && headers['content-type'].indexOf('json') >= 0
-
-    const stringBody = chunk.toString()
-    if (isJson) {
-      try {
-        return JSON.parse(stringBody)
-      } catch (e) {
-        return stringBody
-      }
-    }
-
-    return stringBody
-  }
-
-  return chunk
-}
-
 module.exports.wrapAction = action => async (req, res, next) => {
   try {
     const response = await action(req)
@@ -37,6 +18,9 @@ module.exports.wrapAction = action => async (req, res, next) => {
     forEach(([key, value]) => {
       res.set(key, value)
     }, toPairs(headers))
+
+    // NOTE: will log body before applying i18n middleware
+    res.body = body
 
     res.status(statusCode).send(body)
   } catch (error) {
