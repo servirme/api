@@ -1,5 +1,5 @@
 const jwt = require('../../../src/helpers/jwt')
-const ExpiredError = require('../../../src/Errors/Expired')
+const NotAuthorizedError = require('../../../src/Errors/NotAuthorized')
 const InvalidError = require('../../../src/Errors/Invalid')
 
 const payload = {
@@ -56,6 +56,6 @@ describe('JWT', () => {
 
     expect(() => {
       jwt.verify(oldToken)
-    }).toThrow(ExpiredError)
+    }).toThrow(NotAuthorizedError)
   })
 })

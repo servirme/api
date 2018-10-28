@@ -10,16 +10,10 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true,
       },
-      establishment_id: {
-        type: Sequelize.INTEGER,
-      },
       email: {
         type: Sequelize.STRING(60),
         allowNull: false,
         unique: true,
-        validate: {
-          isEmail: true,
-        },
       },
       password: {
         type: Sequelize.STRING(60),

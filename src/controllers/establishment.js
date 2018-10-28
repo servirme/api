@@ -44,14 +44,3 @@ module.exports.show = async ({ params }) => {
     },
   }
 }
-
-// userEstabilishments({ auth }) {
-//   return establishmentModel.getUserEstablishment(auth.user.id)
-//     .then(establishments => ({
-//       statusCode: 200,
-//       body: {
-//         message: 'establishment.user-list',
-//         result: establishments,
-//       },
-//     }))
-// }

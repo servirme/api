@@ -9,4 +9,4 @@ module.exports.linkUserAndEstablishment = (
 })
 
 module.exports.getEstablishmentsFromUser = userId => models.EstablishmentUser
-  .find({ where: { user_id: userId } })
+  .findAll({ where: { user_id: userId } })

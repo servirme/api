@@ -2,8 +2,8 @@ const BaseError = require('../../../src/Errors/BaseError')
 const NotAuthorizedError = require('../../../src/Errors/NotAuthorized')
 const { unauthorized } = require('../../../config/errorCodes')
 
-const startCode = 1600
-const endCode = 1699
+const startCode = 1500
+const endCode = 1599
 
 describe('NotAuthorizedError', () => {
   test('should be a instance of BaseError', () => {

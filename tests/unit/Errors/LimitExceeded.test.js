@@ -2,8 +2,8 @@ const BaseError = require('../../../src/Errors/BaseError')
 const LimitExceededError = require('../../../src/Errors/LimitExceeded')
 const { limitExceeded } = require('../../../config/errorCodes')
 
-const startCode = 1700
-const endCode = 1799
+const startCode = 1600
+const endCode = 1699
 
 describe('LimitExceededError', () => {
   test('should be a instance of BaseError', () => {

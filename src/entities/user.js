@@ -18,9 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(60),
       allowNull: false,
       unique: true,
-      validate: {
-        isEmail: true,
-      },
     },
     active: {
       type: DataTypes.BOOLEAN,
