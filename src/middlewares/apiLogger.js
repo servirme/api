@@ -1,5 +1,6 @@
 const log4js = require('log4js')
-const { extractResponseBody } = require('../helpers/express')
+const onFinished = require('on-finished')
+
 const { getData } = require('../helpers/jwt')
 
 const logger = log4js.getLogger('api')
@@ -36,14 +37,7 @@ module.exports = (req, res, next) => {
 
   logger.debug(requestLog)
 
-  const { end } = res
-  res.end = (chunk, encoding) => {
-    res.end = end
-    res.end(chunk, encoding)
-
-    // eslint-disable-next-line no-underscore-dangle
-    const responseBody = extractResponseBody(chunk, res._headers)
-
+  onFinished(res, () => {
     const endTime = Date.now()
     const difference = endTime - req.startTime.getTime()
 
@@ -52,14 +46,14 @@ module.exports = (req, res, next) => {
     // Response
     logger.log(logLevel, {
       requestId: req.requestId,
-      type: 'reponse',
-      body: responseBody,
+      type: 'response',
+      body: res.body,
       // eslint-disable-next-line no-underscore-dangle
       headers: res._headers,
       statusCode: res.statusCode,
       latency: difference,
     })
-  }
+  })
 
   next()
 }
