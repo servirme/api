@@ -1,4 +1,4 @@
-require('./global-setup')
+require('./setup')
 const express = require('express')
 const cors = require('cors')
 const { json } = require('body-parser')
@@ -12,6 +12,7 @@ const {
 const { wrapAction } = require('./helpers/express')
 const appGenericRoutes = require('./routes/otherRoutes')
 const appRoutes = require('./routes/appRoutes')
+const NotFoundError = require('./Errors/NotFound')
 
 const app = express()
 
@@ -27,12 +28,9 @@ app.use(requestMetadata)
 app.use(appGenericRoutes)
 app.use(appRoutes)
 
-const notFoundResponse = () => ({
-  statusCode: 404,
-  body: {
-    message: 'url-not-found',
-  },
-})
+const notFoundResponse = () => {
+  throw new NotFoundError('url')
+}
 
 app.all('*', wrapAction(notFoundResponse))
 

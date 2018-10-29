@@ -1,6 +1,6 @@
 const Joi = require('joi')
 
-const { AUTH } = require('../../config/constants')
+const { AUTH } = require('../constants')
 
 const authSchema = Joi.object({
   email: Joi.string().email().required(),

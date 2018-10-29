@@ -1,7 +1,7 @@
 const { pluck } = require('ramda')
 
 const establishmentTransform = require('../transforms/establishment')
-const { models, Op } = require('./database')
+const { models, Operators } = require('./database')
 const { hashPassword } = require('../helpers/security')
 const { checkConflict, checkExists } = require('../helpers/model')
 
@@ -33,7 +33,7 @@ module.exports.getEstablishments = async (userId) => {
   const establishmentIds = pluck('establishment_id', userEstablishments)
 
   const establishments = await models.Establishment.findAll({
-    where: { id: { [Op.in]: establishmentIds } },
+    where: { id: { [Operators.in]: establishmentIds } },
   })
 
   const transformedEstablishments = establishments

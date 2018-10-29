@@ -21,7 +21,8 @@ if (!validEnvs.includes(env)) {
 
 sequelize.authenticate()
   .then(() => {
+    logger.debug('Successfully connected to database')
     app.listen(PORT, () => {
-      logger.info(`Server is running in '${env}' mode on port ${PORT}`)
+      logger.debug(`Server is running in '${env}' mode on port ${PORT}`)
     })
   })

@@ -2,7 +2,7 @@ const { path } = require('ramda')
 const jwt = require('../helpers/jwt')
 const NotAuthorizedError = require('../Errors/NotAuthorized')
 const ForbiddenError = require('../Errors/Forbidden')
-const { AUTH } = require('../../config/constants')
+const { AUTH } = require('../constants')
 const { jwt: jwtValidator } = require('../validators/auth')
 
 const { HEADER, LEVELS } = AUTH

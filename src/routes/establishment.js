@@ -4,7 +4,6 @@ const {
   show,
   create,
   update,
-  // userEstabilishments,
 } = require('../controllers/establishment')
 const {
   adminAuth,
@@ -25,11 +24,6 @@ router.post(
   validate(createSchema),
   wrapAction(create)
 )
-// router.get(
-//   '/establishments/my',
-//   adminAuth,
-//   wrapAction(userEstabilishments)
-// )
 router.put(
   '/establishment/:id',
   adminAuth,

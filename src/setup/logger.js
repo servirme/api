@@ -1,44 +1,33 @@
 const log4js = require('log4js')
 const { assocPath, isNil, path } = require('ramda')
 
-const { isProd, env } = require('./env')
+const { isProd, env } = require('../../config/env')
 
 const logLevels = {
   production: 'ALL',
   test: 'ERROR',
-  development: 'ALL',
+  development: 'WARN',
 }
-const logType = isProd ? 'dateFile' : 'stdout'
-const layoutType = isProd ? 'json' : 'colored'
+const logType = isProd ? 'apiFile' : 'console'
 
 const log4jsConfig = {
   pm2: isProd,
   appenders: {
     apiFile: {
-      type: logType,
+      type: 'dateFile',
       alwaysIncludePattern: true,
       daysToKeep: 30,
-      layout: { type: layoutType },
+      layout: { type: 'json' },
       filename: 'logs/api.log',
-    },
-    databaseFile: {
-      type: logType,
-      alwaysIncludePattern: true,
-      daysToKeep: 30,
-      layout: { type: layoutType },
-      filename: 'logs/database.log',
     },
     console: {
       type: 'stdout',
+      layout: { type: 'colored' },
     },
   },
   categories: {
     api: {
-      appenders: ['apiFile'],
-      level: logLevels[env],
-    },
-    database: {
-      appenders: ['databaseFile'],
+      appenders: [logType],
       level: logLevels[env],
     },
     default: {
@@ -64,7 +53,7 @@ const replaceSensitiveFields = (data) => {
     const needToReplace = !isNil(path(fieldPath, body))
 
     if (needToReplace) {
-      return assocPath(fieldPath, '******', body)
+      return assocPath(fieldPath, '*', body)
     }
 
     return body
@@ -72,7 +61,7 @@ const replaceSensitiveFields = (data) => {
 }
 
 const jsonLayout = () => logEvent => logEvent.data.map(data => JSON.stringify({
-  timestamp: logEvent.startTime,
+  time: logEvent.startTime,
   level: logEvent.level.levelStr,
   category: logEvent.categoryName,
   data: replaceSensitiveFields(data),

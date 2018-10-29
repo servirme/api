@@ -1,4 +1,3 @@
-const Sequelize = require('sequelize')
 const { merge } = require('ramda')
 
 const sequelize = require('../database')
@@ -19,6 +18,6 @@ const paginate = (
   return model.findAll(databaseOptions)
 }
 
-module.exports.Op = Sequelize.Op
+module.exports.Operators = sequelize.Operators
 module.exports.getTransaction = getTransaction
 module.exports.paginate = paginate

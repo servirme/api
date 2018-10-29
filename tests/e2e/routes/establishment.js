@@ -1,4 +1,4 @@
-const { AUTH } = require('../../../config/constants')
+const { AUTH } = require('../../../src/constants')
 const testServer = require('../testServer')
 const { models } = require('../../../src/models/database')
 const { auth } = require('../helpers')
