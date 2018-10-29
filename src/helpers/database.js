@@ -1,74 +1,24 @@
-const { readdirSync } = require('fs')
-const { join } = require('path')
 const Sequelize = require('sequelize')
-const log4js = require('log4js')
-const {
-  assoc,
-  filter,
-  has,
-} = require('ramda')
+const { merge } = require('ramda')
 
-const { isProd } = require('../../config/env')
+const sequelize = require('../database')
 
-const {
-  DATABASE_DATABASE,
-  DATABASE_DIALECT,
-  DATABASE_HOST,
-  DATABASE_PASSWORD,
-  DATABASE_USERNAME,
-  LOGGING,
-} = process.env
-const logger = log4js.getLogger('database')
+const getTransaction = () => sequelize.transaction()
 
-const logging = (isProd || LOGGING === 'true') && logger.debug.bind(logger)
+const paginate = (
+  model,
+  dbOptions = {},
+  paginationOptions = {}
+) => {
+  const { page = 1, limit = 10 } = paginationOptions
+  const databaseOptions = merge(dbOptions, {
+    offset: page * limit,
+    limit,
+  })
 
-const sequelizeConfig = {
-  database: DATABASE_DATABASE,
-  host: DATABASE_HOST,
-  dialect: DATABASE_DIALECT,
-  logging,
-  operatorsAliases: Sequelize.Op,
-  username: DATABASE_USERNAME,
-  password: DATABASE_PASSWORD,
-  benchmark: true,
-  pool: {
-    handleDisconnects: true,
-    idle: 60000,
-    acquire: 20000,
-  },
-  dialectOptions: {
-    prependSearchPath: true,
-  },
+  return model.findAll(databaseOptions)
 }
 
-const sequelize = new Sequelize(sequelizeConfig)
-
-const ENTITIES_DIRECTORY = join(__dirname, '..', 'entities')
-
-const entitiesFiles = readdirSync(ENTITIES_DIRECTORY)
-  .map(file => join(ENTITIES_DIRECTORY, file))
-  .map(entityName => sequelize.import(entityName))
-
-const assocEntities = (entities, entity) => assoc(
-  entity.name,
-  entity,
-  entities
-)
-const models = entitiesFiles.reduce(assocEntities, {})
-
-const runSingleAssociate = entity => entity.associate(models)
-
-const runAssociate = () => {
-  const haveAssociations = filter(has('associate'), entitiesFiles)
-  Object.values(haveAssociations).forEach(runSingleAssociate)
-}
-
-runAssociate(entitiesFiles)
-
-if (DATABASE_DIALECT === 'sqlite') {
-  sequelize.sync()
-}
-
-module.exports.models = models
-module.exports.sequelize = sequelize
 module.exports.Op = Sequelize.Op
+module.exports.getTransaction = getTransaction
+module.exports.paginate = paginate

@@ -1,9 +1,7 @@
 const { pluck } = require('ramda')
 
-const userRepository = require('../repositories/user')
-const establishmentRepository = require('../repositories/establishment')
-const establishmentUserRepository = require('../repositories/establishmentUser')
 const establishmentTransform = require('../transforms/establishment')
+const { models, Op } = require('./database')
 const { hashPassword } = require('../helpers/security')
 const { checkConflict, checkExists } = require('../helpers/model')
 
@@ -11,7 +9,7 @@ module.exports.createUser = async ({ email, password }) => {
   try {
     const hashedPassword = await hashPassword(password)
 
-    return await userRepository.createUser({
+    return await models.User.create({
       email,
       password: hashedPassword,
     })
@@ -21,7 +19,7 @@ module.exports.createUser = async ({ email, password }) => {
 }
 
 module.exports.getByEmail = async (email) => {
-  const user = await userRepository.getByEmail(email)
+  const user = await models.User.findOne({ where: { email } })
 
   checkExists('user', user)
 
@@ -29,12 +27,14 @@ module.exports.getByEmail = async (email) => {
 }
 
 module.exports.getEstablishments = async (userId) => {
-  const userEstablishments = await establishmentUserRepository
-    .getEstablishmentsFromUser(userId)
+  const userEstablishments = await models.EstablishmentUser
+    .findAll({ where: { user_id: userId } })
 
   const establishmentIds = pluck('establishment_id', userEstablishments)
 
-  const establishments = await establishmentRepository.getIds(establishmentIds)
+  const establishments = await models.Establishment.findAll({
+    where: { id: { [Op.in]: establishmentIds } },
+  })
 
   const transformedEstablishments = establishments
     .map(establishmentTransform.output)
