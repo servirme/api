@@ -6,18 +6,25 @@ const {
 module.exports.wrapAction = action => async (req, res, next) => {
   try {
     const response = await action(req)
+
+    if (!response.statusCode) {
+      throw new Error('Missing statusCode in response')
+    }
+
     const {
-      statusCode = 200,
+      statusCode,
       body = {},
-      headers = {},
-      translate = [],
     } = response
 
-    translate.forEach(res.translate)
+    if (response.translate) {
+      response.translate.forEach(res.translate)
+    }
 
-    forEach(([key, value]) => {
-      res.set(key, value)
-    }, toPairs(headers))
+    if (response.headers) {
+      forEach(([key, value]) => {
+        res.set(key, value)
+      }, toPairs(response.headers))
+    }
 
     // NOTE: will log body before applying i18n middleware
     res.body = body

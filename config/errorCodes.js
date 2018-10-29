@@ -3,8 +3,9 @@ module.exports = {
   validationError: 1000,
   notFound: {
     generic: 1100,
-    user: 1101,
-    establishment: 1102,
+    url: 1101,
+    user: 1102,
+    establishment: 1103,
   },
   conflict: {
     generic: 1200,

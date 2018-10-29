@@ -30,7 +30,6 @@
     "body": "invalid.body",
     "jwt": "invalid.jwt"
   },
-  "url-not-found": "url-not-found",
   "plans": {
     "list": "Listing all plans successfully",
     "show": "Listing plan details successfully"
@@ -53,7 +52,8 @@
   },
   "not-found": {
     "user": "not-found.user",
-    "establishment": "not-found.establishment"
+    "establishment": "not-found.establishment",
+    "url": "not-found.url"
   },
   "conflict": {
     "user": "conflict.user",

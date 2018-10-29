@@ -1,7 +1,9 @@
 const { join } = require('path')
 const i18n = require('i18n')
 const log4js = require('log4js')
-const { i18n: i18nConfig } = require('../../../config/app')
+const { assoc } = require('ramda')
+
+const i18nConfig = require('../../../config/i18n')
 
 const logger = log4js.getLogger('api')
 
@@ -33,16 +35,17 @@ module.exports.getInstance = (language) => {
         const translated = this.__(key, data)
 
         if (translated === key) {
-          logger.warn(`Response not translated: '${key}'`)
+          logger.warn({
+            message: 'Response not translated',
+            key,
+          })
         }
 
         return translated
       },
     }
 
-    const i18nInstanceConfig = Object.assign(i18nBaseConfig, {
-      register: instance,
-    })
+    const i18nInstanceConfig = assoc('register', instance, i18nBaseConfig)
     i18n.configure(i18nInstanceConfig)
     instance.setLocale(language)
 

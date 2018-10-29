@@ -3,7 +3,7 @@ const userTransform = require('../transforms/user')
 const InvalidError = require('../Errors/Invalid')
 const { checkHashPassword } = require('../helpers/security')
 const { sign } = require('../helpers/jwt')
-const { AUTH } = require('../../config/constants')
+const { AUTH } = require('../constants')
 
 const signJwtUser = user => sign({ type: AUTH.LEVELS.ADMIN, user })
 const checkPassword = async (plainTextPassword, user) => {

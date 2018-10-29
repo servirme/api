@@ -8,8 +8,7 @@ const status = () => {
   return {
     statusCode: 200,
     body: {
-      date: now.toISOString(),
-      timestamp: now.getTime(),
+      datetime: now.toISOString(),
       message: 'status.ok',
     },
   }

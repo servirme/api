@@ -1,6 +1,6 @@
 const { mergeAll } = require('ramda')
 
-const { AUTH } = require('../../config/constants')
+const { AUTH } = require('../../src/constants')
 const { sign } = require('../../src/helpers/jwt')
 
 const defaultPayload = {

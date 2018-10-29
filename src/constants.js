@@ -1,5 +1,4 @@
 module.exports = {
-  CDN_BASE: 'https://cdn.servir.me',
   AUTH: {
     HEADER: 'token',
     LEVELS: {
