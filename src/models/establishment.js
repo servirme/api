@@ -1,12 +1,10 @@
 const InvalidError = require('../Errors/Invalid')
 const establishmentTransform = require('../transforms/establishment')
-const establishmentRepository = require('../repositories/establishment')
-const establishmentUserRepository = require('../repositories/establishmentUser')
+const { models } = require('./database')
 const { checkConflict, checkExists } = require('../helpers/model')
 
 const validateOneEstablishmentPerUser = async (userId) => {
-  const establishments = await establishmentUserRepository
-    .getEstablishmentsFromUser(userId)
+  const establishments = await models.EstablishmentUser.findAll({ where: { user_id: userId } })
 
   if (establishments && establishments.length) {
     throw new InvalidError('user-establishment')
@@ -21,16 +19,14 @@ module.exports.createEstablishment = async (establishmentData, userId) => {
       establishmentData
     )
 
-    const establishmentCreated = await establishmentRepository.create(
-      establishmentInput
-    )
+    const establishmentCreated = await models.Establishment.create(establishmentInput)
 
-    await establishmentUserRepository.linkUserAndEstablishment(
-      userId,
-      establishmentCreated.id
-    )
+    await models.EstablishmentUser.create({
+      user_id: userId,
+      establishment_id: establishmentCreated.id,
+    })
 
-    await establishmentRepository.activate(establishmentCreated)
+    await establishmentCreated.updateAttributes({ active: true })
 
     return establishmentTransform.output(establishmentCreated)
   } catch (error) {
@@ -38,15 +34,18 @@ module.exports.createEstablishment = async (establishmentData, userId) => {
   }
 }
 
-module.exports.updateEstablishment = (id, establishmentData) => {
+module.exports.updateEstablishment = async (id, establishmentData) => {
   const transformed = establishmentTransform.input(establishmentData)
 
-  return establishmentRepository.update(id, transformed)
-    .then(establishmentTransform.output)
+  const establishment = await models.Establishment.findById(id)
+
+  await establishment.updateAttributes(transformed)
+
+  return establishmentTransform.output(establishment)
 }
 
 module.exports.showEstablishment = async (id) => {
-  const establishment = await establishmentRepository.getOne(id)
+  const establishment = await models.Establishment.findById(id)
 
   checkExists('establishment', establishment)
 

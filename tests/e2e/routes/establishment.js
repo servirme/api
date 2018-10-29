@@ -1,6 +1,6 @@
 const { AUTH } = require('../../../config/constants')
 const testServer = require('../testServer')
-const { models } = require('../../../src/helpers/database')
+const { models } = require('../../../src/models/database')
 const { auth } = require('../helpers')
 
 const { admin: getAdminToken } = auth

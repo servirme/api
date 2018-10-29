@@ -1,6 +1,6 @@
 NODE_ENV=test
 
-LOGGING=true
+DATABASE_LOGGING=true
 
 DATABASE_HOST=postgres
 DATABASE_DATABASE=servirme

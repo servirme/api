@@ -3,13 +3,17 @@ const { wrapAction } = require('../helpers/express')
 
 const router = Router()
 
-const status = () => ({
-  statusCode: 200,
-  body: {
-    timestamp: new Date().toISOString(),
-    message: 'status.ok',
-  },
-})
+const status = () => {
+  const now = new Date()
+  return {
+    statusCode: 200,
+    body: {
+      date: now.toISOString(),
+      timestamp: now.getTime(),
+      message: 'status.ok',
+    },
+  }
+}
 
 const robots = () => ({
   statusCode: 200,
