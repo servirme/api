@@ -1,7 +1,7 @@
 require('../../dotenv')
 const log4js = require('log4js')
 const app = require('../app')
-const { sequelize } = require('../models/database')
+const sequelize = require('../database')
 const { env } = require('../../config/env')
 
 const logger = log4js.getLogger('api')
