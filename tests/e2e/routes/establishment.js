@@ -7,14 +7,11 @@ const { admin: getAdminToken } = auth
 
 describe('Establishment routes', () => {
   let establishment
-  let adminToken
+  const { token: adminToken } = getAdminToken()
 
-  beforeAll(() => {
-    adminToken = getAdminToken()
-
-    return models.Establishment.truncate({ force: true })
-      .then(() => models.EstablishmentUser.truncate({ force: true }))
-  })
+  beforeAll(() => Promise.resolve()
+    .then(() => models.Establishment.truncate({ force: true }))
+    .then(() => models.EstablishmentUser.truncate({ force: true })))
 
   test('Should create a establishment', () => {
     const payload = {

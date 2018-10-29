@@ -1,5 +1,4 @@
 const authModel = require('../models/auth')
-const { removeJwtFields } = require('../helpers/jwt')
 
 module.exports.login = async ({ body }) => {
   const token = await authModel.signIn(body)
@@ -24,24 +23,3 @@ module.exports.register = async ({ body }) => {
     },
   }
 }
-
-module.exports.refreshToken = async (req) => {
-  const decoded = removeJwtFields(req.auth)
-
-  const token = await authModel.sign(decoded)
-
-  return {
-    statusCode: 200,
-    body: {
-      message: 'token.refresh',
-      token,
-    },
-  }
-}
-
-module.exports.check = () => ({
-  statusCode: 200,
-  body: {
-    message: 'token.ok',
-  },
-})

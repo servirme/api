@@ -1,5 +1,5 @@
 const userModel = require('./user')
-const userTransform = require('../transforms/user')
+const jwtTransform = require('../transforms/jwt')
 const InvalidError = require('../Errors/Invalid')
 const { checkHashPassword } = require('../helpers/security')
 const { sign } = require('../helpers/jwt')
@@ -17,11 +17,11 @@ const checkPassword = async (plainTextPassword, user) => {
   }
 }
 
-module.exports.sign = sign
-
 module.exports.signUp = async (credentials) => {
   const createdUser = await userModel.createUser(credentials)
-  const jwtData = userTransform.jwt(createdUser)
+  const jwtData = jwtTransform({
+    user: createdUser,
+  })
 
   return signJwtUser(jwtData)
 }
@@ -31,7 +31,9 @@ module.exports.signIn = async ({ email, password }) => {
 
   await checkPassword(password, user)
 
-  const jwtData = userTransform.jwt(user)
+  const jwtData = jwtTransform({
+    user,
+  })
 
   return signJwtUser(jwtData)
 }

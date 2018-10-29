@@ -2,6 +2,7 @@ const { mergeAll } = require('ramda')
 
 const { AUTH } = require('../../src/constants')
 const { sign } = require('../../src/helpers/jwt')
+const jwtTransform = require('../../src/transforms/jwt')
 
 const defaultPayload = {
   user: {
@@ -12,19 +13,22 @@ const defaultPayload = {
   },
 }
 
-const generateToken = type => (payload, mergeWithDefault = true) => {
+const generateToken = type => (payload) => {
   const payloads = [
     { type },
     payload,
+    defaultPayload,
   ]
 
-  if (mergeWithDefault) {
-    payloads.push(defaultPayload)
-  }
-
   const finalPayload = mergeAll(payloads)
+  console.log(finalPayload)
+  const jwtData = jwtTransform(finalPayload)
+  console.log(jwtData)
 
-  return sign(finalPayload)
+  return {
+    token: sign(jwtData),
+    data: jwtData,
+  }
 }
 
 module.exports.auth = {

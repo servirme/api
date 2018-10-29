@@ -1,5 +1,6 @@
 const { path } = require('ramda')
 const jwt = require('../helpers/jwt')
+const tokenModel = require('../models/token')
 const NotAuthorizedError = require('../Errors/NotAuthorized')
 const ForbiddenError = require('../Errors/Forbidden')
 const { AUTH } = require('../constants')
@@ -24,7 +25,7 @@ const decodeAndValidate = (token) => {
   return value
 }
 
-const getMiddleware = mode => (req, res, next) => {
+const getMiddleware = mode => async (req, res, next) => {
   const token = getApiToken(req)
 
   if (!token) {
@@ -36,7 +37,12 @@ const getMiddleware = mode => (req, res, next) => {
   const { type } = decoded
 
   if (mode && type !== mode) {
-    throw new ForbiddenError('jwt')
+    throw new ForbiddenError('jwt.mode')
+  }
+
+  const databaseToken = await tokenModel.get(decoded.id)
+  if (!databaseToken) {
+    throw new ForbiddenError('jwt.invalid')
   }
 
   req.auth = decoded

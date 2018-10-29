@@ -16,6 +16,7 @@ module.exports.login = Joi.object({
 })
 
 module.exports.jwt = Joi.object({
+  id: Joi.string().required(),
   type: Joi.valid(Object.values(AUTH.LEVELS)).required(),
   user: Joi.object({
     id: Joi.number().required(),
