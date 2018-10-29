@@ -19,8 +19,10 @@ module.exports = (err, req, res, next) => {
 
   error.getTranslateKeys().forEach(res.translate)
 
-  res
-    .status(error.getHttpCode())
-    .send(error.getBody())
+  const httpCode = error.getHttpCode()
+  const body = error.getBody()
+  res.body = body
+
+  res.status(httpCode).send(body)
   next()
 }
