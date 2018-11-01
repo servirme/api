@@ -32,3 +32,5 @@ const sequelize = new Sequelize(sequelizeConfig)
 
 module.exports = sequelize
 module.exports.Operators = operators
+module.exports.connect = logger => sequelize.authenticate()
+  .tap(() => logger.debug('Successfully connected to database'))

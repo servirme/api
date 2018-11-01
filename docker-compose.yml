@@ -1,7 +1,7 @@
 version: "3"
 services:
   postgres:
-    container_name: 'servirme_dev_db'
+    container_name: 'servirme_dev_postgres'
     image: postgres:10
     restart: always
     environment:
@@ -38,53 +38,13 @@ services:
       interval: 10s
       retries: 5
 
-  nginx-proxy:
-    container_name: 'nginx-proxy'
-    image: jwilder/nginx-proxy
+  redis:
+    container_name: 'servirme_dev_redis'
+    command: ["redis-server", "--appendonly", "yes"]
+    image: redis:5-alpine
     restart: always
-    volumes:
-      - ./letsencrypt/live/api.servir.me/privkey.pem:/etc/nginx/certs/api.servir.me.key:ro
-      - ./letsencrypt/live/api.servir.me/cert.pem:/etc/nginx/certs/api.servir.me.crt:ro
-      - /var/run/docker.sock:/tmp/docker.sock:ro
     networks:
       - application
-    ports:
-      - 80:80
-      - 443:443
-
-  api-prod:
-    container_name: 'servirme_prod_api'
-    build:
-      context: .
-      dockerfile: Dockerfile
-    working_dir: /code
-    volumes:
-      - ./:/code
-      - /code/node_modules
-    networks:
-      - application
-    environment:
-      - VIRTUAL_HOST=api.servir.me
-      - NODE_ENV=production
-      - PORT=80
-    expose:
-      - 80
-    command: "npm run start-prod"
-    depends_on:
-      - nginx-proxy
-
-  postgres-prod:
-    container_name: 'servirme_prod_db'
-    image: postgres:9
-    restart: always
-    environment:
-      POSTGRES_DB: servirme
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD:
-    networks:
-      - application
-    expose:
-      - 5432
 
 networks:
   application:

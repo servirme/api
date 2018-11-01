@@ -1,22 +1,25 @@
 .PHONY: dev prod test lint down clean
 
 # Production
-prod: setupdb-prod api-prod
+prod: setupdb-prod redis-prod api-prod
 
 api-prod:
-	@docker-compose up -d api-prod
+	@docker-compose -f docker-compose.prod.yml up -d api
+
+redis-prod:
+	@docker-compose -f docker-compose.prod.yml up -d redis
 
 setupdb-prod: database-prod migrate-prod seed-prod
 
 database-prod:
-	@docker-compose up -d postgres-prod
+	@docker-compose -f docker-compose.prod.yml up -d postgres
 	@sleep 3
 
 migrate-prod:
-	@docker-compose run --rm api-prod npm run migrate
+	@docker-compose -f docker-compose.prod.yml run --rm api npm run migrate
 
 seed-prod:
-	@docker-compose run --rm api-prod npm run seed
+	@docker-compose -f docker-compose.prod.yml run --rm api npm run seed
 
 # Certificates
 generate-cert:
@@ -60,13 +63,16 @@ pull:
 	@git pull origin master
 
 pm2-restart:
-	@docker-compose exec api-prod npm run pm2-restart
+	@docker-compose -f docker-compose.prod.yml exec api npm run pm2-restart
 
 # Development
-dev: setupdb-dev api-dev
+dev: setupdb-dev redis-dev api-dev
 
 api-dev:
 	@docker-compose up -d api
+
+redis-dev:
+	@docker-compose up -d redis
 
 setupdb-dev: database-dev migrate-dev seed-dev
 
