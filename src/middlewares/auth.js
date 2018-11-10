@@ -35,7 +35,7 @@ const getMiddleware = mode => (req, res, next) => {
 
   const { type } = decoded
 
-  if (mode && type !== mode) {
+  if (mode && type !== mode && type !== LEVELS.MASTER) {
     throw new ForbiddenError('jwt')
   }
 

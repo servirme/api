@@ -2,6 +2,7 @@ const InvalidError = require('../Errors/Invalid')
 const establishmentTransform = require('../transforms/establishment')
 const { models } = require('./database')
 const { checkConflict, checkExists } = require('../helpers/model')
+const { applyAcl, permissions } = require('../helpers/acl')
 
 const validateOneEstablishmentPerUser = async (userId) => {
   const establishments = await models.EstablishmentUser.findAll({ where: { user_id: userId } })
@@ -11,7 +12,7 @@ const validateOneEstablishmentPerUser = async (userId) => {
   }
 }
 
-module.exports.createEstablishment = async (establishmentData, userId) => {
+const createEstablishment = async (establishmentData, userId) => {
   try {
     await validateOneEstablishmentPerUser(userId)
 
@@ -34,7 +35,7 @@ module.exports.createEstablishment = async (establishmentData, userId) => {
   }
 }
 
-module.exports.updateEstablishment = async (id, establishmentData) => {
+const updateEstablishment = async (id, establishmentData) => {
   const transformed = establishmentTransform.input(establishmentData)
 
   const establishment = await models.Establishment.findById(id)
@@ -44,10 +45,14 @@ module.exports.updateEstablishment = async (id, establishmentData) => {
   return establishmentTransform.output(establishment)
 }
 
-module.exports.showEstablishment = async (id) => {
+const showEstablishment = async (id) => {
   const establishment = await models.Establishment.findById(id)
 
   checkExists('establishment', establishment)
 
   return establishmentTransform.output(establishment)
 }
+
+module.exports.create = applyAcl(createEstablishment, permissions.ESTABLISHMENT_CREATE)
+module.exports.update = applyAcl(updateEstablishment, permissions.ESTABLISHMENT_UPDATE)
+module.exports.show = showEstablishment

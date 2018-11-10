@@ -4,15 +4,20 @@ const log4js = require('log4js')
 const { assoc } = require('ramda')
 
 const i18nConfig = require('../../../config/i18n')
+const { isProd } = require('../../../config/env')
 
 const logger = log4js.getLogger('api')
 
 const i18nBaseConfig = {
+  autoReload: !isProd,
   locales: i18nConfig.validLocales,
   objectNotation: true,
   syncFiles: true,
   indent: '  ',
   directory: join(__dirname, 'locales'),
+  api: {
+    __: 'i18nTranslate',
+  },
 }
 
 const normalizeTranslateInput = (key, data = {}) => {
@@ -31,12 +36,12 @@ module.exports.getInstance = (language) => {
     const instance = {
       translate(...params) {
         const { key, data } = normalizeTranslateInput(...params)
-        // eslint-disable-next-line no-underscore-dangle
-        const translated = this.__(key, data)
+        const translated = this.i18nTranslate(key, data)
 
         if (translated === key) {
           logger.warn({
             message: 'Response not translated',
+            language,
             key,
           })
         }

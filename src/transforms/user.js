@@ -5,4 +5,5 @@ module.exports.jwt = applySpec({
   name: prop('name'),
   email: prop('email'),
   active: prop('active'),
+  permission_group: prop('permission_group'),
 })

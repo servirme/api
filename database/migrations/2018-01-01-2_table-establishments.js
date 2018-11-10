@@ -30,12 +30,6 @@ module.exports = {
       },
       site: Sequelize.STRING(50),
       landline_phone: Sequelize.STRING(30),
-      email: {
-        type: Sequelize.STRING(60),
-        validate: {
-          isEmail: true,
-        },
-      },
       category_id: Sequelize.INTEGER,
       plan_id: Sequelize.INTEGER,
       created_at: Sequelize.DATE,

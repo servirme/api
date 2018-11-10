@@ -2,7 +2,7 @@ const userModel = require('./user')
 const userTransform = require('../transforms/user')
 const InvalidError = require('../Errors/Invalid')
 const { checkHashPassword } = require('../helpers/security')
-const { sign } = require('../helpers/jwt')
+const { removeJwtFields, sign } = require('../helpers/jwt')
 const { AUTH } = require('../constants')
 
 const signJwtUser = user => sign({ type: AUTH.LEVELS.ADMIN, user })
@@ -16,8 +16,6 @@ const checkPassword = async (plainTextPassword, user) => {
     throw new InvalidError('password')
   }
 }
-
-module.exports.sign = sign
 
 module.exports.signUp = async (credentials) => {
   const createdUser = await userModel.createUser(credentials)
@@ -34,4 +32,10 @@ module.exports.signIn = async ({ email, password }) => {
   const jwtData = userTransform.jwt(user)
 
   return signJwtUser(jwtData)
+}
+
+module.exports.refresh = (currentAuthData) => {
+  const decoded = removeJwtFields(currentAuthData)
+
+  return sign(decoded)
 }

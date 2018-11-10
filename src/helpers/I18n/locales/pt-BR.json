@@ -5,11 +5,11 @@
   "invalid-token-unauthorized": "invalid-token-unauthorized",
   "validation": {
     "any": {
-      "required": "validation.any.required",
+      "required": "Campo obrigatório",
       "empty": "validation.any.empty"
     },
     "string": {
-      "email": "validation.string.email"
+      "email": "Campo deve ser um email válido"
     },
     "boolean": {
       "base": "validation.boolean.base"
@@ -31,11 +31,11 @@
   "invalid": {
     "password": "invalid.password",
     "body": "invalid.body",
-    "jwt": "invalid.jwt"
+    "jwt": "invalid.jwt",
+    "user-establishment": "Apenas um estabelecimento pode existir por usuário"
   },
   "status": {
-    "ok": "OK",
-    "okaaaa": "status.okaaaa"
+    "ok": "OK"
   },
   "signed": {
     "in": "signed.in",
@@ -60,7 +60,12 @@
   "unauthorized": {
     "empty-token": "unauthorized.empty-token",
     "not-authorized": "unauthorized.not-authorized",
-    "jwt-incomplete": "unauthorized.jwt-incomplete"
+    "jwt-incomplete": "unauthorized.jwt-incomplete",
+    "insuficient-permission": {
+      "establishment": {
+        "create": "Permissão insuficiente para criar estabelecimento"
+      }
+    }
   },
   "establishmen": {
     "created": "establishmen.created",

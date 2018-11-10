@@ -1,9 +1,10 @@
 const establishmentModel = require('../models/establishment')
 
-module.exports.create = async ({ body, auth }) => {
+module.exports.create = async (req) => {
+  const { body, auth } = req
   const { id: userId } = auth.user
 
-  const establishment = await establishmentModel.createEstablishment(body, userId)
+  const establishment = await establishmentModel.create(req, body, userId)
 
   return {
     statusCode: 201,
@@ -14,8 +15,9 @@ module.exports.create = async ({ body, auth }) => {
   }
 }
 
-module.exports.update = async ({ body, params }) => {
-  const establishment = await establishmentModel.updateEstablishment(params.id, body)
+module.exports.update = async (req) => {
+  const { body, params } = req
+  const establishment = await establishmentModel.update(req, params.id, body)
 
   return {
     statusCode: 200,
@@ -28,7 +30,7 @@ module.exports.update = async ({ body, params }) => {
 
 module.exports.show = async ({ params }) => {
   const { id } = params
-  const establishment = await establishmentModel.showEstablishment(id)
+  const establishment = await establishmentModel.show(id)
 
   return {
     statusCode: 200,

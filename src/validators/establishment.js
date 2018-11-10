@@ -13,7 +13,6 @@ const state = Joi.string().max(50)
 const site = Joi.string().max(50)
 const slug = Joi.string().max(20)
 const landlinePhone = Joi.string().max(30)
-const email = Joi.string().email().max(60)
 const categoryId = Joi.number().integer()
 const planId = Joi.number()
 
@@ -21,7 +20,6 @@ const establishmentSchema = (options = {}) => ({
   name: getRuleRequired(name, options.create),
   site: getRuleRequired(site),
   slug: getRuleRequired(slug),
-  email: getRuleRequired(email, options.create),
   active: getRuleRequired(active),
   logo: getRuleRequired(logo),
   street: getRuleRequired(street),

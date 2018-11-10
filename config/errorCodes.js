@@ -17,6 +17,7 @@ module.exports = {
     body: 1301,
     jwt: 1302,
     password: 1303,
+    'user-establishment': 1304,
   },
   mismatch: {
     generic: 1400,
@@ -24,6 +25,7 @@ module.exports = {
   unauthorized: {
     generic: 1500,
     'empty-token': 1501,
+    'insuficient-permission': 1502,
   },
   limitExceeded: {
     generic: 1600,
