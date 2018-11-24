@@ -18,12 +18,13 @@ module.exports.login = Joi.object({
 module.exports.jwt = Joi.object({
   type: Joi.valid(Object.values(AUTH.LEVELS)).required(),
   user: Joi.object({
-    id: Joi.number().required(),
+    id: Joi.number().integer().required(),
     name: Joi.string(),
     email: Joi.string(),
     active: Joi.boolean(),
   }).required(),
   establishment: Joi.object({
-    id: Joi.number().required(),
+    id: Joi.number().integer().required(),
+    aclGroupId: Joi.number().integer().required(),
   }),
 })

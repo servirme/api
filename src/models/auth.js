@@ -1,11 +1,10 @@
-const userModel = require('./user')
-const userTransform = require('../transforms/user')
 const InvalidError = require('../Errors/Invalid')
 const { checkHashPassword } = require('../helpers/security')
-const { removeJwtFields, sign } = require('../helpers/jwt')
-const { AUTH } = require('../constants')
+const { removeJwtFields, generateToken, sign } = require('../helpers/jwt')
+const { models } = require('./database')
+const { hashPassword } = require('../helpers/security')
+const { checkConflict, checkExists } = require('../helpers/model')
 
-const signJwtUser = user => sign({ type: AUTH.LEVELS.ADMIN, user })
 const checkPassword = async (plainTextPassword, user) => {
   const valid = await checkHashPassword(
     plainTextPassword,
@@ -17,21 +16,33 @@ const checkPassword = async (plainTextPassword, user) => {
   }
 }
 
-module.exports.signUp = async (credentials) => {
-  const createdUser = await userModel.createUser(credentials)
-  const jwtData = userTransform.jwt(createdUser)
+const createUser = async ({ email, password }) => {
+  try {
+    const hashedPassword = await hashPassword(password)
 
-  return signJwtUser(jwtData)
+    return await models.User.create({
+      email,
+      password: hashedPassword,
+    })
+  } catch (error) {
+    return checkConflict('user', error)
+  }
+}
+
+module.exports.signUp = async (credentials) => {
+  const createdUser = await createUser(credentials)
+
+  return generateToken({ user: createdUser })
 }
 
 module.exports.signIn = async ({ email, password }) => {
-  const user = await userModel.getByEmail(email)
+  const user = await models.User.findOne({ where: { email } })
+
+  checkExists('user', user)
 
   await checkPassword(password, user)
 
-  const jwtData = userTransform.jwt(user)
-
-  return signJwtUser(jwtData)
+  return generateToken({ user })
 }
 
 module.exports.refresh = (currentAuthData) => {

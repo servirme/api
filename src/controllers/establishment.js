@@ -40,3 +40,17 @@ module.exports.show = async ({ params }) => {
     },
   }
 }
+
+module.exports.select = async (req) => {
+  const { establishmentId } = req.param
+
+  const newToken = await establishmentModel.select(req.auth, establishmentId)
+
+  return {
+    statusCode: 200,
+    body: {
+      message: 'establishment.selected',
+      result: newToken,
+    },
+  }
+}

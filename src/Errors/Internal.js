@@ -7,7 +7,7 @@ const { env } = require('../../config/env')
 const apiLogger = log4js.getLogger('api')
 
 class InternalError extends BaseError {
-  constructor(err, requestId) {
+  constructor(err, req) {
     super(500, internalError, 'http.500')
 
     if (env === 'development') {
@@ -21,7 +21,7 @@ class InternalError extends BaseError {
     }
 
     apiLogger.error({
-      requestId,
+      requestId: req.requestId,
       message: err.message,
       stackTrace: err.stack,
     })

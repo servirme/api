@@ -2,6 +2,7 @@ const Joi = require('joi')
 
 const { getRuleRequired } = require('../helpers/validator')
 
+const id = Joi.number().integer().min(1)
 const active = Joi.boolean()
 const name = Joi.string().max(100)
 const logo = Joi.string().max(150)
@@ -39,9 +40,13 @@ module.exports.create = Joi.object({
 
 module.exports.update = Joi.object({
   body: establishmentSchema({ create: false }),
-  params: { id: Joi.number().integer() },
+  params: { id },
 })
 
 module.exports.show = Joi.object({
-  params: { id: Joi.number().integer() },
+  params: { id },
+})
+
+module.exports.select = Joi.object({
+  params: { id },
 })

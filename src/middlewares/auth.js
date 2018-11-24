@@ -10,9 +10,10 @@ const { HEADER, LEVELS } = AUTH
 const getApiToken = path(['headers', HEADER])
 
 const decodeAndValidate = (token) => {
-  const decoded = jwt.removeJwtFields(jwt.verify(token))
+  const decoded = jwt.verify(token)
+  const tokenData = jwt.removeJwtFields(decoded)
 
-  const { value, error } = jwtValidator.validate(decoded, {
+  const { value, error } = jwtValidator.validate(tokenData, {
     abortEarly: true,
     allowUnknown: false,
   })

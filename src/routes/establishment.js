@@ -4,6 +4,7 @@ const {
   show,
   create,
   update,
+  select,
 } = require('../controllers/establishment')
 const {
   adminAuth,
@@ -13,6 +14,7 @@ const {
   create: createSchema,
   update: updateSchema,
   show: showSchema,
+  select: selectSchema,
 } = require('../validators/establishment')
 const { wrapAction } = require('../helpers/express')
 
@@ -35,6 +37,13 @@ router.get(
   adminAuth,
   validate(showSchema),
   wrapAction(show)
+)
+
+router.get(
+  '/establishment/:establishmentId/select',
+  adminAuth,
+  validate(selectSchema),
+  wrapAction(select)
 )
 
 module.exports = router

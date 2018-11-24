@@ -2,7 +2,7 @@ const BaseError = require('../Errors/BaseError')
 const InternalError = require('../Errors/Internal')
 const InvalidError = require('../Errors/Invalid')
 
-const normalizeError = (err, requestId) => {
+const normalizeError = (err, req) => {
   if (err instanceof BaseError) {
     return err
   }
@@ -11,11 +11,11 @@ const normalizeError = (err, requestId) => {
     return new InvalidError('body')
   }
 
-  return new InternalError(err, requestId)
+  return new InternalError(err, req)
 }
 
 module.exports = (err, req, res, next) => {
-  const error = normalizeError(err, req.requestId)
+  const error = normalizeError(err, req)
 
   error.getTranslateKeys().forEach(res.translate)
 

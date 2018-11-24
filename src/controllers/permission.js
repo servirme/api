@@ -1,7 +1,7 @@
 const permissionModel = require('../models/permission')
 
 module.exports.all = () => {
-  const permissions = permissionModel.all()
+  const permissions = permissionModel.ALL
 
   return {
     statusCode: 200,
@@ -31,7 +31,7 @@ module.exports.remove = async (req) => {
   return {
     statusCode: 200,
     body: {
-      message: 'permission.added',
+      message: 'permission.removed',
     },
   }
 }

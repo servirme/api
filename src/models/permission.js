@@ -22,20 +22,20 @@ const checkIfAllValid = (rules) => {
   }
 }
 
-const addPermissions = (permissionGroupId, rules) => {
+const addPermissions = (aclGroupId, rules) => {
 
 }
 
-const removePermissions = (permissionGroupId, rules) => {
+const removePermissions = (aclGroupId, rules) => {
 
 }
 
-module.exports.hasPermission = (permissionGroupId, ruleId) => {
+module.exports.hasPermission = (aclGroupId, ruleId) => {
   // TODO - check if group has access to rule
   return false
 }
 
-module.exports.all = () => allPermissions
+module.exports.ALL = allPermissions
 
 module.exports.add = applyAcl(addPermissions, permissions.PERMISSION_ADD)
 
